@@ -29,6 +29,9 @@ class SceneQuiz:
         # 問題ごとの状態
         self.current_q = None
         self.shuffled_options = []  # 4択用
+        self.current_correct_idx = 0
+        self.user_answer_text = ""
+        self.correct_answer_text = ""
         self.selected_words = []  # 並び替え解答用
         self.remaining_words = []  # 並び替え残チップ用
         self.q_start_time = 0
@@ -102,6 +105,9 @@ class SceneQuiz:
         self.companion_mood = "normal"
         self.companion_say = "英語をじっくり読もう！"
         self.q_start_time = time.time()
+        self.user_answer_text = ""
+        self.correct_answer_text = ""
+        self.current_correct_idx = 0
 
         q_type = self.current_q.get("type", "choice")
         if q_type == "choice":
@@ -283,12 +289,29 @@ class SceneQuiz:
         elapsed = time.time() - self.q_start_time
         speed_bonus = max(0, int(30 - elapsed * 1.5))
 
+        if 0 <= chosen_idx < len(self.shuffled_options):
+            self.user_answer_text = self.shuffled_options[chosen_idx]
+        else:
+            self.user_answer_text = ""
+
+        if 0 <= self.current_correct_idx < len(self.shuffled_options):
+            self.correct_answer_text = self.shuffled_options[self.current_correct_idx]
+        else:
+            self.correct_answer_text = ""
+
         is_correct = chosen_idx == self.current_correct_idx
         self._record_result(is_correct, speed_bonus)
 
     def _judge_reorder(self):
         elapsed = time.time() - self.q_start_time
         speed_bonus = max(0, int(30 - elapsed * 1.5))
+
+        self.user_answer_text = " ".join([w for _, w in self.selected_words])
+        correct_words = [
+            self.current_q.get("options", [])[i]
+            for i in self.current_q.get("answer", [])
+        ]
+        self.correct_answer_text = " ".join(correct_words)
 
         chosen_order = [orig_i for orig_i, w in self.selected_words]
         correct_order = self.current_q.get("answer", [])
@@ -689,9 +712,8 @@ class SceneQuiz:
                 if self.last_speed_bonus > 0
                 else ""
             )
-            # 正解バナーからゆったり18px空けて獲得EXPを表示
             self.app.text.draw_text(
-                35, 126, f"獲得: 100 EXP  {bonus_str}", 7
+                35, 116, f"獲得: 100 EXP  {bonus_str}", 7
             )
         else:
             pyxel.rect(20, 68, 280, 40, 8)
@@ -700,15 +722,121 @@ class SceneQuiz:
                 128, 80, "× 不正解", 7
             )
             self.app.text.draw_text(
-                35, 126, "獲得: 0 EXP", 6
+                35, 116, "獲得: 0 EXP", 6
             )
 
-        # 正解の英文表示（間隔を30px確保）
-        self.app.text.draw_text(
-            22, 156, "【正しい英文】", 6
-        )
-        full_sentence = self.current_q.get("sentence", "")
+        card_y = 138
         q_type = self.current_q.get("type", "choice")
+
+        # 解答対比カードの描画
+        if q_type == "choice":
+            if self.last_is_correct:
+                # 正解時: 全幅カード
+                pyxel.rect(20, card_y, 280, 40, 0)
+                pyxel.rectb(20, card_y, 280, 40, 11)  # 緑枠
+                self.app.text.draw_text_mini(
+                    26, card_y + 4, "あなたの解答 (◎ 正解):", 11
+                )
+                self.app.text.draw_text(
+                    26,
+                    card_y + 19,
+                    self.user_answer_text or "-",
+                    7,
+                    max_width=268,
+                    font_type="english",
+                )
+                cur_y = card_y + 40 + 12
+            else:
+                # 不正解時: 左右分割カード (幅135pxずつ)
+                # 左: あなたの解答 (赤枠)
+                pyxel.rect(20, card_y, 135, 44, 0)
+                pyxel.rectb(20, card_y, 135, 44, 8)
+                self.app.text.draw_text_mini(
+                    26, card_y + 4, "あなたの解答 (×)", 8
+                )
+                self.app.text.draw_text(
+                    26,
+                    card_y + 20,
+                    self.user_answer_text or "-",
+                    8,
+                    max_width=123,
+                    font_type="english",
+                )
+
+                # 右: 正解 (緑枠)
+                pyxel.rect(165, card_y, 135, 44, 0)
+                pyxel.rectb(165, card_y, 135, 44, 11)
+                self.app.text.draw_text_mini(
+                    171, card_y + 4, "正解 (◎)", 11
+                )
+                self.app.text.draw_text(
+                    171,
+                    card_y + 20,
+                    self.correct_answer_text or "-",
+                    11,
+                    max_width=123,
+                    font_type="english",
+                )
+                cur_y = card_y + 44 + 12
+        elif q_type == "reorder":
+            if self.last_is_correct:
+                # 正解時: 全幅カード
+                pyxel.rect(20, card_y, 280, 38, 0)
+                pyxel.rectb(20, card_y, 280, 38, 11)
+                self.app.text.draw_text_mini(
+                    26, card_y + 3, "あなたの並び替え (◎ 正解):", 11
+                )
+                self.app.text.draw_text(
+                    26,
+                    card_y + 18,
+                    self.user_answer_text or "-",
+                    7,
+                    max_width=268,
+                    font_type="english",
+                )
+                cur_y = card_y + 38 + 12
+            else:
+                # 不正解時: 上下2段カード (各36px)
+                # 上段: あなたの解答
+                pyxel.rect(20, card_y, 280, 36, 0)
+                pyxel.rectb(20, card_y, 280, 36, 8)
+                self.app.text.draw_text_mini(
+                    26, card_y + 3, "あなたの並び替え (×):", 8
+                )
+                self.app.text.draw_text(
+                    26,
+                    card_y + 17,
+                    self.user_answer_text or "-",
+                    8,
+                    max_width=268,
+                    font_type="english",
+                )
+
+                # 下段: 正しい並び順
+                next_card_y = card_y + 40
+                pyxel.rect(20, next_card_y, 280, 36, 0)
+                pyxel.rectb(20, next_card_y, 280, 36, 11)
+                self.app.text.draw_text_mini(
+                    26, next_card_y + 3, "正しい並び順 (◎):", 11
+                )
+                self.app.text.draw_text(
+                    26,
+                    next_card_y + 17,
+                    self.correct_answer_text or "-",
+                    11,
+                    max_width=268,
+                    font_type="english",
+                )
+                cur_y = next_card_y + 36 + 12
+        else:
+            cur_y = card_y
+
+        # 正解の英文表示
+        self.app.text.draw_text(
+            22, cur_y, "【正しい英文】", 6
+        )
+        cur_y += 18
+        full_sentence = self.current_q.get("sentence", "")
         if q_type == "choice":
             c_word = self.current_q.get("options", [])[
                 self.current_q.get("answer", 0)
@@ -724,31 +852,32 @@ class SceneQuiz:
         full_sentence = self._format_dialogue(full_sentence)
         next_y = self.app.text.draw_text(
             22,
-            178,
+            cur_y,
             full_sentence,
             7,
+            font_type="english",
             max_width=276,
-            line_spacing=4,
+            line_spacing=3,
         )
 
-        # 日本語訳（12pxの間隔）
+        # 日本語訳（10pxの間隔）
         feedback_trans = self._format_dialogue(self.current_q.get("translation", ""))
         next_y2 = self.app.text.draw_text(
             22,
-            next_y + 12,
+            next_y + 10,
             f"訳: {feedback_trans}",
             6,
             max_width=276,
             line_spacing=3,
         )
 
-        # ポイント解説（14pxの間隔）
+        # ポイント解説（12pxの間隔）
         self.app.text.draw_text(
-            22, next_y2 + 14, "【ポイント解説】", 12
+            22, next_y2 + 12, "【ポイント解説】", 12
         )
         self.app.text.draw_text(
             22,
-            next_y2 + 34,
+            next_y2 + 30,
             self.current_q.get("explanation", ""),
             7,
             max_width=276,
