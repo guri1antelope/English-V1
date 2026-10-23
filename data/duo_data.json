@@ -353,18 +353,18 @@
           "id": "DUO_S02_Q020",
           "global_id": 20,
           "type": "choice",
-          "sentence": "Could you move over a little? Oh,sorry. I didn't realize I was taking up so much space.",
+          "sentence": "Could you move over a little? Oh, sorry. I didn't ( ) I was taking up so much space.",
           "full_sentence": "Could you move over a little? Oh,sorry. I didn't realize I was taking up so much space.",
           "translation": "「少し詰めていただけませんか？」「あ、ごめんなさい。こんなに場所を取っていたなんて気付きませんでした。」",
-          "target_word": "Ohsorry",
+          "target_word": "realize",
           "options": [
-            "tollfree",
-            "Ohsorry",
-            "Palace",
-            "romantic"
+            "realize",
+            "remind",
+            "require",
+            "refuse"
           ],
-          "answer": 1,
-          "explanation": "重要語: 【Ohsorry】\n文脈: 「少し詰めていただけませんか？」「あ、ごめんなさい。こんなに場所を取っていたなんて気付きませんでした。」"
+          "answer": 0,
+          "explanation": "重要語: 【realize】〜に気づく、悟る\n文脈: 詰めていただけますか？ あ、すみません。こんなに場所をとっていたとは気づきませんでした。"
         },
         {
           "id": "DUO_S02_Q021",
@@ -1185,18 +1185,18 @@
           "id": "DUO_S06_Q063",
           "global_id": 63,
           "type": "choice",
-          "sentence": "Anything else? That's it. For here or to go? To go.",
+          "sentence": "Anything else? ( ). For here or to go? To go.",
           "full_sentence": "Anything else? That's it. For here or to go? To go.",
           "translation": "「他にご注文は？」「それだけです。」「こちらでお召し上がりですか？」「持ち帰ります。」",
-          "target_word": "Thats",
+          "target_word": "That's it",
           "options": [
-            "Theres",
-            "often",
-            "believe",
-            "Thats"
+            "Never mind",
+            "That's it",
+            "So do I",
+            "You bet"
           ],
-          "answer": 3,
-          "explanation": "重要語: 【Thats】\n文脈: 「他にご注文は？」「それだけです。」「こちらでお召し上がりですか？」「持ち帰ります。」"
+          "answer": 1,
+          "explanation": "重要語: 【That's it】それだけです、以上です\n文脈: 他にご注文は？ それだけです。店内ですか、お持ち帰りですか？"
         },
         {
           "id": "DUO_S06_Q064",
@@ -2236,18 +2236,18 @@
           "id": "DUO_S10_Q119",
           "global_id": 119,
           "type": "choice",
-          "sentence": "Dolly resembles her big sister in every way. You can’t tell them apart.",
+          "sentence": "Dolly ( ) her big sister in every way. You can't tell them apart.",
           "full_sentence": "Dolly resembles her big sister in every way. You can’t tell them apart.",
           "translation": "ドリーはあらゆる点でお姉さんにそっくりだ。二人を見分けることはできないよ。",
-          "target_word": "cant",
+          "target_word": "resembles",
           "options": [
-            "deli",
-            "rise",
-            "cant",
-            "length"
+            "resembles",
+            "replaces",
+            "removes",
+            "respects"
           ],
-          "answer": 2,
-          "explanation": "重要語: 【cant】\n文脈: ドリーはあらゆる点でお姉さんにそっくりだ。二人を見分けることはできないよ。"
+          "answer": 0,
+          "explanation": "重要語: 【resemble】〜に似ている\n文脈: ドリーはあらゆる面でお姉さんにそっくりだ。見分けがつかないよ。"
         },
         {
           "id": "DUO_S10_Q120",
@@ -2955,18 +2955,18 @@
           "id": "DUO_S14_Q156",
           "global_id": 156,
           "type": "choice",
-          "sentence": "Please hand in your assignment via e-mail no later than 5 pm on June 10",
+          "sentence": "Please hand in your ( ) via e-mail no later than 5 pm on June 10.",
           "full_sentence": "Please hand in your assignment via e-mail no later than 5 pm on June 10",
           "translation": "課題は電子メールで6月10日の午後5時までに提出してください。",
-          "target_word": "email",
+          "target_word": "assignment",
           "options": [
-            "Excited",
-            "email",
-            "Year",
-            "shabby"
+            "appointment",
+            "assignment",
+            "agreement",
+            "announcement"
           ],
           "answer": 1,
-          "explanation": "重要語: 【email】\n文脈: 課題は電子メールで6月10日の午後5時までに提出してください。"
+          "explanation": "重要語: 【assignment】課題、宿題\n文脈: 課題は6月10日の午後5時までにEメールで提出してください。"
         },
         {
           "id": "DUO_S14_Q157",
@@ -2989,18 +2989,18 @@
           "id": "DUO_S14_Q158",
           "global_id": 158,
           "type": "choice",
-          "sentence": "His thesis doesn't make sense. To begin with, its theme is obscure.",
+          "sentence": "His thesis doesn't make sense. To begin with, its theme is ( ).",
           "full_sentence": "His thesis doesn't make sense. To begin with, its theme is obscure.",
           "translation": "彼の論文は意味不明。第一、主題が曖昧だ。",
-          "target_word": "doesnt",
+          "target_word": "obscure",
           "options": [
-            "discount",
-            "Natto",
-            "fridge",
-            "doesnt"
+            "obvious",
+            "accurate",
+            "obscure",
+            "familiar"
           ],
-          "answer": 3,
-          "explanation": "重要語: 【doesnt】\n文脈: 彼の論文は意味不明。第一、主題が曖昧だ。"
+          "answer": 2,
+          "explanation": "重要語: 【obscure】（意味などが）曖昧な、不鮮明な\n文脈: 彼の論文は意味不明だ。第一にテーマが曖昧すぎる。"
         },
         {
           "id": "DUO_S14_Q159",
@@ -3391,18 +3391,18 @@
           "id": "DUO_S16_Q179",
           "global_id": 179,
           "type": "choice",
-          "sentence": "I met the man by chance. He’s gentle and smart. What's more, he’s single!",
+          "sentence": "I met the man by chance. He's gentle and smart. ( ), he's single!",
           "full_sentence": "I met the man by chance. He’s gentle and smart. What's more, he’s single!",
           "translation": "偶然その人に出会ったの。優しくて頭もいいの。おまけに独身！",
-          "target_word": "Whats",
+          "target_word": "What's more",
           "options": [
-            "gift",
-            "Whats",
-            "agree",
-            "relaxed"
+            "In addition",
+            "What's more",
+            "On the other hand",
+            "As a result"
           ],
           "answer": 1,
-          "explanation": "重要語: 【Whats】\n文脈: 偶然その人に出会ったの。優しくて頭もいいの。おまけに独身！"
+          "explanation": "重要語: 【What's more】おまけに、さらに\n文脈: 偶然その人に出会ったの。優しくて知的よ。そのうえ独身なの！"
         },
         {
           "id": "DUO_S16_Q180",
@@ -6847,18 +6847,18 @@
           "id": "DUO_S30_Q362",
           "global_id": 362,
           "type": "choice",
-          "sentence": "It’s optimistic of you to believe that things will work out. At best there’s a fifty-fifty-chance.",
+          "sentence": "It's ( ) of you to believe that things will work out. At best there's a fifty-fifty chance.",
           "full_sentence": "It’s optimistic of you to believe that things will work out. At best there’s a fifty-fifty-chance.",
           "translation": "物事がうまく行くと信じるなんて君も楽観的だね。可能性はせいぜい50％だよ。",
-          "target_word": "fiftyfiftychance",
+          "target_word": "optimistic",
           "options": [
-            "anthropologist",
-            "westernization",
-            "representatives",
-            "fiftyfiftychance"
+            "pessimistic",
+            "optimistic",
+            "suspicious",
+            "cautious"
           ],
-          "answer": 3,
-          "explanation": "重要語: 【fiftyfiftychance】\n文脈: 物事がうまく行くと信じるなんて君も楽観的だね。可能性はせいぜい50％だよ。"
+          "answer": 1,
+          "explanation": "重要語: 【optimistic】楽観的な\n文脈: 事態が好転すると信じるなんて楽観的だな。せいぜい五分五分の確率だよ。"
         },
         {
           "id": "DUO_S30_Q363",
@@ -6990,18 +6990,18 @@
           "id": "DUO_S31_Q369",
           "global_id": 369,
           "type": "choice",
-          "sentence": "Bob, don’t disturb her. Mind your own business, he whispered.",
+          "sentence": "Bob, don't ( ) her. Mind your own business, he whispered.",
           "full_sentence": "Bob, don’t disturb her. Mind your own business, he whispered.",
           "translation": "「ボブ、彼女の邪魔をしちゃだめだぞ。おせっかいはやめろ」と彼はささやいた。",
-          "target_word": "dont",
+          "target_word": "disturb",
           "options": [
-            "rate",
-            "stop",
-            "dont",
-            "Vienna"
+            "disturb",
+            "discover",
+            "display",
+            "destroy"
           ],
-          "answer": 2,
-          "explanation": "重要語: 【dont】\n文脈: 「ボブ、彼女の邪魔をしちゃだめだぞ。おせっかいはやめろ」と彼はささやいた。"
+          "answer": 0,
+          "explanation": "重要語: 【disturb】〜の邪魔をする、妨げる\n文脈: ボブ、彼女の邪魔をするなよ。余計なお世話だ、と彼は囁いた。"
         },
         {
           "id": "DUO_S31_Q370",
@@ -7024,18 +7024,18 @@
           "id": "DUO_S31_Q371",
           "global_id": 371,
           "type": "choice",
-          "sentence": "He was so childish that he couldn't resist temptation.",
+          "sentence": "He was so childish that he couldn't resist ( ).",
           "full_sentence": "He was so childish that he couldn't resist temptation.",
           "translation": "彼はあまりに子供だから誘惑に勝てなかった。（我慢できなかった）",
-          "target_word": "couldnt",
+          "target_word": "temptation",
           "options": [
-            "couldnt",
-            "theres",
-            "stocks",
-            "forests"
+            "intention",
+            "attention",
+            "temptation",
+            "invention"
           ],
-          "answer": 0,
-          "explanation": "重要語: 【couldnt】\n文脈: 彼はあまりに子供だから誘惑に勝てなかった。（我慢できなかった）"
+          "answer": 2,
+          "explanation": "重要語: 【temptation】誘惑\n文脈: 彼はとても子供っぽかったので、誘惑に逆らうことができなかった。"
         },
         {
           "id": "DUO_S31_Q372",
@@ -7092,18 +7092,18 @@
           "id": "DUO_S31_Q375",
           "global_id": 375,
           "type": "choice",
-          "sentence": "You despise Nick, don't you? On the contrary! I look up to him.",
+          "sentence": "You ( ) Nick, don't you? On the contrary! I look up to him.",
           "full_sentence": "You despise Nick, don't you? On the contrary! I look up to him.",
           "translation": "「ニックを軽蔑しているんだろう？」「とんでもない！（それどころか！）尊敬しているわ。」",
-          "target_word": "dont",
+          "target_word": "despise",
           "options": [
-            "rate",
-            "tell",
-            "dont",
-            "handy"
+            "despise",
+            "describe",
+            "decrease",
+            "depend"
           ],
-          "answer": 2,
-          "explanation": "重要語: 【dont】\n文脈: 「ニックを軽蔑しているんだろう？」「とんでもない！（それどころか！）尊敬しているわ。」"
+          "answer": 0,
+          "explanation": "重要語: 【despise】〜を軽蔑する、見下す\n文脈: ニックを見下しているんだろう？ とんでもない！ 尊敬しているよ。"
         },
         {
           "id": "DUO_S31_Q376",
@@ -7517,18 +7517,18 @@
           "id": "DUO_S33_Q397",
           "global_id": 397,
           "type": "choice",
-          "sentence": "The police say there’s someone pulling strings behind the scenes.",
+          "sentence": "The police say there's someone pulling strings ( ).",
           "full_sentence": "The police say there’s someone pulling strings behind the scenes.",
           "translation": "裏で糸を引いている人物がいると警察は言っている。",
-          "target_word": "theres",
+          "target_word": "behind the scenes",
           "options": [
-            "delayed",
-            "nametag",
-            "judged",
-            "theres"
+            "on the spot",
+            "behind the scenes",
+            "in the way",
+            "under control"
           ],
-          "answer": 3,
-          "explanation": "重要語: 【theres】\n文脈: 裏で糸を引いている人物がいると警察は言っている。"
+          "answer": 1,
+          "explanation": "重要語: 【behind the scenes】舞台裏で、黒幕として\n文脈: 警察によれば、黒幕として糸を引いている人物がいるとのことだ。"
         },
         {
           "id": "DUO_S33_Q398",
@@ -7812,18 +7812,18 @@
           "id": "DUO_S34_Q413",
           "global_id": 413,
           "type": "choice",
-          "sentence": "By and large, reporters don't hesitate to intrude on one's privacy.",
+          "sentence": "By and large, reporters don't ( ) to intrude on one's privacy.",
           "full_sentence": "By and large, reporters don't hesitate to intrude on one's privacy.",
           "translation": "概して、記者というものは個人のプライバシーを侵害することにためらいを感じない。",
-          "target_word": "dont",
+          "target_word": "hesitate",
           "options": [
-            "below",
-            "dents",
-            "dont",
-            "lots"
+            "hesitate",
+            "imitate",
+            "isolate",
+            "indicate"
           ],
-          "answer": 2,
-          "explanation": "重要語: 【dont】\n文脈: 概して、記者というものは個人のプライバシーを侵害することにためらいを感じない。"
+          "answer": 0,
+          "explanation": "重要語: 【hesitate】躊躇する、ためらう\n文脈: 概して記者は個人のプライバシーに踏み込むことを躊躇しない。"
         },
         {
           "id": "DUO_S34_Q414",
@@ -9327,18 +9327,18 @@
           "id": "DUO_S41_Q492",
           "global_id": 492,
           "type": "choice",
-          "sentence": "Quite a few people have been invited to celebrate the couple's anniversary.",
+          "sentence": "Quite a few people have been invited to celebrate the couple's ( ).",
           "full_sentence": "Quite a few people have been invited to celebrate the couple's anniversary.",
           "translation": "かなりの数の人々が、その夫婦の結婚記念のお祝いに招待されている。",
-          "target_word": "couples",
+          "target_word": "anniversary",
           "options": [
-            "offers",
-            "talked",
-            "noted",
-            "couples"
+            "anniversary",
+            "ceremony",
+            "conference",
+            "university"
           ],
-          "answer": 3,
-          "explanation": "重要語: 【couples】\n文脈: かなりの数の人々が、その夫婦の結婚記念のお祝いに招待されている。"
+          "answer": 0,
+          "explanation": "重要語: 【anniversary】記念日\n文脈: かなり多くの人々が、その夫妻の結婚記念日を祝うために招待された。"
         },
         {
           "id": "DUO_S41_Q493",
