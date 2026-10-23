@@ -583,7 +583,7 @@ class SceneQuiz:
         )
 
     def _draw_companion_footer(self, q_type: str = "choice"):
-        """相棒のセリフとアニメーション。"""
+        """相棒のセリフとタイムバー（速度ボーナスゲージ）。"""
         cy = 535 if q_type == "reorder" else 495
         pyxel.rect(15, cy, 290, 54, 0)
         pyxel.rectb(15, cy, 290, 54, 5)
@@ -599,17 +599,33 @@ class SceneQuiz:
             scale=1,
         )
 
-        # 行数に応じた上下完全中央揃え
-        lines = self.app.text.wrap_text(self.companion_say, max_width=220)
-        text_h = len(lines) * 16 + max(0, len(lines) - 1) * 2
-        ty = cy + (54 - text_h) // 2
+        # 速度ボーナス（10秒で0まで減衰）のリアルタイム計算
+        elapsed = time.time() - self.q_start_time
+        speed_bonus = max(0, int(30 - elapsed * 3))
+        display_bonus = speed_bonus * 3 if self.quiz_mode == "daily_duo" else speed_bonus
+        time_ratio = max(0.0, min(1.0, (10.0 - elapsed) / 10.0))
+
+        # 上段: 相棒のセリフ (y: cy + 8)
         self.app.text.draw_text(
             75,
-            ty,
+            cy + 8,
             self.companion_say,
             7,
             max_width=220,
-            line_spacing=2,
+        )
+
+        # 下段: タイムバー (x: 75〜215 幅140, y: cy + 32, 高さ10)
+        pyxel.rect(75, cy + 32, 140, 10, 0)
+        pyxel.rectb(75, cy + 32, 140, 10, 5)
+        bar_w = int(136 * time_ratio)
+        if bar_w > 0:
+            bar_col = 10 if speed_bonus > 15 else 12  # 残り半分以上なら金色、それ以降は水色
+            pyxel.rect(77, cy + 34, bar_w, 6, bar_col)
+
+        # ボーナス数値表示 (x: 222, y: cy + 31)
+        bonus_col = 10 if display_bonus > 0 else 5
+        self.app.text.draw_text_mini(
+            222, cy + 31, f"+{display_bonus}EXP" if display_bonus > 0 else "+0EXP", bonus_col
         )
 
     def _draw_feedback_modal(self):

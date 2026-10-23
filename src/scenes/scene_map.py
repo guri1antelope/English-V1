@@ -229,7 +229,7 @@ class SceneMap:
                 )
                 # 獲得報酬の明記 (PixelMplus 12pt)
                 self.app.text.draw_text_mini(
-                    18, ly + 48, "報酬: 1問100EXP+クリアでリンゴ2個(★3で+肉1個)", 10 if is_unlocked else 5
+                    18, ly + 48, "報酬: 1問100EXP+リンゴ2個 (★3で+肉1個)", 10 if is_unlocked else 5
                 )
 
                 if not is_unlocked:
@@ -300,7 +300,7 @@ class SceneMap:
                 self.app.text.draw_text_mini(18, ly + 30, s_range, 6)
                 # 獲得報酬の明記 (PixelMplus 12pt)
                 self.app.text.draw_text_mini(
-                    18, ly + 48, "報酬: 1問100EXP+クリアでリンゴ2個(★3で+肉1個)", 11 if is_cleared else 10
+                    18, ly + 48, "報酬: 1問100EXP+リンゴ2個 (★3で+肉1個)", 11 if is_cleared else 10
                 )
 
                 # ステータス
