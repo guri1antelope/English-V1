@@ -211,9 +211,12 @@ class SceneQuiz:
     def _handle_answering_click(self, mx: int, my: int):
         # 1. 音声ボタン (x: 214, y: 6, 幅46, 高30)
         if 212 <= mx <= 262 and 4 <= my <= 38:
-            audio_file = self.current_q.get("audio_file")
-            if audio_file:
-                self.app.audio.play_voice(audio_file)
+            audio_file = (
+                self.current_q.get("audio_file")
+                or f"{self.current_q.get('id', '')}.wav"
+            )
+            reading_text = self._get_reading_text(self.current_q)
+            self.app.audio.play_voice(audio_file, text=reading_text)
             return
 
         # 2. 要点あんちょこボタン (x: 266, y: 6, 幅46, 高30)
@@ -336,7 +339,17 @@ class SceneQuiz:
             self.app.storage.save_slot(self.app.current_slot, slot_data)
 
     def _handle_feedback_click(self, mx: int, my: int):
-        # 「つぎへすすむ」ボタン (x: 20, y: 550, 幅280, 高52)
+        # 1. 音声ボタン (x: 214, y: 6, 幅46, 高30) - 解説中も再聴可能
+        if 212 <= mx <= 262 and 4 <= my <= 38:
+            audio_file = (
+                self.current_q.get("audio_file")
+                or f"{self.current_q.get('id', '')}.wav"
+            )
+            reading_text = self._get_reading_text(self.current_q)
+            self.app.audio.play_voice(audio_file, text=reading_text)
+            return
+
+        # 2. 「つぎへすすむ」ボタン (x: 20, y: 550, 幅280, 高52)
         if 20 <= mx <= 300 and 550 <= my <= 602:
             self.app.audio.play_se("tap")
             if self.current_q_idx + 1 < len(self.questions):
@@ -439,6 +452,28 @@ class SceneQuiz:
             return ""
         import re
         return re.sub(r"(?<!\n)\s*(B[:：])", r"\n\1", text)
+
+    def _get_reading_text(self, q: dict) -> str:
+        """音声発音用の完全な英文を取得する。"""
+        if not q:
+            return ""
+        if q.get("full_sentence"):
+            return q["full_sentence"]
+
+        sentence = q.get("sentence", "")
+        q_type = q.get("type", "choice")
+        if q_type == "choice":
+            options = q.get("options", [])
+            ans = q.get("answer", 0)
+            if options and 0 <= ans < len(options):
+                return sentence.replace("( )", options[ans])
+        elif q_type == "reorder":
+            options = q.get("options", [])
+            ans_order = q.get("answer", [])
+            if options and ans_order:
+                words = [options[i] for i in ans_order if 0 <= i < len(options)]
+                return sentence.replace("( )", " ".join(words))
+        return sentence
 
     def _get_translation_geometry(self) -> tuple[int, int]:
         """和訳ヒントポップアップの表示位置と高さを動的計算する。"""

@@ -109,34 +109,61 @@ class AudioEngine:
         if snd_id is not None:
             pyxel.play(0, snd_id)
 
-    def play_voice(self, filename: str):
-        """事前生成された英語音声（WAV/MP3）を再生。"""
-        if not self.voice_enabled or not filename:
+    def play_voice(self, filename: str | None = None, text: str | None = None):
+        """英語音声を再生。
+
+        WAVファイルが存在すればWAVを再生し、
+        未生成または再生失敗時はWeb Speech API（ブラウザ標準英語ネイティブ音声）でフォールバック。
+        """
+        if not self.voice_enabled:
+            return
+        if not filename and not text:
             return
 
-        filepath = os.path.join(self.voices_dir, filename)
+        filepath = os.path.join(self.voices_dir, filename) if filename else None
 
         # 1. Webブラウザ環境
         if IS_WEB:
             try:
-                # 単一Audioインスタンス再利用＆フォールバック付き再生
+                import json
+
+                text_json = json.dumps(text or "")
+                file_rel = f"assets/voices/{filename}" if filename else ""
+                file_app = f"app/assets/voices/{filename}" if filename else ""
+
                 js_code = (
                     "(function() {"
                     "if (!window._eikenVoiceAudio) { window._eikenVoiceAudio = new Audio(); }"
                     "const audio = window._eikenVoiceAudio;"
                     "audio.pause();"
                     "audio.currentTime = 0;"
+                    "const fallbackText = " + text_json + ";"
+                    "const speakFallback = function() {"
+                    "  if (fallbackText && window.speechSynthesis) {"
+                    "    window.speechSynthesis.cancel();"
+                    "    const u = new SpeechSynthesisUtterance(fallbackText);"
+                    "    u.lang = 'en-US';"
+                    "    u.rate = 0.95;"
+                    "    window.speechSynthesis.speak(u);"
+                    "  }"
+                    "};"
+                    "const wavFile = " + json.dumps(file_rel) + ";"
+                    "const wavFallback = " + json.dumps(file_app) + ";"
+                    "if (!wavFile) {"
+                    "  speakFallback();"
+                    "  return;"
+                    "}"
                     "const playWith = function(u, fb) {"
                     "  audio.src = u;"
                     "  const p = audio.play();"
                     "  if (p && p.catch) {"
                     "    p.catch(function(e) {"
                     "      if (fb) { playWith(fb, null); }"
-                    "      else { console.warn('[Eiken Audio] Play failed:', e); }"
+                    "      else { speakFallback(); }"
                     "    });"
                     "  }"
                     "};"
-                    f"playWith('assets/voices/{filename}', 'app/assets/voices/{filename}');"
+                    "playWith(wavFile, wavFallback);"
                     "})();"
                 )
                 js.eval(js_code)
@@ -145,7 +172,7 @@ class AudioEngine:
             return
 
         # 2. PC環境
-        if PYGAME_AVAILABLE and os.path.exists(filepath):
+        if filepath and PYGAME_AVAILABLE and os.path.exists(filepath):
             try:
                 pygame.mixer.music.load(filepath)
                 pygame.mixer.music.play()
