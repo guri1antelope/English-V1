@@ -233,12 +233,16 @@ class SceneMap:
                 )
 
                 if not is_unlocked:
-                    self.app.text.draw_text(244, ly + 26, "🔒ロック", 5)
+                    status_str = "🔒ロック"
+                    status_col = 5
                 elif is_cleared:
-                    star_str = "★" * stars + "☆" * (3 - stars)
-                    self.app.text.draw_text(244, ly + 26, star_str, 10)
+                    status_str = "★" * stars + "☆" * (3 - stars)
+                    status_col = 10
                 else:
-                    self.app.text.draw_text(244, ly + 26, "未クリア", 12)
+                    status_str = "未クリア"
+                    status_col = 12
+                sw = self.app.text.measure_text_width(status_str)
+                self.app.text.draw_text(294 - sw, ly + 26, status_str, status_col)
 
         else:
             # DUOモード
@@ -303,12 +307,11 @@ class SceneMap:
                     18, ly + 48, "報酬: 1問100EXP+リンゴ2個 (★3で+肉1個)", 11 if is_cleared else 10
                 )
 
-                # ステータス
+                # ステータス（クリア時のみ右余白16pxで星を表示、未クリア時は非表示）
                 if is_cleared:
                     star_str = "★" * stars + "☆" * (3 - stars)
-                    self.app.text.draw_text(244, ly + 26, star_str, 10)
-                else:
-                    self.app.text.draw_text(244, ly + 26, "自由挑戦", 11)
+                    sw = self.app.text.measure_text_width(star_str)
+                    self.app.text.draw_text(294 - sw, ly + 26, star_str, 10)
 
         # フッター帯（スクロール内容が下部に漏れないようにマスク）
         pyxel.rect(0, 565, 320, 75, 1)

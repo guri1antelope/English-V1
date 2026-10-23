@@ -278,14 +278,14 @@ class SceneQuiz:
 
     def _judge_choice(self, chosen_idx: int):
         elapsed = time.time() - self.q_start_time
-        speed_bonus = max(0, int(30 - elapsed * 3))
+        speed_bonus = max(0, int(30 - elapsed * 1.5))
 
         is_correct = chosen_idx == self.current_correct_idx
         self._record_result(is_correct, speed_bonus)
 
     def _judge_reorder(self):
         elapsed = time.time() - self.q_start_time
-        speed_bonus = max(0, int(30 - elapsed * 3))
+        speed_bonus = max(0, int(30 - elapsed * 1.5))
 
         chosen_order = [orig_i for orig_i, w in self.selected_words]
         correct_order = self.current_q.get("answer", [])
@@ -599,11 +599,11 @@ class SceneQuiz:
             scale=1,
         )
 
-        # 速度ボーナス（10秒で0まで減衰）のリアルタイム計算
+        # 速度ボーナス（20秒で0まで減衰）のリアルタイム計算
         elapsed = time.time() - self.q_start_time
-        speed_bonus = max(0, int(30 - elapsed * 3))
+        speed_bonus = max(0, int(30 - elapsed * 1.5))
         display_bonus = speed_bonus * 3 if self.quiz_mode == "daily_duo" else speed_bonus
-        time_ratio = max(0.0, min(1.0, (10.0 - elapsed) / 10.0))
+        time_ratio = max(0.0, min(1.0, (20.0 - elapsed) / 20.0))
 
         # 上段: 相棒のセリフ (y: cy + 8)
         self.app.text.draw_text(
