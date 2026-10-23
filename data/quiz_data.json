@@ -1590,13 +1590,19 @@
         {
           "id": "L09_Q009",
           "type": "reorder",
-          "sentence": "If it ( ) fine tomorrow, we will go on a picnic.",
+          "sentence": "( ) tomorrow, we will go on a picnic.",
           "translation": "もし明日晴れれば、私たちはピクニックに行きます。",
           "options": [
-            "is"
+            "If",
+            "it",
+            "is",
+            "fine"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2,
+            3
           ],
           "explanation": "時や条件を表す副詞節の中では、未来のことでも現在形（is）を使います。",
           "audio_file": "L09_Q009.wav"
@@ -1604,13 +1610,19 @@
         {
           "id": "L09_Q010",
           "type": "reorder",
-          "sentence": "I will call you as soon as I ( ) the airport.",
+          "sentence": "I will call you as soon as ( ).",
           "translation": "空港に到着したらすぐにあなたに電話します。",
           "options": [
-            "reach"
+            "I",
+            "reach",
+            "the",
+            "airport"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2,
+            3
           ],
           "explanation": "as soon as（〜するとすぐに）が導く時を表す副詞節の中では、未来の動作でも現在形 reach を用います。",
           "audio_file": "L09_Q010.wav"
@@ -2042,13 +2054,17 @@
         {
           "id": "L12_Q002",
           "type": "reorder",
-          "sentence": "If I ( ) you, I would take that opportunity immediately.",
+          "sentence": "( ) you, I would take that opportunity immediately.",
           "translation": "もし私があなたなら、すぐにそのチャンスを掴むだろう。",
           "options": [
+            "If",
+            "I",
             "were"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2
           ],
           "explanation": "仮定法過去の条件節の be動詞は、主語が I や単数でも were を使うのが原則です。",
           "audio_file": "L12_Q002.wav"
@@ -2074,13 +2090,19 @@
         {
           "id": "L12_Q004",
           "type": "reorder",
-          "sentence": "I wish I ( ) speak English more fluently.",
+          "sentence": "I wish ( ) more fluently.",
           "translation": "英語をもっと流暢に話せたらいいのになあ。",
           "options": [
-            "could"
+            "I",
+            "could",
+            "speak",
+            "English"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2,
+            3
           ],
           "explanation": "現在の願望を表す I wish の後ろは仮定法過去（could speak）になります。",
           "audio_file": "L12_Q004.wav"
@@ -2124,13 +2146,21 @@
         {
           "id": "L12_Q007",
           "type": "reorder",
-          "sentence": "If it ( ) not for water, no living things could survive.",
+          "sentence": "( ) water, no living things could survive.",
           "translation": "もし水がなければ、いかなる生物も生存できないだろう。",
           "options": [
-            "were"
+            "If",
+            "it",
+            "were",
+            "not",
+            "for"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2,
+            3,
+            4
           ],
           "explanation": "If it were not for 〜 で「もし（今）〜がなければ」という重要定型表現です。",
           "audio_file": "L12_Q007.wav"
@@ -2156,13 +2186,19 @@
         {
           "id": "L12_Q009",
           "type": "reorder",
-          "sentence": "He talks as if he ( ) everything about the project.",
+          "sentence": "He talks ( ) everything about the project.",
           "translation": "彼はまるでそのプロジェクトについて何でも知っているかのように話す。",
           "options": [
+            "as",
+            "if",
+            "he",
             "knew"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2,
+            3
           ],
           "explanation": "as if + 仮定法過去 で「まるで〜であるかのように」を表します。",
           "audio_file": "L12_Q009.wav"
@@ -2170,13 +2206,17 @@
         {
           "id": "L12_Q010",
           "type": "reorder",
-          "sentence": "If I ( ) rich, I would travel around the world.",
+          "sentence": "( ) rich, I would travel around the world.",
           "translation": "もし私が大金持ちなら、世界中を旅するだろう。",
           "options": [
+            "If",
+            "I",
             "were"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2
           ],
           "explanation": "現在の事実に反する仮定法過去なので were です。",
           "audio_file": "L12_Q010.wav"
@@ -2220,13 +2260,17 @@
         {
           "id": "L13_Q002",
           "type": "reorder",
-          "sentence": "I clearly remember ( ) hands with the president.",
+          "sentence": "I clearly ( ) with the president.",
           "translation": "私は大統領と握手したことを鮮明に覚えている。",
           "options": [
-            "shaking"
+            "remember",
+            "shaking",
+            "hands"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2
           ],
           "explanation": "過去にしたことを「〜したことを覚えている」は remember doing（動名詞）です。",
           "audio_file": "L13_Q002.wav"
@@ -2250,13 +2294,17 @@
         {
           "id": "L13_Q004",
           "type": "reorder",
-          "sentence": "Would you mind ( ) the window? It's a bit cold.",
+          "sentence": "Would ( ) the window? It's a bit cold.",
           "translation": "窓を閉めていただけませんか？少し寒いです。",
           "options": [
+            "you",
+            "mind",
             "closing"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2
           ],
           "explanation": "mind は動名詞のみを目的語に取るので mind closing です。",
           "audio_file": "L13_Q004.wav"
@@ -2264,13 +2312,17 @@
         {
           "id": "L13_Q005",
           "type": "reorder",
-          "sentence": "He gave up ( ) smoking after talking to his doctor.",
+          "sentence": "He ( ) after talking to his doctor.",
           "translation": "彼は医師と話した後、タバコを吸うのを諦めた（禁煙した）。",
           "options": [
+            "gave",
+            "up",
             "smoking"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2
           ],
           "explanation": "give up は前置詞で終わる句動詞であり、動名詞（smoking）を取ります。",
           "audio_file": "L13_Q005.wav"
@@ -2342,13 +2394,21 @@
         {
           "id": "L13_Q010",
           "type": "reorder",
-          "sentence": "We are looking forward to ( ) part in the festival.",
+          "sentence": "We are ( ) in the festival.",
           "translation": "私たちはその祭りに参加するのを楽しみに待っている。",
           "options": [
-            "taking"
+            "looking",
+            "forward",
+            "to",
+            "taking",
+            "part"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2,
+            3,
+            4
           ],
           "explanation": "look forward to の to は前置詞なので、後ろは動名詞 taking になります。",
           "audio_file": "L13_Q010.wav"
@@ -2375,13 +2435,15 @@
         {
           "id": "L14_Q001",
           "type": "reorder",
-          "sentence": "( ) sick, she decided to stay home from school.",
+          "sentence": "( ), she decided to stay home from school.",
           "translation": "気分が悪かったので、彼女は学校を休んで家にいることにした。",
           "options": [
-            "Feeling"
+            "Feeling",
+            "sick"
           ],
           "answer": [
-            0
+            0,
+            1
           ],
           "explanation": "Because she felt sick を分詞構文にすると Feeling sick となります。",
           "audio_file": "L14_Q001.wav"
@@ -2421,13 +2483,19 @@
         {
           "id": "L14_Q004",
           "type": "reorder",
-          "sentence": "( ) in easy Japanese, this guidebook is suitable for foreigners.",
+          "sentence": "( ), this guidebook is suitable for foreigners.",
           "translation": "平易な日本語で書かれているので、このガイドブックは外国人に適している。",
           "options": [
-            "Written"
+            "Written",
+            "in",
+            "easy",
+            "Japanese"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2,
+            3
           ],
           "explanation": "ガイドブックが「書かれている（受動態）」なので、過去分詞 Written から始まります。",
           "audio_file": "L14_Q004.wav"
@@ -2435,13 +2503,15 @@
         {
           "id": "L14_Q005",
           "type": "reorder",
-          "sentence": "( ) speaking, Japanese students are very polite and quiet.",
+          "sentence": "( ), Japanese students are very polite and quiet.",
           "translation": "一般的に言えば、日本の学生はとても礼儀正しく静かだ。",
           "options": [
-            "Generally"
+            "Generally",
+            "speaking"
           ],
           "answer": [
-            0
+            0,
+            1
           ],
           "explanation": "Generally speaking で「一般的に言えば」という頻出の独立分詞構文です。",
           "audio_file": "L14_Q005.wav"
@@ -2449,13 +2519,17 @@
         {
           "id": "L14_Q006",
           "type": "reorder",
-          "sentence": "He sat on the bench, ( ) the sunset over the sea.",
+          "sentence": "He sat on the bench, ( ) over the sea.",
           "translation": "彼は海に沈む夕日を眺めながら、ベンチに座っていた。",
           "options": [
-            "watching"
+            "watching",
+            "the",
+            "sunset"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2
           ],
           "explanation": "「〜しながら」という付帯状況を表す分詞構文 watching です。",
           "audio_file": "L14_Q006.wav"
@@ -2463,13 +2537,21 @@
         {
           "id": "L14_Q007",
           "type": "reorder",
-          "sentence": "( ) all things into consideration, we decided to cancel the trip.",
+          "sentence": "( ), we decided to cancel the trip.",
           "translation": "すべてのことを考慮に入れて、私たちは旅行を中止することに決めた。",
           "options": [
-            "Taking"
+            "Taking",
+            "all",
+            "things",
+            "into",
+            "consideration"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2,
+            3,
+            4
           ],
           "explanation": "Taking all things into consideration で「すべてのことを考慮すると」という決まり文句です。",
           "audio_file": "L14_Q007.wav"
@@ -2477,13 +2559,19 @@
         {
           "id": "L14_Q008",
           "type": "reorder",
-          "sentence": "( ) from his accent, he must be from Australia.",
+          "sentence": "( ), he must be from Australia.",
           "translation": "彼のアクセント（訛り）から判断すると、彼はオーストラリア出身に違いない。",
           "options": [
-            "Judging"
+            "Judging",
+            "from",
+            "his",
+            "accent"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2,
+            3
           ],
           "explanation": "Judging from 〜 で「〜から判断すると」という独立分詞構文です。",
           "audio_file": "L14_Q008.wav"
@@ -2491,13 +2579,15 @@
         {
           "id": "L14_Q009",
           "type": "reorder",
-          "sentence": "Weather ( ), we will hold the sports festival outside.",
+          "sentence": "( ), we will hold the sports festival outside.",
           "translation": "天気が許せば、私たちは運動会を外で開催します。",
           "options": [
+            "Weather",
             "permitting"
           ],
           "answer": [
-            0
+            0,
+            1
           ],
           "explanation": "Weather permitting で「天気が許せば」という慣用表現です。",
           "audio_file": "L14_Q009.wav"
@@ -2694,13 +2784,19 @@
         {
           "id": "L15_Q009",
           "type": "reorder",
-          "sentence": "That is ( ) he became friends with the famous singer.",
+          "sentence": "That is ( ) with the famous singer.",
           "translation": "そのようにして彼はその有名な歌手と友人になったのだ。",
           "options": [
-            "how"
+            "how",
+            "he",
+            "became",
+            "friends"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2,
+            3
           ],
           "explanation": "That is how 〜 で「そのようにして〜した、そうやって〜した」という重要表現です。",
           "audio_file": "L15_Q009.wav"
@@ -2708,13 +2804,21 @@
         {
           "id": "L15_Q010",
           "type": "reorder",
-          "sentence": "I met a boy ( ) father is a pilot.",
+          "sentence": "I met a boy ( ).",
           "translation": "私は父親がパイロットをしている少年に会った。",
           "options": [
-            "whose"
+            "whose",
+            "father",
+            "is",
+            "a",
+            "pilot"
           ],
           "answer": [
-            0
+            0,
+            1,
+            2,
+            3,
+            4
           ],
           "explanation": "「その少年の父親」という所有格の関係を表すので whose father となります。",
           "audio_file": "L15_Q010.wav"
