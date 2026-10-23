@@ -1,0 +1,23 @@
+# 内部専用リソース（原本写真・元テキスト・検証スクショ・生成ツール等）
+_dev_internal/
+web_dist/
+
+# 重いファイル・個別拡張子
+*.HEIC
+*.log
+*.tmp
+Thumbs.db
+.DS_Store
+
+# Python キャッシュ
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 環境変数・シークレット
+.env
+.env.*
+
+# エディタ設定
+.vscode/
+.idea/

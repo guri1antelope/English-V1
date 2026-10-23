@@ -1,0 +1,3924 @@
+{
+  "app_title": "目指せ英検準2級",
+  "areas": [
+    {
+      "id": 1,
+      "name": "単語・熟語",
+      "name_en": "Vocabulary & Idioms",
+      "description": "準2級頻出の名詞・動詞・形容詞・熟語を完全マスター！"
+    },
+    {
+      "id": 2,
+      "name": "英文法マスター",
+      "name_en": "Grammar Master",
+      "description": "並び替え問題で関係詞・仮定法・時制などの文法を攻略！"
+    },
+    {
+      "id": 3,
+      "name": "会話表現",
+      "name_en": "Daily Conversations",
+      "description": "日常会話・道案内・電話応対などの対話文を完成させよう！"
+    },
+    {
+      "id": 4,
+      "name": "実力テスト",
+      "name_en": "Mock Exams",
+      "description": "本番形式の総合テストで実力を判定しよう！"
+    }
+  ],
+  "lessons": [
+    {
+      "id": 1,
+      "area_id": 1,
+      "title": "Lesson 01: 重要名詞①",
+      "format": "choice",
+      "cheat_sheet": {
+        "title": "重要名詞のポイント",
+        "points": [
+          "experience: 経験（仕事や学習など）",
+          "technology: 科学技術（ITや産業）",
+          "distance: 距離（from A to B）",
+          "variety: 多様性、種類（a variety of 〜）",
+          "ceremony: 式典（卒業式、結婚式など）",
+          "passenger: 乗客（電車、バス、飛行機）",
+          "scientist: 科学者",
+          "volunteer: ボランティア（自発的な奉仕）"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L01_Q001",
+          "type": "choice",
+          "sentence": "He gained a lot of valuable ( ) while working at the hospital.",
+          "translation": "彼は病院で働いている間に多くの貴重な経験を得た。",
+          "options": [
+            "experience",
+            "distance",
+            "ceremony",
+            "variety"
+          ],
+          "answer": 0,
+          "explanation": "文脈から「貴重な経験」を表す experience が適切。distance は距離、ceremony は儀式、variety は多様性。",
+          "audio_file": "L01_Q001.wav"
+        },
+        {
+          "id": "L01_Q002",
+          "type": "choice",
+          "sentence": "Modern ( ) makes it possible to communicate with people all over the world.",
+          "translation": "現代の科学技術により、世界中の人々と連絡を取ることが可能になっている。",
+          "options": [
+            "technology",
+            "passenger",
+            "customer",
+            "household"
+          ],
+          "answer": 0,
+          "explanation": "Modern technology（現代の科学技術）が文脈に合致します。passenger は乗客、customer は客。",
+          "audio_file": "L01_Q002.wav"
+        },
+        {
+          "id": "L01_Q003",
+          "type": "choice",
+          "sentence": "The train was delayed, so the ( ) had to wait on the platform for an hour.",
+          "translation": "電車が遅延したため、乗客たちはプラットホームで1時間待たなければならなかった。",
+          "options": [
+            "passengers",
+            "scientists",
+            "officers",
+            "volunteers"
+          ],
+          "answer": 0,
+          "explanation": "電車を待つ人々なので passengers（乗客たち）が正解。officers は役人・警官。",
+          "audio_file": "L01_Q003.wav"
+        },
+        {
+          "id": "L01_Q004",
+          "type": "choice",
+          "sentence": "The store sells a wide ( ) of fresh fruits and vegetables.",
+          "translation": "その店は多種多様な新鮮な果物と野菜を販売している。",
+          "options": [
+            "variety",
+            "distance",
+            "temperature",
+            "lecture"
+          ],
+          "answer": 0,
+          "explanation": "a wide variety of 〜 で「多種多様な〜」という頻出の重要イディオムです。",
+          "audio_file": "L01_Q004.wav"
+        },
+        {
+          "id": "L01_Q005",
+          "type": "choice",
+          "sentence": "The ( ) between Tokyo and Osaka is about 500 kilometers.",
+          "translation": "東京と大阪の間の距離は約500キロメートルです。",
+          "options": [
+            "distance",
+            "experience",
+            "industry",
+            "activity"
+          ],
+          "answer": 0,
+          "explanation": "キロメートルで表される2地点の間隔なので distance（距離）が正解。",
+          "audio_file": "L01_Q005.wav"
+        },
+        {
+          "id": "L01_Q006",
+          "type": "choice",
+          "sentence": "Many ( ) helped clean up the beach after the festival.",
+          "translation": "祭りの後、多くのボランティアが海岸の清掃を手伝った。",
+          "options": [
+            "volunteers",
+            "satellites",
+            "instruments",
+            "advertisements"
+          ],
+          "answer": 0,
+          "explanation": "清掃活動を無償で手伝う人々なので volunteers が適切。satellites は人工衛星。",
+          "audio_file": "L01_Q006.wav"
+        },
+        {
+          "id": "L01_Q007",
+          "type": "choice",
+          "sentence": "The graduation ( ) will start at ten o'clock tomorrow morning.",
+          "translation": "卒業式典は明日の朝10時に始まります。",
+          "options": [
+            "ceremony",
+            "moment",
+            "sign",
+            "skill"
+          ],
+          "answer": 0,
+          "explanation": "graduation ceremony で「卒業式」を表します。moment は瞬間、skill は技術。",
+          "audio_file": "L01_Q007.wav"
+        },
+        {
+          "id": "L01_Q008",
+          "type": "choice",
+          "sentence": "The car ( ) plays a very important role in Japan's economy.",
+          "translation": "自動車産業は日本経済において極めて重要な役割を果たしている。",
+          "options": [
+            "industry",
+            "aquarium",
+            "agency",
+            "lecture"
+          ],
+          "answer": 0,
+          "explanation": "car industry で「自動車産業」となります。aquarium は水族館。",
+          "audio_file": "L01_Q008.wav"
+        },
+        {
+          "id": "L01_Q009",
+          "type": "choice",
+          "sentence": "She has a special ( ) for playing the piano with her eyes closed.",
+          "translation": "彼女には目を閉じてピアノを弾く特別な技術がある。",
+          "options": [
+            "skill",
+            "distance",
+            "customer",
+            "satellite"
+          ],
+          "answer": 0,
+          "explanation": "ピアノを弾く能力・腕前なので skill（技能・技術）が正解。",
+          "audio_file": "L01_Q009.wav"
+        },
+        {
+          "id": "L01_Q010",
+          "type": "choice",
+          "sentence": "Please pay attention to the warning ( ) by the river.",
+          "translation": "川のそばにある警告の標識に注意してください。",
+          "options": [
+            "sign",
+            "variety",
+            "passenger",
+            "ceremony"
+          ],
+          "answer": 0,
+          "explanation": "warning sign で「警告標識・看板」を表します。",
+          "audio_file": "L01_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "area_id": 1,
+      "title": "Lesson 02: 重要名詞②（抽象名詞・熟語表現）",
+      "format": "choice",
+      "cheat_sheet": {
+        "title": "名詞を含む重要成句",
+        "points": [
+          "in shape: 体調が良い（keep in shape）",
+          "for sale: 売り物の",
+          "at risk: 危機に瀕して（at risk of 〜）",
+          "in danger: 危険な状態で",
+          "as a result: 結果として",
+          "none of your business: 余計なお世話",
+          "patience: 忍耐（with patience = patiently）",
+          "talent: 才能（have a talent for 〜）"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L02_Q001",
+          "type": "choice",
+          "sentence": "He exercises every morning to keep himself in good ( ).",
+          "translation": "彼は体調を良好に保つために毎朝運動している。",
+          "options": [
+            "shape",
+            "case",
+            "mind",
+            "addition"
+          ],
+          "answer": 0,
+          "explanation": "keep in good shape で「体調・体型を良好に保つ」という成句です。",
+          "audio_file": "L02_Q001.wav"
+        },
+        {
+          "id": "L02_Q002",
+          "type": "choice",
+          "sentence": "Many wild animals are at ( ) of becoming extinct.",
+          "translation": "多くの野生動物が絶滅の危機に瀕している。",
+          "options": [
+            "risk",
+            "last",
+            "loss",
+            "danger"
+          ],
+          "answer": 0,
+          "explanation": "at risk of 〜 で「〜の危険・危機に瀕して」となります（at risk of extinction）。",
+          "audio_file": "L02_Q002.wav"
+        },
+        {
+          "id": "L02_Q003",
+          "type": "choice",
+          "sentence": "Teaching young children requires a great deal of ( ).",
+          "translation": "幼い子どもたちを教えることには、多大な忍耐が必要とされる。",
+          "options": [
+            "patience",
+            "emotion",
+            "talent",
+            "importance"
+          ],
+          "answer": 0,
+          "explanation": "忍耐強く教えることなので patience（忍耐・辛抱）が正解。talent は才能。",
+          "audio_file": "L02_Q003.wav"
+        },
+        {
+          "id": "L02_Q004",
+          "type": "choice",
+          "sentence": "She has an extraordinary ( ) for playing classical guitar.",
+          "translation": "彼女にはクラシックギターを弾く並外れた才能がある。",
+          "options": [
+            "talent",
+            "distress",
+            "charge",
+            "addition"
+          ],
+          "answer": 0,
+          "explanation": "have a talent for 〜 で「〜の才能がある」を表します。",
+          "audio_file": "L02_Q004.wav"
+        },
+        {
+          "id": "L02_Q005",
+          "type": "choice",
+          "sentence": "He didn't study hard, and as a ( ), he failed the examination.",
+          "translation": "彼は熱心に勉強せず、その結果として試験に落ちてしまった。",
+          "options": [
+            "result",
+            "shape",
+            "trouble",
+            "danger"
+          ],
+          "answer": 0,
+          "explanation": "as a result で「結果として」という重要接続表現です。",
+          "audio_file": "L02_Q005.wav"
+        },
+        {
+          "id": "L02_Q006",
+          "type": "choice",
+          "sentence": "Is that beautiful painting on the wall for ( )?",
+          "translation": "壁にかかっているあの美しい絵は売り物ですか？",
+          "options": [
+            "sale",
+            "market",
+            "price",
+            "business"
+          ],
+          "answer": 0,
+          "explanation": "for sale で「売り物の」を表します（on sale だと特売中）。",
+          "audio_file": "L02_Q006.wav"
+        },
+        {
+          "id": "L02_Q007",
+          "type": "choice",
+          "sentence": "The doctor listened to the patient's story with ( ).",
+          "translation": "医師は患者の話を注意深く（配慮をもって）聞いた。",
+          "options": [
+            "care",
+            "ease",
+            "luck",
+            "money"
+          ],
+          "answer": 0,
+          "explanation": "with care で「注意深く、慎重に（= carefully）」となります。",
+          "audio_file": "L02_Q007.wav"
+        },
+        {
+          "id": "L02_Q008",
+          "type": "choice",
+          "sentence": "She solved the difficult math problem with ( ).",
+          "translation": "彼女はその難しい数学の問題を難なく（容易に）解いた。",
+          "options": [
+            "ease",
+            "risk",
+            "pain",
+            "danger"
+          ],
+          "answer": 0,
+          "explanation": "with ease で「容易に、たやすく（= easily）」という意味です。",
+          "audio_file": "L02_Q008.wav"
+        },
+        {
+          "id": "L02_Q009",
+          "type": "choice",
+          "sentence": "We had a lot of ( ) finding the hotel in the dark.",
+          "translation": "私たちは暗闇の中でホテルを見つけるのにとても苦労した。",
+          "options": [
+            "trouble",
+            "result",
+            "shape",
+            "sale"
+          ],
+          "answer": 0,
+          "explanation": "have trouble doing で「〜するのに苦労する」という定型表現です。",
+          "audio_file": "L02_Q009.wav"
+        },
+        {
+          "id": "L02_Q010",
+          "type": "choice",
+          "sentence": "I ran into my old teacher on the ( ) to the library.",
+          "translation": "私は図書館へ行く途中で昔の先生に偶然出会った。",
+          "options": [
+            "way",
+            "road",
+            "street",
+            "path"
+          ],
+          "answer": 0,
+          "explanation": "on the way to 〜 で「〜へ行く途中で」を表します。",
+          "audio_file": "L02_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "area_id": 1,
+      "title": "Lesson 03: 重要動詞①",
+      "format": "choice",
+      "cheat_sheet": {
+        "title": "許す・避ける・飾る等の動詞",
+        "points": [
+          "accept: 受け入れる（招待・申し出）",
+          "allow: 許可する（allow 人 to do）",
+          "recognize: 見覚えがある、認識する",
+          "avoid: 避ける（avoid -ing）",
+          "deny: 否定する（deny -ing）",
+          "pretend: 〜のふりをする（pretend to be 〜）",
+          "praise: ほめる（praise 人 for 〜）",
+          "recover: 回復する（recover from illness）"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L03_Q001",
+          "type": "choice",
+          "sentence": "I haven't seen Ken for ten years, so I couldn't ( ) him at first.",
+          "translation": "ケンと10年間会っていなかったので、最初彼だと分からなかった（認識できなかった）。",
+          "options": [
+            "recognize",
+            "accept",
+            "impress",
+            "view"
+          ],
+          "answer": 0,
+          "explanation": "人を見て誰だか分かる・認識するという意味では recognize が正解。",
+          "audio_file": "L03_Q001.wav"
+        },
+        {
+          "id": "L03_Q002",
+          "type": "choice",
+          "sentence": "She finally decided to ( ) the job offer from the international firm.",
+          "translation": "彼女はついに国際的な企業からの採用の申し出を受け入れることに決めた。",
+          "options": [
+            "accept",
+            "refuse",
+            "avoid",
+            "pretend"
+          ],
+          "answer": 0,
+          "explanation": "job offer（仕事のオファー）を「受け入れる」ので accept が適切。",
+          "audio_file": "L03_Q002.wav"
+        },
+        {
+          "id": "L03_Q003",
+          "type": "choice",
+          "sentence": "My parents will not ( ) me to travel abroad by myself.",
+          "translation": "両親は私が一人で海外旅行することを許してくれないだろう。",
+          "options": [
+            "allow",
+            "deny",
+            "praise",
+            "decorate"
+          ],
+          "answer": 0,
+          "explanation": "allow + 人 + to do で「人が〜するのを許可する・許す」となります。",
+          "audio_file": "L03_Q003.wav"
+        },
+        {
+          "id": "L03_Q004",
+          "type": "choice",
+          "sentence": "You should leave early in the morning to ( ) heavy traffic.",
+          "translation": "激しい交通渋滞を避けるために、朝早く出発すべきだ。",
+          "options": [
+            "avoid",
+            "pretend",
+            "damage",
+            "borrow"
+          ],
+          "answer": 0,
+          "explanation": "traffic（交通渋滞や事故）を「避ける」には avoid が適切です。",
+          "audio_file": "L03_Q004.wav"
+        },
+        {
+          "id": "L03_Q005",
+          "type": "choice",
+          "sentence": "The little boy ( ) to be asleep when his mother entered the bedroom.",
+          "translation": "その幼い男の子は母親が寝室に入ってきたとき、眠っているふりをした。",
+          "options": [
+            "pretended",
+            "denied",
+            "included",
+            "punished"
+          ],
+          "answer": 0,
+          "explanation": "pretend to be 〜 で「〜のふりをする」という意味になります。",
+          "audio_file": "L03_Q005.wav"
+        },
+        {
+          "id": "L03_Q006",
+          "type": "choice",
+          "sentence": "The teacher ( ) the student for his excellent essay on science.",
+          "translation": "先生はその生徒の優れた科学の小論文をほめた。",
+          "options": [
+            "praised",
+            "punished",
+            "damaged",
+            "borrowed"
+          ],
+          "answer": 0,
+          "explanation": "praise 人 for 〜 で「〜の理由で人をほめる」を表します。",
+          "audio_file": "L03_Q006.wav"
+        },
+        {
+          "id": "L03_Q007",
+          "type": "choice",
+          "sentence": "It took him nearly three weeks to completely ( ) from the flu.",
+          "translation": "彼がインフルエンザから完全に回復するのに3週間近くかかった。",
+          "options": [
+            "recover",
+            "rescue",
+            "miss",
+            "raise"
+          ],
+          "answer": 0,
+          "explanation": "recover from 〜 で「病気やケガから回復する」となります。",
+          "audio_file": "L03_Q007.wav"
+        },
+        {
+          "id": "L03_Q008",
+          "type": "choice",
+          "sentence": "The suspect firmly ( ) taking any money from the desk.",
+          "translation": "容疑者は机から金を取ったことをきっぱりと否定した。",
+          "options": [
+            "denied",
+            "accepted",
+            "decorated",
+            "allowed"
+          ],
+          "answer": 0,
+          "explanation": "deny -ing で「〜したことを否定する」という意味です。",
+          "audio_file": "L03_Q008.wav"
+        },
+        {
+          "id": "L03_Q009",
+          "type": "choice",
+          "sentence": "They spent the whole afternoon ( ) the Christmas tree with lights.",
+          "translation": "彼らは午後のすべてを、電飾でクリスマスツリーを飾ることに費やした。",
+          "options": [
+            "decorating",
+            "excluding",
+            "punishing",
+            "renting"
+          ],
+          "answer": 0,
+          "explanation": "decorate A with B で「AをBで装飾する・飾る」となります。",
+          "audio_file": "L03_Q009.wav"
+        },
+        {
+          "id": "L03_Q010",
+          "type": "choice",
+          "sentence": "The company decided to ( ) three new software engineers next month.",
+          "translation": "会社は来月、3人の新しいソフトウェア技術者を雇うことを決めた。",
+          "options": [
+            "hire",
+            "damage",
+            "lend",
+            "borrow"
+          ],
+          "answer": 0,
+          "explanation": "新しい従業員を「雇う」には hire（または employ）が正解。",
+          "audio_file": "L03_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "area_id": 1,
+      "title": "Lesson 04: 重要動詞②（頻出の群動詞）",
+      "format": "choice",
+      "cheat_sheet": {
+        "title": "超頻出の群動詞フレーズ",
+        "points": [
+          "take place: 起こる、開催される",
+          "take part in: に参加する（= participate in）",
+          "take after: に似ている（親に似る）",
+          "come across: に偶然出会う・見つける",
+          "come up with: （アイデアなどを）思いつく",
+          "get along with: と仲良くやっていく",
+          "get over: を克服する、乗り越える",
+          "put off: を延期する（= postpone）",
+          "put up with: を我慢する（= tolerate）",
+          "look forward to: を楽しみに待つ（toは前置詞なので動詞-ing）"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L04_Q001",
+          "type": "choice",
+          "sentence": "The Olympic Games ( ) every four years in a different city.",
+          "translation": "オリンピック競技大会は4年ごとに異なる都市で開催される。",
+          "options": [
+            "take place",
+            "take off",
+            "take after",
+            "take over"
+          ],
+          "answer": 0,
+          "explanation": "イベントや行事が「開催される・行われる」は take place です。",
+          "audio_file": "L04_Q001.wav"
+        },
+        {
+          "id": "L04_Q002",
+          "type": "choice",
+          "sentence": "More than 500 students decided to ( ) the marathon race.",
+          "translation": "500人以上の生徒がそのマラソンレースに参加することを決めた。",
+          "options": [
+            "take part in",
+            "get along with",
+            "come up with",
+            "look out for"
+          ],
+          "answer": 0,
+          "explanation": "take part in 〜 で「〜に参加する」という重要句動詞です。",
+          "audio_file": "L04_Q002.wav"
+        },
+        {
+          "id": "L04_Q003",
+          "type": "choice",
+          "sentence": "Lisa really ( ) her grandmother in both appearance and personality.",
+          "translation": "リサは見た目も性格も本当に祖母に似ている。",
+          "options": [
+            "takes after",
+            "takes off",
+            "puts away",
+            "gives up"
+          ],
+          "answer": 0,
+          "explanation": "take after で「（親や祖父母などの肉親に）似ている」を表します。",
+          "audio_file": "L04_Q003.wav"
+        },
+        {
+          "id": "L04_Q004",
+          "type": "choice",
+          "sentence": "While cleaning the attic, I ( ) an old photo album of my family.",
+          "translation": "屋根裏を掃除しているとき、偶然家族の古い写真アルバムを見つけた。",
+          "options": [
+            "came across",
+            "put off",
+            "looked after",
+            "took up"
+          ],
+          "answer": 0,
+          "explanation": "come across で「〜に偶然出くわす、偶然見つける」となります。",
+          "audio_file": "L04_Q004.wav"
+        },
+        {
+          "id": "L04_Q005",
+          "type": "choice",
+          "sentence": "The scientist suddenly ( ) a great solution to the environmental problem.",
+          "translation": "その科学者は環境問題に対する素晴らしい解決策を突然思いついた。",
+          "options": [
+            "came up with",
+            "put up with",
+            "got along with",
+            "ran out of"
+          ],
+          "answer": 0,
+          "explanation": "come up with 〜 で「（アイデアや解決策を）思いつく」を表します。",
+          "audio_file": "L04_Q005.wav"
+        },
+        {
+          "id": "L04_Q006",
+          "type": "choice",
+          "sentence": "He is very friendly, so he easily ( ) all of his classmates.",
+          "translation": "彼はとても親しみやすいので、クラスメイト全員とすぐに仲良くなる。",
+          "options": [
+            "gets along with",
+            "catches up with",
+            "looks down on",
+            "breaks up with"
+          ],
+          "answer": 0,
+          "explanation": "get along with 〜 で「〜と仲良くやっていく」という意味です。",
+          "audio_file": "L04_Q006.wav"
+        },
+        {
+          "id": "L04_Q007",
+          "type": "choice",
+          "sentence": "It took her several months to ( ) the shock of losing her dog.",
+          "translation": "愛犬を失ったショックを克服する（乗り越える）のに数ヶ月かかった。",
+          "options": [
+            "get over",
+            "give in",
+            "turn down",
+            "pick up"
+          ],
+          "answer": 0,
+          "explanation": "get over 〜 で「困難・ショック・病気を克服する・乗り越える」です。",
+          "audio_file": "L04_Q007.wav"
+        },
+        {
+          "id": "L04_Q008",
+          "type": "choice",
+          "sentence": "Due to the storm, the baseball match was ( ) until next Sunday.",
+          "translation": "嵐のため、野球の試合は次の日曜日まで延期された。",
+          "options": [
+            "put off",
+            "put out",
+            "taken off",
+            "given up"
+          ],
+          "answer": 0,
+          "explanation": "put off で「延期する（= postpone）」となります。",
+          "audio_file": "L04_Q008.wav"
+        },
+        {
+          "id": "L04_Q009",
+          "type": "choice",
+          "sentence": "I can no longer ( ) with the loud noise from the construction site.",
+          "translation": "私は建設現場からの大きな騒音にもう我慢できない。",
+          "options": [
+            "put up",
+            "catch up",
+            "keep up",
+            "make up"
+          ],
+          "answer": 0,
+          "explanation": "put up with 〜 で「〜を我慢する」という必須の成句です。",
+          "audio_file": "L04_Q009.wav"
+        },
+        {
+          "id": "L04_Q010",
+          "type": "choice",
+          "sentence": "We are all looking forward to ( ) you in Tokyo next month.",
+          "translation": "私たちは皆、来月東京であなたに会えるのを楽しみに待っています。",
+          "options": [
+            "seeing",
+            "see",
+            "saw",
+            "seen"
+          ],
+          "answer": 0,
+          "explanation": "look forward to の to は前置詞なので、後ろには動名詞（seeing）が続きます。",
+          "audio_file": "L04_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "area_id": 1,
+      "title": "Lesson 05: 重要形容詞・副詞",
+      "format": "choice",
+      "cheat_sheet": {
+        "title": "形容詞・副詞の重要区別",
+        "points": [
+          "hard（熱心に） vs hardly（ほとんど〜ない）",
+          "late（遅れて） vs lately（最近・近頃）",
+          "few（数がほとんどない） vs a few（少しはある）",
+          "little（量がほとんどない） vs a little（少しはある）",
+          "diligent: 勤勉な、真面目な",
+          "honest: 正直な",
+          "complete: 完全な（completely: 完全に）"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L05_Q001",
+          "type": "choice",
+          "sentence": "It was so dark in the forest that I could ( ) see the path.",
+          "translation": "森の中はとても暗かったので、小道がほとんど見えなかった。",
+          "options": [
+            "hardly",
+            "hard",
+            "late",
+            "lately"
+          ],
+          "answer": 0,
+          "explanation": "hardly は「ほとんど〜ない」という準否定の副詞です。hard だと「熱心に」になります。",
+          "audio_file": "L05_Q001.wav"
+        },
+        {
+          "id": "L05_Q002",
+          "type": "choice",
+          "sentence": "Have you seen any good movies ( )?",
+          "translation": "最近、何か面白い映画を見ましたか？",
+          "options": [
+            "lately",
+            "late",
+            "hardly",
+            "shortly"
+          ],
+          "answer": 0,
+          "explanation": "現在完了形とともに「最近・近頃」を表す副詞は lately（または recently）です。",
+          "audio_file": "L05_Q002.wav"
+        },
+        {
+          "id": "L05_Q003",
+          "type": "choice",
+          "sentence": "Because he had very ( ) money left, he decided to walk home.",
+          "translation": "彼にはほとんどお金が残っていなかったので、家まで歩くことにした。",
+          "options": [
+            "little",
+            "a little",
+            "few",
+            "a few"
+          ],
+          "answer": 0,
+          "explanation": "money は不可算名詞（数えられない）であり、「ほとんどない」と否定の意味なので little が正解。",
+          "audio_file": "L05_Q003.wav"
+        },
+        {
+          "id": "L05_Q004",
+          "type": "choice",
+          "sentence": "Although he is busy, he has ( ) good friends who always support him.",
+          "translation": "彼は忙しいが、いつも彼を支えてくれる数人の良い友人がいる。",
+          "options": [
+            "a few",
+            "few",
+            "little",
+            "a little"
+          ],
+          "answer": 0,
+          "explanation": "friends は可算名詞の複数形であり、「何人かの、少しはいる」という肯定的なニュアンスなので a few が適切。",
+          "audio_file": "L05_Q004.wav"
+        },
+        {
+          "id": "L05_Q005",
+          "type": "choice",
+          "sentence": "She is such a ( ) student that she never misses submitting homework.",
+          "translation": "彼女はとても勤勉な生徒なので、宿題の提出を決して欠かさない。",
+          "options": [
+            "diligent",
+            "late",
+            "simple",
+            "convenient"
+          ],
+          "answer": 0,
+          "explanation": "熱心で勤勉な態度を表す形容詞は diligent です。",
+          "audio_file": "L05_Q005.wav"
+        },
+        {
+          "id": "L05_Q006",
+          "type": "choice",
+          "sentence": "To be completely ( ) with you, I don't really like seafood.",
+          "translation": "あなたに対して完全に正直に言うと、私はシーフードがあまり好きではありません。",
+          "options": [
+            "honest",
+            "serious",
+            "polite",
+            "active"
+          ],
+          "answer": 0,
+          "explanation": "To be honest with you で「率直に言うと、正直なところ」という定型フレーズです。",
+          "audio_file": "L05_Q006.wav"
+        },
+        {
+          "id": "L05_Q007",
+          "type": "choice",
+          "sentence": "The new bridge was ( ) destroyed by the powerful earthquake.",
+          "translation": "その新しい橋は強力な地震によって完全に破壊された。",
+          "options": [
+            "completely",
+            "neatly",
+            "hardly",
+            "frequently"
+          ],
+          "answer": 0,
+          "explanation": "「完全に、徹底的に」破壊されたので副詞 completely が適切。",
+          "audio_file": "L05_Q007.wav"
+        },
+        {
+          "id": "L05_Q008",
+          "type": "choice",
+          "sentence": "His room is always kept very neat and ( ).",
+          "translation": "彼の部屋はいつもとてもきちんとしていて清潔に保たれている。",
+          "options": [
+            "clean",
+            "noisy",
+            "blind",
+            "dull"
+          ],
+          "answer": 0,
+          "explanation": "neat and clean で「小ぎれいで清潔な」という自然な組み合わせです。",
+          "audio_file": "L05_Q008.wav"
+        },
+        {
+          "id": "L05_Q009",
+          "type": "choice",
+          "sentence": "The twins look so ( ) that even their parents sometimes confuse them.",
+          "translation": "その双子はとてもよく似ているので、両親でさえ時々見間違える。",
+          "options": [
+            "alike",
+            "same",
+            "likely",
+            "alive"
+          ],
+          "answer": 0,
+          "explanation": "look alike で「似たように見える、似ている」となります（alike は叙述用法の形容詞）。",
+          "audio_file": "L05_Q009.wav"
+        },
+        {
+          "id": "L05_Q010",
+          "type": "choice",
+          "sentence": "They held a ( ) meeting to discuss the urgent budget problem.",
+          "translation": "彼らは緊急の予算問題を議論するために真剣な会議を開いた。",
+          "options": [
+            "serious",
+            "dull",
+            "lazy",
+            "foolish"
+          ],
+          "answer": 0,
+          "explanation": "真剣な、重大な会議なので serious が正解。",
+          "audio_file": "L05_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "area_id": 1,
+      "title": "Lesson 06: 重要前置詞・接続詞",
+      "format": "choice",
+      "cheat_sheet": {
+        "title": "前置詞・接続詞の使い分け",
+        "points": [
+          "by（〜までに: 完了期限） vs until（〜までずっと: 継続）",
+          "during（〜の間: 前置詞＋名詞） vs while（〜の間: 接続詞＋S+V）",
+          "although / even though（〜だけれども: 譲歩の接続詞）",
+          "both A and B: AもBも両方",
+          "either A or B: AかBのどちらか一方",
+          "neither A nor B: AもBもどちらも〜ない"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L06_Q001",
+          "type": "choice",
+          "sentence": "You must submit your English report ( ) five o'clock this Friday.",
+          "translation": "今週の金曜日の5時までに英語のレポートを提出しなければならない。",
+          "options": [
+            "by",
+            "until",
+            "for",
+            "during"
+          ],
+          "answer": 0,
+          "explanation": "「〜までに（期限までに1回完了）」を表すので by が正解。until だと「5時まで提出し続ける」になり不自然。",
+          "audio_file": "L06_Q001.wav"
+        },
+        {
+          "id": "L06_Q002",
+          "type": "choice",
+          "sentence": "The library will remain closed ( ) the end of next month.",
+          "translation": "図書館は来月末までずっと閉館したままになります。",
+          "options": [
+            "until",
+            "by",
+            "since",
+            "while"
+          ],
+          "answer": 0,
+          "explanation": "閉館状態が「その時点までずっと継続する」ので until が正解。",
+          "audio_file": "L06_Q002.wav"
+        },
+        {
+          "id": "L06_Q003",
+          "type": "choice",
+          "sentence": "I fell asleep on the sofa ( ) I was watching television.",
+          "translation": "私はテレビを見ている間にソファで眠ってしまった。",
+          "options": [
+            "while",
+            "during",
+            "between",
+            "despite"
+          ],
+          "answer": 0,
+          "explanation": "後ろに主語＋動詞（I was watching）が続いているので、接続詞の while が正解。during は前置詞なので名詞が続きます。",
+          "audio_file": "L06_Q003.wav"
+        },
+        {
+          "id": "L06_Q004",
+          "type": "choice",
+          "sentence": "He took a lot of beautiful photos ( ) his stay in Hokkaido.",
+          "translation": "彼は北海道滞在の間にたくさんの美しい写真を撮った。",
+          "options": [
+            "during",
+            "while",
+            "since",
+            "unless"
+          ],
+          "answer": 0,
+          "explanation": "his stay（名詞句）が続いているので、前置詞の during が適切。",
+          "audio_file": "L06_Q004.wav"
+        },
+        {
+          "id": "L06_Q005",
+          "type": "choice",
+          "sentence": "( ) she was very tired, she finished writing the novel.",
+          "translation": "彼女はとても疲れていたけれども、小説を書き終えた。",
+          "options": [
+            "Although",
+            "Because",
+            "Unless",
+            "If"
+          ],
+          "answer": 0,
+          "explanation": "「〜だけれども」という譲歩を表す接続詞 Although が文脈に合致します。",
+          "audio_file": "L06_Q005.wav"
+        },
+        {
+          "id": "L06_Q006",
+          "type": "choice",
+          "sentence": "The movie was ( ) interesting and educational for students.",
+          "translation": "その映画は生徒たちにとって面白くもあり、教育的でもあった。",
+          "options": [
+            "both",
+            "either",
+            "neither",
+            "not"
+          ],
+          "answer": 0,
+          "explanation": "both A and B で「AもBも両方」を表します。",
+          "audio_file": "L06_Q006.wav"
+        },
+        {
+          "id": "L06_Q007",
+          "type": "choice",
+          "sentence": "You can choose ( ) coffee or tea with your dessert.",
+          "translation": "デザートと一緒にコーヒーか紅茶のどちらかをお選びいただけます。",
+          "options": [
+            "either",
+            "both",
+            "neither",
+            "also"
+          ],
+          "answer": 0,
+          "explanation": "either A or B で「AかBのどちらか一方」を表します。",
+          "audio_file": "L06_Q007.wav"
+        },
+        {
+          "id": "L06_Q008",
+          "type": "choice",
+          "sentence": "He likes ( ) sweet food nor spicy food.",
+          "translation": "彼は甘い食べ物も辛い食べ物もどちらも好きではない。",
+          "options": [
+            "neither",
+            "either",
+            "both",
+            "none"
+          ],
+          "answer": 0,
+          "explanation": "nor と呼応して「AもBもどちらも〜ない」を表すのは neither です（neither A nor B）。",
+          "audio_file": "L06_Q008.wav"
+        },
+        {
+          "id": "L06_Q009",
+          "type": "choice",
+          "sentence": "We decided to go camping ( ) the heavy rain.",
+          "translation": "私たちは大雨にもかかわらずキャンプに行くことにした。",
+          "options": [
+            "in spite of",
+            "because of",
+            "instead of",
+            "as for"
+          ],
+          "answer": 0,
+          "explanation": "in spite of 〜（または despite 〜）で「〜にもかかわらず」を表す前置詞句です。",
+          "audio_file": "L06_Q009.wav"
+        },
+        {
+          "id": "L06_Q010",
+          "type": "choice",
+          "sentence": "She drank green tea ( ) coffee after lunch.",
+          "translation": "彼女は昼食後、コーヒーの代わりに緑茶を飲んだ。",
+          "options": [
+            "instead of",
+            "in front of",
+            "because of",
+            "in spite of"
+          ],
+          "answer": 0,
+          "explanation": "instead of 〜 で「〜の代わりに」という意味です。",
+          "audio_file": "L06_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "area_id": 1,
+      "title": "Lesson 07: 準2級の最重要熟語",
+      "format": "choice",
+      "cheat_sheet": {
+        "title": "必須イディオム総ざらい",
+        "points": [
+          "at a loss: 途方に暮れて",
+          "by chance: 偶然に（= by accident）",
+          "by the way: ところで（話題の転換）",
+          "for a while: しばらくの間",
+          "on time: 時間通りに（定刻に）",
+          "out of order: 故障して",
+          "at least: 少なくとも",
+          "by all means: ぜひとも、もちろん",
+          "in order to do: 〜するために",
+          "so far: これまでのところ"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L07_Q001",
+          "type": "choice",
+          "sentence": "When he lost his passport in a foreign country, he was completely at a ( ).",
+          "translation": "外国でパスポートを失くしたとき、彼は完全に途方に暮れた。",
+          "options": [
+            "loss",
+            "risk",
+            "danger",
+            "last"
+          ],
+          "answer": 0,
+          "explanation": "at a loss で「途方に暮れて、どうしていいか分からず」という重要熟語です。",
+          "audio_file": "L07_Q001.wav"
+        },
+        {
+          "id": "L07_Q002",
+          "type": "choice",
+          "sentence": "I met an old classmate on the train ( ) chance yesterday.",
+          "translation": "昨日、電車の中で昔の同級生に偶然会った。",
+          "options": [
+            "by",
+            "in",
+            "on",
+            "with"
+          ],
+          "answer": 0,
+          "explanation": "by chance で「偶然に」を表します。",
+          "audio_file": "L07_Q002.wav"
+        },
+        {
+          "id": "L07_Q003",
+          "type": "choice",
+          "sentence": "The elevator is currently out of ( ), so please use the stairs.",
+          "translation": "エレベーターは現在故障中ですので、階段をご利用ください。",
+          "options": [
+            "order",
+            "work",
+            "service",
+            "control"
+          ],
+          "answer": 0,
+          "explanation": "out of order で「（機械などが）故障して」を表します。",
+          "audio_file": "L07_Q003.wav"
+        },
+        {
+          "id": "L07_Q004",
+          "type": "choice",
+          "sentence": "Despite the snowy weather, the airplane arrived ( ) time.",
+          "translation": "雪の降る天候にもかかわらず、飛行機は定刻通りに到着した。",
+          "options": [
+            "on",
+            "in",
+            "at",
+            "by"
+          ],
+          "answer": 0,
+          "explanation": "on time で「時間通りに、定刻に」となります。",
+          "audio_file": "L07_Q004.wav"
+        },
+        {
+          "id": "L07_Q005",
+          "type": "choice",
+          "sentence": "You should study English for at ( ) thirty minutes every day.",
+          "translation": "毎日少なくとも30分は英語を勉強すべきだ。",
+          "options": [
+            "least",
+            "last",
+            "most",
+            "less"
+          ],
+          "answer": 0,
+          "explanation": "at least で「少なくとも」を表します。",
+          "audio_file": "L07_Q005.wav"
+        },
+        {
+          "id": "L07_Q006",
+          "type": "choice",
+          "sentence": "He woke up early in ( ) to catch the first train.",
+          "translation": "彼は始発列車に乗るために早起きした。",
+          "options": [
+            "order",
+            "case",
+            "fact",
+            "short"
+          ],
+          "answer": 0,
+          "explanation": "in order to do で「〜するために」という目的を表す定型句です。",
+          "audio_file": "L07_Q006.wav"
+        },
+        {
+          "id": "L07_Q007",
+          "type": "choice",
+          "sentence": "Everything has gone smoothly with the project ( ) far.",
+          "translation": "これまでのところ、そのプロジェクトはすべて順調に進んでいる。",
+          "options": [
+            "so",
+            "as",
+            "by",
+            "too"
+          ],
+          "answer": 0,
+          "explanation": "so far で「これまでのところ」を表します。",
+          "audio_file": "L07_Q007.wav"
+        },
+        {
+          "id": "L07_Q008",
+          "type": "choice",
+          "sentence": "A: May I borrow your dictionary?\nB: By all ( ), go ahead.",
+          "translation": "A: 辞書を借りてもいいですか？\nB: ええ、もちろんどうぞ。",
+          "options": [
+            "means",
+            "ways",
+            "cases",
+            "chances"
+          ],
+          "answer": 0,
+          "explanation": "By all means で「ぜひとも、もちろんいいですよ」という快諾の返答になります。",
+          "audio_file": "L07_Q008.wav"
+        },
+        {
+          "id": "L07_Q009",
+          "type": "choice",
+          "sentence": "Please sit down and rest for a ( ); you look exhausted.",
+          "translation": "座って少しの間休んでください。とても疲れているように見えます。",
+          "options": [
+            "while",
+            "time",
+            "moment",
+            "second"
+          ],
+          "answer": 0,
+          "explanation": "for a while で「しばらくの間」を表します。",
+          "audio_file": "L07_Q009.wav"
+        },
+        {
+          "id": "L07_Q010",
+          "type": "choice",
+          "sentence": "This town is by ( ) the most popular tourist destination in the region.",
+          "translation": "この町はずば抜けて（圧倒的に）この地域で最も人気のある観光地だ。",
+          "options": [
+            "far",
+            "way",
+            "much",
+            "long"
+          ],
+          "answer": 0,
+          "explanation": "by far + 最上級 で「ずば抜けて、はるかに」と最上級を強調します。",
+          "audio_file": "L07_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "area_id": 2,
+      "title": "Lesson 08: 自動詞と他動詞",
+      "format": "reorder",
+      "cheat_sheet": {
+        "title": "前置詞が不要な他動詞に注意",
+        "points": [
+          "discuss: 〜について議論する（aboutは不要！）",
+          "marry: 〜と結婚する（withは不要！）",
+          "enter: 〜に入る（intoは不要！）",
+          "attend: 〜に出席する（toは不要！）",
+          "resemble: 〜に似ている（toは不要！）",
+          "reach: 〜に到着する（at/inは不要！）",
+          "rise（上がる: 自動詞） vs raise（〜を上げる: 他動詞）",
+          "lie（横たわる: 自動詞） vs lay（〜を置く: 他動詞）"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L08_Q001",
+          "type": "reorder",
+          "sentence": "Why don't we ( ) in our next meeting?",
+          "translation": "次の会議であなたの提案について話し合いませんか？",
+          "options": [
+            "discuss",
+            "your",
+            "proposal"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "discuss は他動詞なので discuss about とせず、直接目的語（your proposal）を取ります。",
+          "audio_file": "L08_Q001.wav"
+        },
+        {
+          "id": "L08_Q002",
+          "type": "reorder",
+          "sentence": "He entered ( ) when he was only fifteen years old.",
+          "translation": "彼はわずか15歳で高校に入学した。",
+          "options": [
+            "high",
+            "school"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "enter は他動詞なので enter into ではなく直接 high school を置きます。",
+          "audio_file": "L08_Q002.wav"
+        },
+        {
+          "id": "L08_Q003",
+          "type": "reorder",
+          "sentence": "She looks exactly like her mother, and she ( ) in many ways.",
+          "translation": "彼女は母親にそっくりで、多くの点で母親に似ている。",
+          "options": [
+            "resembles",
+            "her",
+            "mother"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "resemble は他動詞なので resemble to とは言わず直接 her mother を続けます。",
+          "audio_file": "L08_Q003.wav"
+        },
+        {
+          "id": "L08_Q004",
+          "type": "reorder",
+          "sentence": "The government decided to ( ) next month.",
+          "translation": "政府は来月、消費税を引き上げることを決定した。",
+          "options": [
+            "raise",
+            "the",
+            "tax"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "「〜を引き上げる」は他動詞 raise です（自動詞 rise は目的語を取れません）。",
+          "audio_file": "L08_Q004.wav"
+        },
+        {
+          "id": "L08_Q005",
+          "type": "reorder",
+          "sentence": "He was so tired that he ( ) on the grass.",
+          "translation": "彼はとても疲れていたので、芝生の上に横たわった。",
+          "options": [
+            "lay",
+            "down"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "「横たわる」lie の過去形は lay です。lay down on the grass で「芝生の上に横になった」。",
+          "audio_file": "L08_Q005.wav"
+        },
+        {
+          "id": "L08_Q006",
+          "type": "reorder",
+          "sentence": "Did you ( ) yesterday morning?",
+          "translation": "昨日の朝の重要な会議に出席しましたか？",
+          "options": [
+            "attend",
+            "the",
+            "meeting"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "attend は他動詞なので attend to ではなく attend the meeting とします。",
+          "audio_file": "L08_Q006.wav"
+        },
+        {
+          "id": "L08_Q007",
+          "type": "reorder",
+          "sentence": "He promised that he would ( ) next spring.",
+          "translation": "彼は来年の春に彼女と結婚すると約束した。",
+          "options": [
+            "marry",
+            "her"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "marry は他動詞なので marry with her ではなく marry her です。",
+          "audio_file": "L08_Q007.wav"
+        },
+        {
+          "id": "L08_Q008",
+          "type": "reorder",
+          "sentence": "We finally ( ) after driving for six hours.",
+          "translation": "6時間運転した後、私たちはついに目的地に到着した。",
+          "options": [
+            "reached",
+            "the",
+            "destination"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "reach は他動詞なので reach at ではなく直接 the destination を置きます。",
+          "audio_file": "L08_Q008.wav"
+        },
+        {
+          "id": "L08_Q009",
+          "type": "reorder",
+          "sentence": "I will ( ) as soon as I arrive at the hotel.",
+          "translation": "ホテルに到着したらすぐにあなたに連絡します。",
+          "options": [
+            "contact",
+            "you"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "contact は他動詞なので contact to you ではなく contact you です。",
+          "audio_file": "L08_Q009.wav"
+        },
+        {
+          "id": "L08_Q010",
+          "type": "reorder",
+          "sentence": "The teacher asked the students to ( ) if they knew the answer.",
+          "translation": "先生は生徒たちに、答えが分かったら手を挙げるように求めた。",
+          "options": [
+            "raise",
+            "their",
+            "hands"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "手を上げる動作は他動詞 raise（raise their hands）です。",
+          "audio_file": "L08_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "area_id": 2,
+      "title": "Lesson 09: 注意すべき時制（完了形・時制の一致）",
+      "format": "reorder",
+      "cheat_sheet": {
+        "title": "時制の重要ルール",
+        "points": [
+          "現在完了（have + 過去分詞）は明確な過去を表す語（yesterday, ago, when〜）と一緒に使えない！",
+          "過去完了（had + 過去分詞）: 過去の特定の時点よりさらに前の動作を表す（大過去）。",
+          "時制の一致: 主節が過去形なら、従属節も過去形（または過去完了）に合わせる。",
+          "例外: 普遍の真理や科学的事実（地球は丸い等）は常に現在形！"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L09_Q001",
+          "type": "reorder",
+          "sentence": "John ( ) when he decided to return to England.",
+          "translation": "ジョンはイギリスへ帰国することを決めた時、ニューヨークに10年間住んでいた。",
+          "options": [
+            "had",
+            "lived",
+            "in",
+            "New",
+            "York",
+            "for",
+            "ten",
+            "years"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "explanation": "帰国を決めた（過去）時点で既に10年間住んでいた継続なので、過去完了 had lived を使います。",
+          "audio_file": "L09_Q001.wav"
+        },
+        {
+          "id": "L09_Q002",
+          "type": "reorder",
+          "sentence": "When I arrived at the station, the train ( ).",
+          "translation": "私が駅に到着した時、電車はすでに出発してしまっていた。",
+          "options": [
+            "had",
+            "already",
+            "left"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "駅に着いた（過去）よりも前に電車が出発していたので、過去完了 had already left になります。",
+          "audio_file": "L09_Q002.wav"
+        },
+        {
+          "id": "L09_Q003",
+          "type": "reorder",
+          "sentence": "My science teacher taught us ( ) round.",
+          "translation": "理科の先生は、地球は丸いということを私たちに教えてくれた。",
+          "options": [
+            "that",
+            "the",
+            "earth",
+            "is"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "explanation": "地球が丸いのは自然の法則・科学的事実なので、主節が taught（過去）でも従属節は現在形 is になります。",
+          "audio_file": "L09_Q003.wav"
+        },
+        {
+          "id": "L09_Q004",
+          "type": "reorder",
+          "sentence": "She realized that she ( ) her umbrella on the bus.",
+          "translation": "彼女はバスの中に傘を忘れてきてしまったことに気づいた。",
+          "options": [
+            "had",
+            "left"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "気づいた（realized）より前に置き忘れたので、過去完了 had left を用います。",
+          "audio_file": "L09_Q004.wav"
+        },
+        {
+          "id": "L09_Q005",
+          "type": "reorder",
+          "sentence": "I told him ( ) him with his homework.",
+          "translation": "私は彼に、宿題を手伝ってあげると伝えた。",
+          "options": [
+            "that",
+            "I",
+            "would",
+            "help"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "explanation": "主節が told（過去）なので、時制の一致により will が would に変化します。",
+          "audio_file": "L09_Q005.wav"
+        },
+        {
+          "id": "L09_Q006",
+          "type": "reorder",
+          "sentence": "We ( ) for two hours when it suddenly began to snow.",
+          "translation": "突然雪が降り始めた時、私たちは2時間テニスをしていた。",
+          "options": [
+            "had",
+            "been",
+            "playing",
+            "tennis"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "explanation": "雪が降り始めた過去の一点まで2時間ずっと継続していた動作なので、過去完了進行形 had been playing になります。",
+          "audio_file": "L09_Q006.wav"
+        },
+        {
+          "id": "L09_Q007",
+          "type": "reorder",
+          "sentence": "I found the watch that I ( ) a few days before.",
+          "translation": "私は数日前に失くしてしまった腕時計を見つけた。",
+          "options": [
+            "had",
+            "lost"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "腕時計を見つけた（found）よりも前に失くしたので、大過去を表す had lost を使います。",
+          "audio_file": "L09_Q007.wav"
+        },
+        {
+          "id": "L09_Q008",
+          "type": "reorder",
+          "sentence": "She said ( ) never eaten Japanese sushi before.",
+          "translation": "彼女は以前に一度も日本の寿司を食べたことがないと話した。",
+          "options": [
+            "she",
+            "had"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "話した時点（said）までの経験を表すため、過去完了 had eaten になります。",
+          "audio_file": "L09_Q008.wav"
+        },
+        {
+          "id": "L09_Q009",
+          "type": "reorder",
+          "sentence": "If it ( ) fine tomorrow, we will go on a picnic.",
+          "translation": "もし明日晴れれば、私たちはピクニックに行きます。",
+          "options": [
+            "is"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "時や条件を表す副詞節の中では、未来のことでも現在形（is）を使います。",
+          "audio_file": "L09_Q009.wav"
+        },
+        {
+          "id": "L09_Q010",
+          "type": "reorder",
+          "sentence": "I will call you as soon as I ( ) the airport.",
+          "translation": "空港に到着したらすぐにあなたに電話します。",
+          "options": [
+            "reach"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "as soon as（〜するとすぐに）が導く時を表す副詞節の中では、未来の動作でも現在形 reach を用います。",
+          "audio_file": "L09_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "area_id": 2,
+      "title": "Lesson 10: 注意すべき受け身",
+      "format": "reorder",
+      "cheat_sheet": {
+        "title": "完了・使役・前置詞の受動態",
+        "points": [
+          "完了形の受動態: have been + 過去分詞（ずっと〜されている）",
+          "助動詞の受動態: can / must + be + 過去分詞",
+          "使役動詞 make の受動態: be made to do（受動態になると to が復活！）",
+          "by以外の前置詞: be surprised at, be interested in, be satisfied with, be known to/for, be killed in"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L10_Q001",
+          "type": "reorder",
+          "sentence": "Soccer ( ) a gentlemen's sport for over a century.",
+          "translation": "サッカーは1世紀以上にわたって紳士のスポーツと呼ばれてきた。",
+          "options": [
+            "has",
+            "been",
+            "called"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "現在完了の受動態は has been + 過去分詞（has been called）となります。",
+          "audio_file": "L10_Q001.wav"
+        },
+        {
+          "id": "L10_Q002",
+          "type": "reorder",
+          "sentence": "English ( ) here since 1990.",
+          "translation": "ここでは1990年以来、英語が教えられてきた。",
+          "options": [
+            "has",
+            "been",
+            "taught"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "過去から現在までの継続した受動態なので has been taught になります。",
+          "audio_file": "L10_Q002.wav"
+        },
+        {
+          "id": "L10_Q003",
+          "type": "reorder",
+          "sentence": "The employees ( ) work overtime every night.",
+          "translation": "従業員たちは毎晩残業させられた。",
+          "options": [
+            "were",
+            "made",
+            "to"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "使役動詞 make は能動態では原形不定詞を取りますが、受動態になると be made to do と to 不定詞が復活します。",
+          "audio_file": "L10_Q003.wav"
+        },
+        {
+          "id": "L10_Q004",
+          "type": "reorder",
+          "sentence": "This fresh fish ( ) raw without cooking.",
+          "translation": "この新鮮な魚は調理せずに生で食べることができる。",
+          "options": [
+            "can",
+            "be",
+            "eaten"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "助動詞を含む受動態は 助動詞 + be + 過去分詞（can be eaten）です。",
+          "audio_file": "L10_Q004.wav"
+        },
+        {
+          "id": "L10_Q005",
+          "type": "reorder",
+          "sentence": "His grandfather ( ) in World War II.",
+          "translation": "彼の祖父は第二次世界大戦で亡くなった（戦死した）。",
+          "options": [
+            "was",
+            "killed"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "戦争や事故で命を落とす場合は be killed in を使います。",
+          "audio_file": "L10_Q005.wav"
+        },
+        {
+          "id": "L10_Q006",
+          "type": "reorder",
+          "sentence": "I ( ) by the speech she gave yesterday.",
+          "translation": "私は彼女が昨日行ったスピーチに深く感銘を受けた。",
+          "options": [
+            "was",
+            "deeply",
+            "impressed"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "「感銘を受ける」は be impressed with (または by) を用います。",
+          "audio_file": "L10_Q006.wav"
+        },
+        {
+          "id": "L10_Q007",
+          "type": "reorder",
+          "sentence": "Kyoto is ( ) people all around the world.",
+          "translation": "京都は世界中の人々に知られている。",
+          "options": [
+            "known",
+            "to"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "「〜に知られている」は be known to 〜 です（〜の理由で有名は be known for）。",
+          "audio_file": "L10_Q007.wav"
+        },
+        {
+          "id": "L10_Q008",
+          "type": "reorder",
+          "sentence": "We were all ( ) the unexpected news.",
+          "translation": "私たちは皆、その思いがけない知らせに驚いた。",
+          "options": [
+            "surprised",
+            "at"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "知らせや出来事に驚くときは be surprised at を用います。",
+          "audio_file": "L10_Q008.wav"
+        },
+        {
+          "id": "L10_Q009",
+          "type": "reorder",
+          "sentence": "The baby was seen ( ) across the living room.",
+          "translation": "その赤ちゃんはリビングルームを横切ってハイハイしているのを目撃された。",
+          "options": [
+            "to",
+            "crawl"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "知覚動詞 see の受動態も be seen to do と to 不定詞が復活します。",
+          "audio_file": "L10_Q009.wav"
+        },
+        {
+          "id": "L10_Q010",
+          "type": "reorder",
+          "sentence": "The top of Mt. Fuji is ( ) snow in winter.",
+          "translation": "冬には富士山の頂上は雪で覆われている。",
+          "options": [
+            "covered",
+            "with"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "「〜で覆われている」は be covered with 〜 を用います。",
+          "audio_file": "L10_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "area_id": 2,
+      "title": "Lesson 11: 助動詞＋完了形（過去への推量・後悔）",
+      "format": "reorder",
+      "cheat_sheet": {
+        "title": "助動詞＋have＋過去分詞の公式",
+        "points": [
+          "must have done: 〜だったに違いない（確信の推量）",
+          "cannot have done: 〜だったはずがない（確信の否定）",
+          "may / might have done: 〜だったかもしれない",
+          "should have done: 〜すべきだったのに（後悔・非難）",
+          "shouldn't have done: 〜すべきではなかったのに",
+          "needn't have done: 〜する必要はなかったのに"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L11_Q001",
+          "type": "reorder",
+          "sentence": "The players look exhausted. It ( ) a very tough game.",
+          "translation": "選手たちは疲れ切って見える。とても厳しい試合だったに違いない。",
+          "options": [
+            "must",
+            "have",
+            "been"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "過去の事実に対する強い確信の推量は must have + 過去分詞（must have been）です。",
+          "audio_file": "L11_Q001.wav"
+        },
+        {
+          "id": "L11_Q002",
+          "type": "reorder",
+          "sentence": "I looked for my wallet everywhere, but I ( ) it on the bus.",
+          "translation": "財布をあらゆる場所で探したが、バスの中に置き忘れたのかもしれない。",
+          "options": [
+            "may",
+            "have",
+            "left"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "「〜したかもしれない」という過去の推量は may have + 過去分詞 を使います。",
+          "audio_file": "L11_Q002.wav"
+        },
+        {
+          "id": "L11_Q003",
+          "type": "reorder",
+          "sentence": "He ( ) that bicycle by himself because he had no money.",
+          "translation": "彼は一文無しだったので、自分でその自転車を買ったはずがない。",
+          "options": [
+            "cannot",
+            "have",
+            "bought"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "「〜だったはずがない」という過去の強い否定推量は cannot have + 過去分詞 です。",
+          "audio_file": "L11_Q003.wav"
+        },
+        {
+          "id": "L11_Q004",
+          "type": "reorder",
+          "sentence": "You ( ) so rude to the customer yesterday.",
+          "translation": "あなたは昨日、お客様にあのような無礼なことを言うべきではなかったのに。",
+          "options": [
+            "should",
+            "not",
+            "have",
+            "said"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "explanation": "「〜すべきではなかったのに（実際はしてしまった）」という後悔・非難は should not have + 過去分詞 です。",
+          "audio_file": "L11_Q004.wav"
+        },
+        {
+          "id": "L11_Q005",
+          "type": "reorder",
+          "sentence": "The exam was very difficult. I ( ) much harder.",
+          "translation": "試験はとても難しかった。もっと一生懸命勉強しておくべきだった。",
+          "options": [
+            "should",
+            "have",
+            "studied"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "「〜すべきだったのに」という過去の後悔は should have + 過去分詞 を使います。",
+          "audio_file": "L11_Q005.wav"
+        },
+        {
+          "id": "L11_Q006",
+          "type": "reorder",
+          "sentence": "You ( ) your umbrella because it didn't rain at all.",
+          "translation": "雨は全く降らなかったので、傘を持ってくる必要はなかったのに。",
+          "options": [
+            "need",
+            "not",
+            "have",
+            "brought"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "explanation": "「〜する必要はなかったのに（実際は持ってきた）」は need not have + 過去分詞 です。",
+          "audio_file": "L11_Q006.wav"
+        },
+        {
+          "id": "L11_Q007",
+          "type": "reorder",
+          "sentence": "She wasn't at the party. She ( ) about the date.",
+          "translation": "彼女はパーティーにいなかった。日程を忘れていたのかもしれない。",
+          "options": [
+            "might",
+            "have",
+            "forgotten"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "might have + 過去分詞 で「〜したかもしれない」という過去の控えめな推量を表します。",
+          "audio_file": "L11_Q007.wav"
+        },
+        {
+          "id": "L11_Q008",
+          "type": "reorder",
+          "sentence": "He looks so sad. He ( ) the final audition.",
+          "translation": "彼はとても悲しそうに見える。最終オーディションに落ちたに違いない。",
+          "options": [
+            "must",
+            "have",
+            "failed"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "must have failed で「失敗したに違いない」という過去の確信推量です。",
+          "audio_file": "L11_Q008.wav"
+        },
+        {
+          "id": "L11_Q009",
+          "type": "reorder",
+          "sentence": "She is an honest person. She ( ) a lie to us.",
+          "translation": "彼女は正直な人だ。私たちに嘘をついたはずがない。",
+          "options": [
+            "cannot",
+            "have",
+            "told"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "cannot have told で「言ったはずがない」を表します。",
+          "audio_file": "L11_Q009.wav"
+        },
+        {
+          "id": "L11_Q010",
+          "type": "reorder",
+          "sentence": "We arrived an hour early. We ( ) so quickly.",
+          "translation": "1時間も早く着いてしまった。あんなに急ぐ必要はなかったのに。",
+          "options": [
+            "needn't",
+            "have",
+            "hurried"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "needn't have hurried で「急ぐ必要はなかったのに」となります。",
+          "audio_file": "L11_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "area_id": 2,
+      "title": "Lesson 12: 仮定法（過去・過去完了）",
+      "format": "reorder",
+      "cheat_sheet": {
+        "title": "仮定法の基本公式",
+        "points": [
+          "仮定法過去（現在の妄想）: If S + 過去形（be動詞はwere）, S + would/could + 原形",
+          "仮定法過去完了（過去の後悔）: If S + had + 過去分詞, S + would/could + have + 過去分詞",
+          "I wish + 過去形: （今）〜ならいいのになあ",
+          "I wish + had + 過去分詞: （あの時）〜だったらよかったのになあ",
+          "without 〜 / but for 〜: もし〜がなければ"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L12_Q001",
+          "type": "reorder",
+          "sentence": "If I had enough money, I ( ) a new laptop.",
+          "translation": "もし十分なお金があれば、新しいノートパソコンを買うことができるのに。",
+          "options": [
+            "could",
+            "buy"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "現在の事実に反する仮定法過去なので、帰結節は could + 動詞の原形（could buy）です。",
+          "audio_file": "L12_Q001.wav"
+        },
+        {
+          "id": "L12_Q002",
+          "type": "reorder",
+          "sentence": "If I ( ) you, I would take that opportunity immediately.",
+          "translation": "もし私があなたなら、すぐにそのチャンスを掴むだろう。",
+          "options": [
+            "were"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "仮定法過去の条件節の be動詞は、主語が I や単数でも were を使うのが原則です。",
+          "audio_file": "L12_Q002.wav"
+        },
+        {
+          "id": "L12_Q003",
+          "type": "reorder",
+          "sentence": "If we had known the schedule, we ( ) the meeting.",
+          "translation": "もし日程を知っていたら、私たちはその会議に出席していただろうに。",
+          "options": [
+            "would",
+            "have",
+            "attended"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "過去の事実に反する仮定法過去完了なので、帰結節は would have + 過去分詞 になります。",
+          "audio_file": "L12_Q003.wav"
+        },
+        {
+          "id": "L12_Q004",
+          "type": "reorder",
+          "sentence": "I wish I ( ) speak English more fluently.",
+          "translation": "英語をもっと流暢に話せたらいいのになあ。",
+          "options": [
+            "could"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "現在の願望を表す I wish の後ろは仮定法過去（could speak）になります。",
+          "audio_file": "L12_Q004.wav"
+        },
+        {
+          "id": "L12_Q005",
+          "type": "reorder",
+          "sentence": "I wish I ( ) harder when I was a student.",
+          "translation": "学生の時にもっと熱心に勉強していたらよかったのになあ。",
+          "options": [
+            "had",
+            "studied"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "過去のことに対する後悔・願望なので、I wish の後ろは had studied（過去完了）になります。",
+          "audio_file": "L12_Q005.wav"
+        },
+        {
+          "id": "L12_Q006",
+          "type": "reorder",
+          "sentence": "Without your advice, I ( ) in the business competition.",
+          "translation": "あなたの助言がなかったら、私はビジネスコンテストで成功できなかっただろう。",
+          "options": [
+            "could",
+            "not",
+            "have",
+            "succeeded"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "explanation": "Without 〜（もし〜がなかったら）に続く過去の仮定なので could not have succeeded です。",
+          "audio_file": "L12_Q006.wav"
+        },
+        {
+          "id": "L12_Q007",
+          "type": "reorder",
+          "sentence": "If it ( ) not for water, no living things could survive.",
+          "translation": "もし水がなければ、いかなる生物も生存できないだろう。",
+          "options": [
+            "were"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "If it were not for 〜 で「もし（今）〜がなければ」という重要定型表現です。",
+          "audio_file": "L12_Q007.wav"
+        },
+        {
+          "id": "L12_Q008",
+          "type": "reorder",
+          "sentence": "If you had taken the umbrella, you ( ) wet now.",
+          "translation": "もし傘を持っていっていたら、今頃濡れていないだろうに。",
+          "options": [
+            "would",
+            "not",
+            "be"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "条件節は過去（had taken）ですが、now があるため帰結節は現在の仮定法過去（would not be）になります。",
+          "audio_file": "L12_Q008.wav"
+        },
+        {
+          "id": "L12_Q009",
+          "type": "reorder",
+          "sentence": "He talks as if he ( ) everything about the project.",
+          "translation": "彼はまるでそのプロジェクトについて何でも知っているかのように話す。",
+          "options": [
+            "knew"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "as if + 仮定法過去 で「まるで〜であるかのように」を表します。",
+          "audio_file": "L12_Q009.wav"
+        },
+        {
+          "id": "L12_Q010",
+          "type": "reorder",
+          "sentence": "If I ( ) rich, I would travel around the world.",
+          "translation": "もし私が大金持ちなら、世界中を旅するだろう。",
+          "options": [
+            "were"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "現在の事実に反する仮定法過去なので were です。",
+          "audio_file": "L12_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "area_id": 2,
+      "title": "Lesson 13: 不定詞と動名詞（目的語の使い分け）",
+      "format": "reorder",
+      "cheat_sheet": {
+        "title": "不定詞・動名詞の決定版ルール",
+        "points": [
+          "動名詞（-ing）のみを目的語に取る: enjoy, finish, stop, mind, avoid, give up",
+          "不定詞（to do）のみを目的語に取る: want, decide, hope, plan, promise, refuse",
+          "意味が変わる動詞:",
+          "  remember to do: 忘れずに〜する（未来のこと）",
+          "  remember doing: 〜したことを覚えている（過去のこと）",
+          "  forget to do: 〜し忘れる",
+          "  forget doing: 〜したことを忘れる"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L13_Q001",
+          "type": "reorder",
+          "sentence": "Please remember ( ) the front door when you leave.",
+          "translation": "外出するときは、忘れずに玄関の鍵をかけてください。",
+          "options": [
+            "to",
+            "lock"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "これから行う動作を「忘れずに〜する」は remember to do です。",
+          "audio_file": "L13_Q001.wav"
+        },
+        {
+          "id": "L13_Q002",
+          "type": "reorder",
+          "sentence": "I clearly remember ( ) hands with the president.",
+          "translation": "私は大統領と握手したことを鮮明に覚えている。",
+          "options": [
+            "shaking"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "過去にしたことを「〜したことを覚えている」は remember doing（動名詞）です。",
+          "audio_file": "L13_Q002.wav"
+        },
+        {
+          "id": "L13_Q003",
+          "type": "reorder",
+          "sentence": "She decided ( ) abroad to study architecture.",
+          "translation": "彼女は建築を学ぶために留学することを決めた。",
+          "options": [
+            "to",
+            "go"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "decide は不定詞のみを目的語に取るので decide to go となります。",
+          "audio_file": "L13_Q003.wav"
+        },
+        {
+          "id": "L13_Q004",
+          "type": "reorder",
+          "sentence": "Would you mind ( ) the window? It's a bit cold.",
+          "translation": "窓を閉めていただけませんか？少し寒いです。",
+          "options": [
+            "closing"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "mind は動名詞のみを目的語に取るので mind closing です。",
+          "audio_file": "L13_Q004.wav"
+        },
+        {
+          "id": "L13_Q005",
+          "type": "reorder",
+          "sentence": "He gave up ( ) smoking after talking to his doctor.",
+          "translation": "彼は医師と話した後、タバコを吸うのを諦めた（禁煙した）。",
+          "options": [
+            "smoking"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "give up は前置詞で終わる句動詞であり、動名詞（smoking）を取ります。",
+          "audio_file": "L13_Q005.wav"
+        },
+        {
+          "id": "L13_Q006",
+          "type": "reorder",
+          "sentence": "Don't forget ( ) your grandmother on her birthday.",
+          "translation": "おばあちゃんの誕生日に彼女に電話するのを忘れないでね。",
+          "options": [
+            "to",
+            "call"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "これから行う動作を「〜し忘れるな」は forget to do です。",
+          "audio_file": "L13_Q006.wav"
+        },
+        {
+          "id": "L13_Q007",
+          "type": "reorder",
+          "sentence": "This coffee is too hot for me ( ).",
+          "translation": "このコーヒーは熱すぎて私には飲めない。",
+          "options": [
+            "to",
+            "drink"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "too 〜 to do で「あまりに〜すぎて…できない」という重要構文です。",
+          "audio_file": "L13_Q007.wav"
+        },
+        {
+          "id": "L13_Q008",
+          "type": "reorder",
+          "sentence": "He was kind enough ( ) me the way to the station.",
+          "translation": "彼はとても親切にも、駅へ行く道を教えてくれた。",
+          "options": [
+            "to",
+            "show"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "形容詞 + enough to do で「とても…なので〜する」を表します。",
+          "audio_file": "L13_Q008.wav"
+        },
+        {
+          "id": "L13_Q009",
+          "type": "reorder",
+          "sentence": "I regret ( ) you that your application has been rejected.",
+          "translation": "残念ながらあなたの応募が却下されたことをお伝えしなければなりません。",
+          "options": [
+            "to",
+            "inform"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "regret to do で「残念ながら〜する」という意味になります。",
+          "audio_file": "L13_Q009.wav"
+        },
+        {
+          "id": "L13_Q010",
+          "type": "reorder",
+          "sentence": "We are looking forward to ( ) part in the festival.",
+          "translation": "私たちはその祭りに参加するのを楽しみに待っている。",
+          "options": [
+            "taking"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "look forward to の to は前置詞なので、後ろは動名詞 taking になります。",
+          "audio_file": "L13_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "area_id": 2,
+      "title": "Lesson 14: 分詞構文（時・理由・付帯状況）",
+      "format": "reorder",
+      "cheat_sheet": {
+        "title": "分詞構文の見極め",
+        "points": [
+          "接続詞＋主語を省略し、動詞を -ing にした構文。",
+          "時（〜するとき）: Seeing the police, he ran away.",
+          "理由（〜なので）: Feeling sick, I stayed in bed.",
+          "否定の分詞構文: Not knowing what to say, I kept silent.",
+          "完了分詞構文（主節より昔）: Having finished my homework, I went out.",
+          "独立分詞構文（慣用表現）: Generally speaking（一般的に言えば）, Strictly speaking（厳密に言えば）"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L14_Q001",
+          "type": "reorder",
+          "sentence": "( ) sick, she decided to stay home from school.",
+          "translation": "気分が悪かったので、彼女は学校を休んで家にいることにした。",
+          "options": [
+            "Feeling"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Because she felt sick を分詞構文にすると Feeling sick となります。",
+          "audio_file": "L14_Q001.wav"
+        },
+        {
+          "id": "L14_Q002",
+          "type": "reorder",
+          "sentence": "( ) what to do next, I asked the teacher for advice.",
+          "translation": "次に何をすべきか分からなかったので、私は先生に助言を求めた。",
+          "options": [
+            "Not",
+            "knowing"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "分詞構文の否定形は、分詞の直前に Not を置いて Not knowing とします。",
+          "audio_file": "L14_Q002.wav"
+        },
+        {
+          "id": "L14_Q003",
+          "type": "reorder",
+          "sentence": "( ) the task, we went to a cafe to celebrate.",
+          "translation": "課題を終えたので、私たちはお祝いのためにカフェに行った。",
+          "options": [
+            "Having",
+            "finished"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "カフェに行った（過去）よりも前に課題を終えたので、完了分詞構文 Having finished になります。",
+          "audio_file": "L14_Q003.wav"
+        },
+        {
+          "id": "L14_Q004",
+          "type": "reorder",
+          "sentence": "( ) in easy Japanese, this guidebook is suitable for foreigners.",
+          "translation": "平易な日本語で書かれているので、このガイドブックは外国人に適している。",
+          "options": [
+            "Written"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "ガイドブックが「書かれている（受動態）」なので、過去分詞 Written から始まります。",
+          "audio_file": "L14_Q004.wav"
+        },
+        {
+          "id": "L14_Q005",
+          "type": "reorder",
+          "sentence": "( ) speaking, Japanese students are very polite and quiet.",
+          "translation": "一般的に言えば、日本の学生はとても礼儀正しく静かだ。",
+          "options": [
+            "Generally"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Generally speaking で「一般的に言えば」という頻出の独立分詞構文です。",
+          "audio_file": "L14_Q005.wav"
+        },
+        {
+          "id": "L14_Q006",
+          "type": "reorder",
+          "sentence": "He sat on the bench, ( ) the sunset over the sea.",
+          "translation": "彼は海に沈む夕日を眺めながら、ベンチに座っていた。",
+          "options": [
+            "watching"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "「〜しながら」という付帯状況を表す分詞構文 watching です。",
+          "audio_file": "L14_Q006.wav"
+        },
+        {
+          "id": "L14_Q007",
+          "type": "reorder",
+          "sentence": "( ) all things into consideration, we decided to cancel the trip.",
+          "translation": "すべてのことを考慮に入れて、私たちは旅行を中止することに決めた。",
+          "options": [
+            "Taking"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Taking all things into consideration で「すべてのことを考慮すると」という決まり文句です。",
+          "audio_file": "L14_Q007.wav"
+        },
+        {
+          "id": "L14_Q008",
+          "type": "reorder",
+          "sentence": "( ) from his accent, he must be from Australia.",
+          "translation": "彼のアクセント（訛り）から判断すると、彼はオーストラリア出身に違いない。",
+          "options": [
+            "Judging"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Judging from 〜 で「〜から判断すると」という独立分詞構文です。",
+          "audio_file": "L14_Q008.wav"
+        },
+        {
+          "id": "L14_Q009",
+          "type": "reorder",
+          "sentence": "Weather ( ), we will hold the sports festival outside.",
+          "translation": "天気が許せば、私たちは運動会を外で開催します。",
+          "options": [
+            "permitting"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Weather permitting で「天気が許せば」という慣用表現です。",
+          "audio_file": "L14_Q009.wav"
+        },
+        {
+          "id": "L14_Q010",
+          "type": "reorder",
+          "sentence": "( ) born and raised in Paris, she speaks fluent French.",
+          "translation": "パリで生まれ育ったので、彼女は流暢なフランス語を話す。",
+          "options": [
+            "Having",
+            "been"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "「生まれ育った」という過去の受動態の完了分詞構文 Having been born and raised です。",
+          "audio_file": "L14_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "area_id": 2,
+      "title": "Lesson 15: 関係詞（関係代名詞・関係副詞）",
+      "format": "reorder",
+      "cheat_sheet": {
+        "title": "関係詞の使い分け",
+        "points": [
+          "関係代名詞（who, which, that）: 後ろの文に主語や目的語が欠けている（不完全な文）",
+          "関係副詞（where, when, why, how）: 後ろの文が完全な文！",
+          "  場所 + where: This is the place where I was born.",
+          "  時 + when: I remember the day when we first met.",
+          "  理由 + why: That is the reason why she was angry.",
+          "  先行詞の省略: This is (the place) where my father works."
+        ]
+      },
+      "questions": [
+        {
+          "id": "L15_Q001",
+          "type": "reorder",
+          "sentence": "Kyoto is the city ( ) when I was a child.",
+          "translation": "京都は私が子どもの頃に育った街です。",
+          "options": [
+            "where",
+            "I",
+            "grew",
+            "up"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "explanation": "先行詞 the city（場所）に対して、後ろに完全な文（I grew up）が続くので関係副詞 where を用います。",
+          "audio_file": "L15_Q001.wav"
+        },
+        {
+          "id": "L15_Q002",
+          "type": "reorder",
+          "sentence": "He lives in Niigata, ( ) for its delicious rice.",
+          "translation": "彼は美味しい米で知られている新潟に住んでいる。",
+          "options": [
+            "which",
+            "is",
+            "known"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Niigata を説明する継続用法（コンマの後ろ）であり、主語が欠けているので関係代名詞 which is known となります。",
+          "audio_file": "L15_Q002.wav"
+        },
+        {
+          "id": "L15_Q003",
+          "type": "reorder",
+          "sentence": "What can be the reason ( ) so suddenly?",
+          "translation": "その計画がそれほど突然に失敗した理由として何が考えられますか？",
+          "options": [
+            "why",
+            "the",
+            "project",
+            "failed"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "explanation": "先行詞 the reason（理由）を修飾する関係副詞は why です。",
+          "audio_file": "L15_Q003.wav"
+        },
+        {
+          "id": "L15_Q004",
+          "type": "reorder",
+          "sentence": "Jane is hoping to work at the company ( ) for thirty years.",
+          "translation": "ジェーンは父親が30年間働いていた会社で働くことを望んでいる。",
+          "options": [
+            "where",
+            "her",
+            "father",
+            "worked"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "explanation": "the company（場所）に対して、後ろの文が完全なので関係副詞 where が適切です。",
+          "audio_file": "L15_Q004.wav"
+        },
+        {
+          "id": "L15_Q005",
+          "type": "reorder",
+          "sentence": "She wouldn't tell me ( ) absent yesterday.",
+          "translation": "彼女は昨日なぜ欠席したのかを私に話そうとしなかった。",
+          "options": [
+            "the",
+            "reason",
+            "why",
+            "she",
+            "was"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "explanation": "「彼女が欠席した理由」は the reason why she was absent です。",
+          "audio_file": "L15_Q005.wav"
+        },
+        {
+          "id": "L15_Q006",
+          "type": "reorder",
+          "sentence": "This is a picture of the town ( ) in.",
+          "translation": "これは私の父が育った町の写真です。",
+          "options": [
+            "which",
+            "my",
+            "father",
+            "grew",
+            "up"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "explanation": "文末に前置詞 in が残っているため、不完全な文となり関係代名詞 which を用います。",
+          "audio_file": "L15_Q006.wav"
+        },
+        {
+          "id": "L15_Q007",
+          "type": "reorder",
+          "sentence": "I like the way ( ) to everyone.",
+          "translation": "私は彼女が誰に対しても親切に話しかけるその話し方が好きだ。",
+          "options": [
+            "she",
+            "talks"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "the way how とは言えず、the way の後ろに直接 S+V（she talks）を続けます。",
+          "audio_file": "L15_Q007.wav"
+        },
+        {
+          "id": "L15_Q008",
+          "type": "reorder",
+          "sentence": "The architect ( ) this building won an international prize.",
+          "translation": "この建物を設計した建築家は国際的な賞を受賞した。",
+          "options": [
+            "who",
+            "designed"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "先行詞 The architect（人）を修飾する主格の関係代名詞 who designed です。",
+          "audio_file": "L15_Q008.wav"
+        },
+        {
+          "id": "L15_Q009",
+          "type": "reorder",
+          "sentence": "That is ( ) he became friends with the famous singer.",
+          "translation": "そのようにして彼はその有名な歌手と友人になったのだ。",
+          "options": [
+            "how"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "That is how 〜 で「そのようにして〜した、そうやって〜した」という重要表現です。",
+          "audio_file": "L15_Q009.wav"
+        },
+        {
+          "id": "L15_Q010",
+          "type": "reorder",
+          "sentence": "I met a boy ( ) father is a pilot.",
+          "translation": "私は父親がパイロットをしている少年に会った。",
+          "options": [
+            "whose"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "「その少年の父親」という所有格の関係を表すので whose father となります。",
+          "audio_file": "L15_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "area_id": 2,
+      "title": "Lesson 16: 比較表現（倍数・最上級・構文）",
+      "format": "reorder",
+      "cheat_sheet": {
+        "title": "準2級頻出の比較構文",
+        "points": [
+          "倍数表現: 倍数詞 + as 〜 as（twice as fast as: 2倍速く）",
+          "the + 比較級 〜, the + 比較級 …: 〜すればするほど、ますます…だ",
+          "the 比較級 of the two: 2つの中でより〜な方",
+          "as many / much as + 数字: 〜もの数/量の",
+          "no fewer than + 数字: 〜もの数（= as many as）",
+          "as soon as possible: できるだけ早く（= as soon as one can）"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L16_Q001",
+          "type": "reorder",
+          "sentence": "He is ( ) boys in the class.",
+          "translation": "彼はそのクラスの2人の少年のうち、背の高い方だ。",
+          "options": [
+            "the",
+            "taller",
+            "of",
+            "the",
+            "two"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "explanation": "「2人のうちより〜な方」は the + 比較級 + of the two という定型構文です。",
+          "audio_file": "L16_Q001.wav"
+        },
+        {
+          "id": "L16_Q002",
+          "type": "reorder",
+          "sentence": "Cheetahs can run ( ) a lion.",
+          "translation": "チーターはライオンの約2倍の速さで走ることができる。",
+          "options": [
+            "almost",
+            "twice",
+            "as",
+            "fast",
+            "as"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "explanation": "「2倍の速さ」は twice as fast as という倍数表現を用います。",
+          "audio_file": "L16_Q002.wav"
+        },
+        {
+          "id": "L16_Q003",
+          "type": "reorder",
+          "sentence": "( ) he ran, the less tired he felt.",
+          "translation": "走れば走るほど、彼は疲れを感じなくなった。",
+          "options": [
+            "The",
+            "longer"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "The + 比較級 〜, the + 比較級 … で「〜すればするほどますます…」を表します。",
+          "audio_file": "L16_Q003.wav"
+        },
+        {
+          "id": "L16_Q004",
+          "type": "reorder",
+          "sentence": "This luxury watch is ( ) that ordinary one.",
+          "translation": "この高級時計はあの普通の時計の3倍の値段がする。",
+          "options": [
+            "three",
+            "times",
+            "as",
+            "expensive",
+            "as"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "explanation": "「3倍〜だ」は three times as expensive as とします。",
+          "audio_file": "L16_Q004.wav"
+        },
+        {
+          "id": "L16_Q005",
+          "type": "reorder",
+          "sentence": "Ken can run ( ) in his school.",
+          "translation": "ケンは学校の他のどの生徒よりも速く走ることができる。",
+          "options": [
+            "faster",
+            "than",
+            "any",
+            "other",
+            "student"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "explanation": "比較級 + than any other + 単数名詞 で「他のどの〜よりも…だ（=最上級の意味）」となります。",
+          "audio_file": "L16_Q005.wav"
+        },
+        {
+          "id": "L16_Q006",
+          "type": "reorder",
+          "sentence": "He read as ( ) two hundred books last year.",
+          "translation": "彼は昨年、200冊もの本を読んだ。",
+          "options": [
+            "many",
+            "as"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "数えられる名詞の数量を強調して「〜もの数」と言うときは as many as + 数値 です。",
+          "audio_file": "L16_Q006.wav"
+        },
+        {
+          "id": "L16_Q007",
+          "type": "reorder",
+          "sentence": "There were no ( ) fifty people at the lecture.",
+          "translation": "その講演会には50人もの人々が参加していた。",
+          "options": [
+            "fewer",
+            "than"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "no fewer than + 数値 で「〜もの多くの（= as many as）」を表します。",
+          "audio_file": "L16_Q007.wav"
+        },
+        {
+          "id": "L16_Q008",
+          "type": "reorder",
+          "sentence": "Please send me the feedback ( ) possible.",
+          "translation": "できるだけ早く私に感想（フィードバック）を送ってください。",
+          "options": [
+            "as",
+            "soon",
+            "as"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "as soon as possible で「できるだけ早く」という定番表現です。",
+          "audio_file": "L16_Q008.wav"
+        },
+        {
+          "id": "L16_Q009",
+          "type": "reorder",
+          "sentence": "Nothing is ( ) health.",
+          "translation": "健康ほど大切なものはない。",
+          "options": [
+            "more",
+            "important",
+            "than"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Nothing is + 比較級 + than 〜 で「〜ほど…なものはない」を表します。",
+          "audio_file": "L16_Q009.wav"
+        },
+        {
+          "id": "L16_Q010",
+          "type": "reorder",
+          "sentence": "She likes playing tennis ( ) than watching it.",
+          "translation": "彼女はテニスを見るよりもプレイすることのほうがずっと好きだ。",
+          "options": [
+            "much",
+            "better"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "比較級 better を強調するために much（または far）を直前に置きます。",
+          "audio_file": "L16_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "area_id": 3,
+      "title": "Lesson 17: 日常会話・対話応答",
+      "format": "choice",
+      "cheat_sheet": {
+        "title": "日常対話の定番フレーズ",
+        "points": [
+          "What's the matter? / What's wrong?: どうしたの？",
+          "Can you do me a favor?: お願いを聞いてもらえますか？",
+          "My pleasure. / Don't mention it.: どういたしまして。",
+          "It depends.: 場合によります。",
+          "That's a pity. / That's too bad.: それはお気の毒に（残念ですね）。",
+          "Why don't we 〜?: 〜しませんか？（提案）",
+          "How about 〜ing?: 〜するのはどう？"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L17_Q001",
+          "type": "choice",
+          "sentence": "A: Carol, what's wrong? You look pale.\nB: ( ).",
+          "translation": "A: キャロル、どうしたの？顔色が悪いよ。\nB: （ ）",
+          "options": [
+            "I left my wallet at home.",
+            "We are going to arrive too early.",
+            "That's a very kind offer.",
+            "I had a great time today."
+          ],
+          "answer": 0,
+          "explanation": "顔色が悪い理由を聞かれているので「家に財布を忘れてきてしまった」と困っている理由を答えるのが自然です。",
+          "audio_file": "L17_Q001.wav"
+        },
+        {
+          "id": "L17_Q002",
+          "type": "choice",
+          "sentence": "A: David, could you do me a favor?\nB: Sure, ( )?",
+          "translation": "A: デイビッド、お願いを聞いてもらえる？\nB: もちろん、（ ）？",
+          "options": [
+            "what is it",
+            "who are you",
+            "why not me",
+            "how much is it"
+          ],
+          "answer": 0,
+          "explanation": "お願いを引き受けるときの「もちろん、何ですか？」は Sure, what is it? が自然です。",
+          "audio_file": "L17_Q002.wav"
+        },
+        {
+          "id": "L17_Q003",
+          "type": "choice",
+          "sentence": "A: Thank you so much for helping me move the heavy sofa.\nB: ( )! Glad I could help.",
+          "translation": "A: 重いソファを動かすのを手伝ってくれて本当にありがとう。\nB: （ ）！役に立ててよかったです。",
+          "options": [
+            "My pleasure",
+            "That's terrible",
+            "Never mind that",
+            "It depends"
+          ],
+          "answer": 0,
+          "explanation": "感謝に対する「どういたしまして、喜んで！」は My pleasure です。",
+          "audio_file": "L17_Q003.wav"
+        },
+        {
+          "id": "L17_Q004",
+          "type": "choice",
+          "sentence": "A: Are you going to join the school picnic this weekend?\nB: Well, ( ). If the weather is good, I will.",
+          "translation": "A: 今週末の学校のピクニックに参加する？\nB: ええと、（ ）。天気が良ければ行くよ。",
+          "options": [
+            "it depends",
+            "I agree with you",
+            "it's impossible",
+            "no problem"
+          ],
+          "answer": 0,
+          "explanation": "「天気が良ければ行く」と条件付きなので「場合によるね」を表す It depends が正解。",
+          "audio_file": "L17_Q004.wav"
+        },
+        {
+          "id": "L17_Q005",
+          "type": "choice",
+          "sentence": "A: I'm afraid I failed the final driving test again.\nB: Oh, ( ). Don't give up!",
+          "translation": "A: 残念ながら、また運転免許の最終試験に落ちてしまったんだ。\nB: おや、（ ）。諦めないで！",
+          "options": [
+            "that's too bad",
+            "sounds great",
+            "congratulations",
+            "you are lucky"
+          ],
+          "answer": 0,
+          "explanation": "残念な報告に対する同情として「それはお気の毒に、残念ですね」の That's too bad（または That's a pity）が適切。",
+          "audio_file": "L17_Q005.wav"
+        },
+        {
+          "id": "L17_Q006",
+          "type": "choice",
+          "sentence": "A: It's a lovely sunny day. ( ) for a walk in the park?\nB: That sounds wonderful!",
+          "translation": "A: とても気持ちの良い晴れの日だね。公園に散歩に行きませんか？\nB: 素敵ですね！",
+          "options": [
+            "Why don't we go",
+            "How come you go",
+            "Where should we go",
+            "Do you have to go"
+          ],
+          "answer": 0,
+          "explanation": "「一緒に〜しませんか？」という提案は Why don't we + 動詞の原形 です。",
+          "audio_file": "L17_Q006.wav"
+        },
+        {
+          "id": "L17_Q007",
+          "type": "choice",
+          "sentence": "A: I'm really tired after running the marathon.\nB: ( ) taking a warm bath and resting?",
+          "translation": "A: マラソンを走った後で本当に疲れたよ。\nB: 温かいお風呂に入って休むのはどう？",
+          "options": [
+            "How about",
+            "Why not",
+            "What if",
+            "Would you"
+          ],
+          "answer": 0,
+          "explanation": "後ろに動名詞（taking）が続いているので「〜するのはどう？」は How about -ing です。",
+          "audio_file": "L17_Q007.wav"
+        },
+        {
+          "id": "L17_Q008",
+          "type": "choice",
+          "sentence": "A: Could you tell me the time, please?\nB: Sure, ( ).",
+          "translation": "A: 時間を教えていただけますか？\nB: もちろん、（ ）。",
+          "options": [
+            "it is half past two",
+            "I have no watch",
+            "it is Tuesday today",
+            "you are welcome"
+          ],
+          "answer": 0,
+          "explanation": "時間を尋ねられているので具体的な時刻「2時半ですよ」と答えるのが自然です。",
+          "audio_file": "L17_Q008.wav"
+        },
+        {
+          "id": "L17_Q009",
+          "type": "choice",
+          "sentence": "A: I'm so sorry I broke your favorite coffee cup.\nB: ( ). It was very old anyway.",
+          "translation": "A: あなたのお気に入りのコーヒーカップを割ってしまって本当にごめんなさい。\nB: （ ）。どうせとても古いものだったから。",
+          "options": [
+            "Don't worry about it",
+            "I can't believe it",
+            "You must pay for it",
+            "It's none of my business"
+          ],
+          "answer": 0,
+          "explanation": "謝罪に対する「気にしないで」は Don't worry about it が適切です。",
+          "audio_file": "L17_Q009.wav"
+        },
+        {
+          "id": "L17_Q010",
+          "type": "choice",
+          "sentence": "A: I've got two tickets for the concert tomorrow!\nB: ( )! I'd love to go with you.",
+          "translation": "A: 明日のコンサートのチケットが2枚手に入ったんだ！\nB: （ ）！ぜひ一緒に行きたいな。",
+          "options": [
+            "Lucky you",
+            "Take your time",
+            "Never mind",
+            "Excuse me"
+          ],
+          "answer": 0,
+          "explanation": "幸運な相手に対して「ついてるね！いいなあ！」と言うフレーズは Lucky you! です。",
+          "audio_file": "L17_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "area_id": 3,
+      "title": "Lesson 18: 道案内・買い物・食事",
+      "format": "choice",
+      "cheat_sheet": {
+        "title": "店舗や街中での決まり文句",
+        "points": [
+          "Can I help you? / May I help you?: いらっしゃいませ、何かお探しですか？",
+          "I'm just looking, thank you.: 見ているだけです、ありがとう。",
+          "Can I try this on?: これを試着してもいいですか？",
+          "Go down this street for two blocks.: この道を2ブロック進んでください。",
+          "Turn right at the second traffic light.: 2つ目の信号を右に曲がってください。",
+          "You can't miss it.: すぐに見つかりますよ（見落とすはずがありません）。",
+          "Are you ready to order?: ご注文はお決まりですか？",
+          "Check, please. / Bill, please.: お会計をお願いします。"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L18_Q001",
+          "type": "choice",
+          "sentence": "A: Excuse me, how can I get to the central museum?\nB: Go straight for two blocks and turn left. You ( ) it.",
+          "translation": "A: すみません、中央博物館へはどう行けばいいですか？\nB: まっすぐ2ブロック進んで左に曲がってください。（ ）。",
+          "options": [
+            "can't miss",
+            "don't find",
+            "won't see",
+            "can lose"
+          ],
+          "answer": 0,
+          "explanation": "道案内の最後に「すぐに見つかりますよ」と言う定番フレーズは You can't miss it です。",
+          "audio_file": "L18_Q001.wav"
+        },
+        {
+          "id": "L18_Q002",
+          "type": "choice",
+          "sentence": "Clerk: May I help you find something?  Customer: No, thank you. ( ).",
+          "translation": "店員: 何かお探しですか？ 客: いいえ、結構です。（ ）。",
+          "options": [
+            "I'm just looking",
+            "I'll buy all of them",
+            "It's too expensive",
+            "Where is the exit"
+          ],
+          "answer": 0,
+          "explanation": "店員に声をかけられて「ただ見ているだけです」と答える定番表現は I'm just looking です。",
+          "audio_file": "L18_Q002.wav"
+        },
+        {
+          "id": "L18_Q003",
+          "type": "choice",
+          "sentence": "Customer: This jacket looks very nice. ( )?  Clerk: Of course, the fitting room is right over there.",
+          "translation": "客: このジャケットはとても素敵ですね。（ ）？ 店員: もちろん、試着室はあちらにございます。",
+          "options": [
+            "Can I try this on",
+            "Do you have a discount",
+            "Can I exchange it",
+            "How long will it take"
+          ],
+          "answer": 0,
+          "explanation": "試着室を案内されているので「試着してもいいですか？」の Can I try this on? が正解。",
+          "audio_file": "L18_Q003.wav"
+        },
+        {
+          "id": "L18_Q004",
+          "type": "choice",
+          "sentence": "Waiter: Are you ready to order, sir?  Customer: Yes, ( ) the grilled salmon, please.",
+          "translation": "ウェイター: ご注文はお決まりですか？ 客: はい、焼き鮭を（ ）お願いします。",
+          "options": [
+            "I'd like to have",
+            "I don't want",
+            "you should bring",
+            "I'm full with"
+          ],
+          "answer": 0,
+          "explanation": "レストランでの注文で「〜をお願いします」は I'd like (to have) 〜 です。",
+          "audio_file": "L18_Q004.wav"
+        },
+        {
+          "id": "L18_Q005",
+          "type": "choice",
+          "sentence": "Customer: We have finished our meal. Could we have the ( ), please?  Waiter: Certainly, right away.",
+          "translation": "客: 食事を終えました。（ ）をいただけますか？ ウェイター: かしこまりました、すぐにお持ちします。",
+          "options": [
+            "check",
+            "menu",
+            "fork",
+            "table"
+          ],
+          "answer": 0,
+          "explanation": "食事後にお会計をお願いするときは check（または bill）を使います。",
+          "audio_file": "L18_Q005.wav"
+        },
+        {
+          "id": "L18_Q006",
+          "type": "choice",
+          "sentence": "A: Is this seat taken?\nB: No, ( ). Go ahead and sit down.",
+          "translation": "A: この席は空いていますか（誰か座っていますか）？\nB: いいえ、（ ）。どうぞお座りください。",
+          "options": [
+            "it's free",
+            "it's occupied",
+            "I am sitting here",
+            "you can't sit"
+          ],
+          "answer": 0,
+          "explanation": "席が空いている場合は No, it's free. や No, not at all. と答えます。",
+          "audio_file": "L18_Q006.wav"
+        },
+        {
+          "id": "L18_Q007",
+          "type": "choice",
+          "sentence": "Clerk: How would you like to pay?  Customer: ( ), please.",
+          "translation": "店員: お支払いはどのようにされますか？ 客: （ ）でお願いします。",
+          "options": [
+            "By credit card",
+            "In Japanese yen only",
+            "With my bag",
+            "At three o'clock"
+          ],
+          "answer": 0,
+          "explanation": "支払い方法を聞かれているので By credit card（クレジットカードで）または By cash（現金で）と答えます。",
+          "audio_file": "L18_Q007.wav"
+        },
+        {
+          "id": "L18_Q008",
+          "type": "choice",
+          "sentence": "A: Excuse me, does this bus go to the city hall?\nB: No, you ( ) take bus number 12 instead.",
+          "translation": "A: すみません、このバスは市役所に行きますか？\nB: いいえ、代わりに12番のバスに乗らなければなりませんよ。",
+          "options": [
+            "should",
+            "would",
+            "used to",
+            "don't have to"
+          ],
+          "answer": 0,
+          "explanation": "「〜に乗るべきですよ、乗ったほうがいいですよ」とアドバイスしているので should が適切。",
+          "audio_file": "L18_Q008.wav"
+        },
+        {
+          "id": "L18_Q009",
+          "type": "choice",
+          "sentence": "Customer: Do you have this sweater in a larger ( )?  Clerk: Let me check our stock in the back.",
+          "translation": "客: このセーターのもっと大きな（ ）はありますか？ 店員: 奥の在庫を確認してまいります。",
+          "options": [
+            "size",
+            "color",
+            "price",
+            "material"
+          ],
+          "answer": 0,
+          "explanation": "larger size で「より大きなサイズ」となります。",
+          "audio_file": "L18_Q009.wav"
+        },
+        {
+          "id": "L18_Q010",
+          "type": "choice",
+          "sentence": "A: How far is it from here to the station on foot?\nB: It takes about ( ) minutes.",
+          "translation": "A: ここから駅まで歩いてどのくらいですか？\nB: （ ）分ほどかかりますよ。",
+          "options": [
+            "ten",
+            "miles",
+            "meters",
+            "o'clock"
+          ],
+          "answer": 0,
+          "explanation": "所要時間を尋ねられているので It takes about ten minutes（約10分）と時間を答えます。",
+          "audio_file": "L18_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "area_id": 3,
+      "title": "Lesson 19: 電話応対・メッセージ",
+      "format": "choice",
+      "cheat_sheet": {
+        "title": "電話の頻出フレーズ",
+        "points": [
+          "Hello, may I speak to Mr. Smith?: スミスさんはいらっしゃいますか？",
+          "This is Tanaka speaking.: （こちらは）田中です。",
+          "Hold on, please.: 少々お待ちください。",
+          "He is on another line right now.: 彼は現在、他の電話に出ております。",
+          "He is out of the office.: 彼は外出しております。",
+          "Would you like to leave a message?: 伝言を残されますか？",
+          "Could you ask him to call me back?: 折り返しお電話をいただけますか？"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L19_Q001",
+          "type": "choice",
+          "sentence": "Caller: Hello, may I speak to Ms. Mackey, please?  Receptionist: ( ). I will connect you right away.",
+          "translation": "発信者: もしもし、マッキーさんはいらっしゃいますか？ 受付: （ ）。すぐにお繋ぎいたします。",
+          "options": [
+            "Hold on, please",
+            "Who are you",
+            "Call again later",
+            "She is sleeping"
+          ],
+          "answer": 0,
+          "explanation": "電話で「少々お待ちください」と保留するときは Hold on, please. が定番です。",
+          "audio_file": "L19_Q001.wav"
+        },
+        {
+          "id": "L19_Q002",
+          "type": "choice",
+          "sentence": "Caller: Hello, is Ken there?  Ken: Yes, ( ) speaking.",
+          "translation": "発信者: もしもし、ケンくんはいる？ ケン: うん、僕だよ（ケンが話しています）。",
+          "options": [
+            "this is",
+            "I am",
+            "here is",
+            "that is"
+          ],
+          "answer": 0,
+          "explanation": "電話で自分が本人であることを伝えるときは This is [名前] speaking. と言います。",
+          "audio_file": "L19_Q002.wav"
+        },
+        {
+          "id": "L19_Q003",
+          "type": "choice",
+          "sentence": "Receptionist: I'm afraid Mr. Baker is out of the office. ( )?  Caller: Yes, please ask him to call me back.",
+          "translation": "受付: あいにくベイカーは外出しております。（ ）？ 発信者: はい、折り返しお電話をくださるようお伝えください。",
+          "options": [
+            "Would you like to leave a message",
+            "Can you visit us tomorrow",
+            "Do you know his mobile number",
+            "Why did you call him"
+          ],
+          "answer": 0,
+          "explanation": "不在時に「伝言（メッセージ）を残されますか？」と尋ねる決まり文句は Would you like to leave a message? です。",
+          "audio_file": "L19_Q003.wav"
+        },
+        {
+          "id": "L19_Q004",
+          "type": "choice",
+          "sentence": "Caller: I'm calling about tomorrow's schedule.  Colleague: He is on ( ) line right now. Could you call back in ten minutes?",
+          "translation": "発信者: 明日の予定についてお電話したのですが。 同僚: 彼は現在、他の電話に出ております。10分後にお掛け直しいただけますか？",
+          "options": [
+            "another",
+            "other",
+            "second",
+            "different"
+          ],
+          "answer": 0,
+          "explanation": "「他の電話（別の回線）に出ている」は on another line と言います。",
+          "audio_file": "L19_Q004.wav"
+        },
+        {
+          "id": "L19_Q005",
+          "type": "choice",
+          "sentence": "A: Hello, this is John from ABC Company. May I ask ( )?\nB: This is Greg from Open Air.",
+          "translation": "A: もしもし、ABCカンパニーのジョンです。どちら様でしょうか？\nB: オープンエアーのグレッグです。",
+          "options": [
+            "who's calling",
+            "where you are",
+            "what you want",
+            "how old you are"
+          ],
+          "answer": 0,
+          "explanation": "相手の名前を尋ねる丁寧な電話表現は May I ask who's calling? です。",
+          "audio_file": "L19_Q005.wav"
+        },
+        {
+          "id": "L19_Q006",
+          "type": "choice",
+          "sentence": "Caller: Could you repeat your email address, please?  Receiver: Sure, I will ( ) it for you: K-E-N-N-Y.",
+          "translation": "発信者: メールアドレスをもう一度言っていただけますか？ 受信者: もちろんです、綴りを言いますね: K-E-N-N-Y。",
+          "options": [
+            "spell",
+            "write",
+            "speak",
+            "send"
+          ],
+          "answer": 0,
+          "explanation": "一文字ずつアルファベットを読み上げる動作は spell です。",
+          "audio_file": "L19_Q006.wav"
+        },
+        {
+          "id": "L19_Q007",
+          "type": "choice",
+          "sentence": "Caller: I'd like to make an ( ) to see Dr. Evans tomorrow afternoon.",
+          "translation": "明日の午後、エヴァンズ医師の診察の予約を取りたいのですが。",
+          "options": [
+            "appointment",
+            "invitation",
+            "apology",
+            "order"
+          ],
+          "answer": 0,
+          "explanation": "医師や人と会う面会の約束・予約は appointment（make an appointment）と言います。",
+          "audio_file": "L19_Q007.wav"
+        },
+        {
+          "id": "L19_Q008",
+          "type": "choice",
+          "sentence": "A: I'm sorry, I think you have the ( ) number. There is no Mr. Green here.",
+          "translation": "すみません、番号をお間違えだと思います。ここにはグリーンという者はいません。",
+          "options": [
+            "wrong",
+            "bad",
+            "mistake",
+            "false"
+          ],
+          "answer": 0,
+          "explanation": "間違い電話のときは You have the wrong number. と言います。",
+          "audio_file": "L19_Q008.wav"
+        },
+        {
+          "id": "L19_Q009",
+          "type": "choice",
+          "sentence": "A: I can hardly hear you. The connection is very ( ). Could you speak a little louder?",
+          "translation": "声がほとんど聞こえません。電波状況（接続）がとても悪いです。もう少し大きな声で話していただけますか？",
+          "options": [
+            "bad",
+            "wrong",
+            "dark",
+            "thin"
+          ],
+          "answer": 0,
+          "explanation": "電話の電波や回線の接続状態が悪いときは The connection is bad と表現します。",
+          "audio_file": "L19_Q009.wav"
+        },
+        {
+          "id": "L19_Q010",
+          "type": "choice",
+          "sentence": "Thank you for calling. Have a wonderful day. ( )!",
+          "translation": "お電話ありがとうございました。良い一日をお過ごしください。それでは失礼します！",
+          "options": [
+            "Goodbye",
+            "Pardon",
+            "Hello",
+            "Welcome"
+          ],
+          "answer": 0,
+          "explanation": "電話の切る際の別れの挨拶は Goodbye! です。",
+          "audio_file": "L19_Q010.wav"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "area_id": 4,
+      "title": "Lesson 20: 語彙・熟語 予想テスト",
+      "format": "choice",
+      "cheat_sheet": {
+        "title": "語彙テストの心得",
+        "points": [
+          "文全体の意味（文脈）を正確に把握する。",
+          "前後の前置詞との結びつき（コロケーション）に注目する。",
+          "消去法を活用して、明らかに意味が合わない選択肢を削る。"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L20_Q001",
+          "type": "choice",
+          "sentence": "Josh was stuck in heavy traffic, so he came ( ) to work.",
+          "translation": "ジョシュはひどい渋滞に巻き込まれたため、仕事に遅れて到着した。",
+          "options": [
+            "late",
+            "early",
+            "recently",
+            "soon"
+          ],
+          "answer": 0,
+          "explanation": "渋滞に巻き込まれたので「遅れて（late）」到着したことになります。",
+          "audio_file": "L20_Q001.wav"
+        },
+        {
+          "id": "L20_Q002",
+          "type": "choice",
+          "sentence": "David had ( ) knowledge of Japanese customs when he first came to Tokyo.",
+          "translation": "デイビッドが初めて東京に来た時、日本の習慣に関する知識はほとんどなかった。",
+          "options": [
+            "little",
+            "few",
+            "a few",
+            "many"
+          ],
+          "answer": 0,
+          "explanation": "knowledge（知識）は不可算名詞なので「ほとんどない」は little です。",
+          "audio_file": "L20_Q002.wav"
+        },
+        {
+          "id": "L20_Q003",
+          "type": "choice",
+          "sentence": "Tom is only ten years old, but surprisingly he solved the math problem with ( ).",
+          "translation": "トムはわずか10歳だが、驚いたことにその数学の問題を難なく解いた。",
+          "options": [
+            "ease",
+            "easy",
+            "easier",
+            "easily"
+          ],
+          "answer": 0,
+          "explanation": "前置詞 with の後ろには名詞が続くので with ease（= easily）が正解。",
+          "audio_file": "L20_Q003.wav"
+        },
+        {
+          "id": "L20_Q004",
+          "type": "choice",
+          "sentence": "When thinking about the plot of his next novel, the writer ( ) a great idea.",
+          "translation": "次の小説のプロットを考えていた時、その作家は素晴らしいアイデアを思いついた。",
+          "options": [
+            "came up with",
+            "took after",
+            "looked up to",
+            "played a part in"
+          ],
+          "answer": 0,
+          "explanation": "アイデアなどを「思いつく」は came up with です。",
+          "audio_file": "L20_Q004.wav"
+        },
+        {
+          "id": "L20_Q005",
+          "type": "choice",
+          "sentence": "Although Bob thought the job offer was attractive, he was too busy to ( ) it.",
+          "translation": "ボブはその仕事のオファーが魅力的だと思ったが、忙しすぎてそれを受け入れることができなかった。",
+          "options": [
+            "accept",
+            "damage",
+            "reject",
+            "borrow"
+          ],
+          "answer": 0,
+          "explanation": "too busy to accept it で「忙しすぎて受け入れることができない」となります。",
+          "audio_file": "L20_Q005.wav"
+        },
+        {
+          "id": "L20_Q006",
+          "type": "choice",
+          "sentence": "Some students prefer studying alone, while ( ) enjoy working with friends.",
+          "translation": "一人で勉強することを好む生徒もいれば、友達と一緒に勉強することを楽しむ生徒もいる。",
+          "options": [
+            "others",
+            "other",
+            "another",
+            "the other"
+          ],
+          "answer": 0,
+          "explanation": "Some 〜 while others … で「〜な人もいれば、…な人もいる」という定番対比表現です。",
+          "audio_file": "L20_Q006.wav"
+        },
+        {
+          "id": "L20_Q007",
+          "type": "choice",
+          "sentence": "Mr. Hill had to ( ) with various accusations before his business succeeded.",
+          "translation": "ヒル氏はビジネスが成功する前に、様々な非難に耐えなければならなかった。",
+          "options": [
+            "put up",
+            "look down on",
+            "see off",
+            "feel like"
+          ],
+          "answer": 0,
+          "explanation": "put up with で「〜に耐える、我慢する」を表します。",
+          "audio_file": "L20_Q007.wav"
+        },
+        {
+          "id": "L20_Q008",
+          "type": "choice",
+          "sentence": "Greg was hired as a ( ) at the National Institute of Science.",
+          "translation": "グレッグは国立科学研究所の研究員として雇われた。",
+          "options": [
+            "researcher",
+            "passenger",
+            "customer",
+            "conductor"
+          ],
+          "answer": 0,
+          "explanation": "研究所で働く役職なので researcher（研究員・研究者）が適切。",
+          "audio_file": "L20_Q008.wav"
+        },
+        {
+          "id": "L20_Q009",
+          "type": "choice",
+          "sentence": "Lucy finally reached the summit of the mountain ( ) the fact that her left leg was injured.",
+          "translation": "ルーシーは左足を負傷していたという事実にもかかわらず、ついに山頂に到達した。",
+          "options": [
+            "in spite of",
+            "on the way to",
+            "according to",
+            "as a result of"
+          ],
+          "answer": 0,
+          "explanation": "in spite of the fact that 〜 で「〜という事実にもかかわらず」を表します。",
+          "audio_file": "L20_Q009.wav"
+        },
+        {
+          "id": "L20_Q010",
+          "type": "choice",
+          "sentence": "James was an expert in computer programming; however, he ( ) to be unfamiliar with it.",
+          "translation": "ジェームズはコンピュータプログラミングの達人だったが、それについて不慣れであるかのように装った。",
+          "options": [
+            "pretended",
+            "failed",
+            "proved",
+            "decided"
+          ],
+          "answer": 0,
+          "explanation": "pretend to be 〜 で「〜のふりをする」です。",
+          "audio_file": "L20_Q010.wav"
+        },
+        {
+          "id": "L20_Q011",
+          "type": "choice",
+          "sentence": "Jane was supposed to attend the meeting, but she couldn't because she was ( ) from work.",
+          "translation": "ジェーンはその会議に出席することになっていたが、仕事を欠席していたため出席できなかった。",
+          "options": [
+            "absent",
+            "experience",
+            "invitation",
+            "appointment"
+          ],
+          "answer": 0,
+          "explanation": "be absent from 〜 で「〜を欠席している」となります。",
+          "audio_file": "L20_Q011.wav"
+        },
+        {
+          "id": "L20_Q012",
+          "type": "choice",
+          "sentence": "Yoko moved to London from Tokyo last year. She had wanted to live ( ) for a long time.",
+          "translation": "ヨーコは昨年東京からロンドンに引っ越した。彼女は長い間ずっと海外に住みたいと望んでいた。",
+          "options": [
+            "abroad",
+            "finally",
+            "frequently",
+            "alive"
+          ],
+          "answer": 0,
+          "explanation": "live abroad で「海外で暮らす、外国に住む」を表します。",
+          "audio_file": "L20_Q012.wav"
+        },
+        {
+          "id": "L20_Q013",
+          "type": "choice",
+          "sentence": "The marathon this year is scheduled to ( ) on September 20th.",
+          "translation": "今年のマラソン大会は9月20日に開催される予定になっている。",
+          "options": [
+            "take place",
+            "come true",
+            "be on sale",
+            "get along"
+          ],
+          "answer": 0,
+          "explanation": "take place で「開催される、行われる」です。",
+          "audio_file": "L20_Q013.wav"
+        },
+        {
+          "id": "L20_Q014",
+          "type": "choice",
+          "sentence": "Because of the strong wind, it took three hours for the firefighters to ( ) the fire.",
+          "translation": "強風のため、消防士たちが火を消し止めるのに3時間かかった。",
+          "options": [
+            "put out",
+            "break out",
+            "watch out",
+            "make out"
+          ],
+          "answer": 0,
+          "explanation": "火を消すことは put out the fire と言います（break out は火災や戦争が「発生する」）。",
+          "audio_file": "L20_Q014.wav"
+        },
+        {
+          "id": "L20_Q015",
+          "type": "choice",
+          "sentence": "The copier in his department was ( ), so Kevin had to go to the convenience store.",
+          "translation": "彼の部署のコピー機が故障していたため、ケビンはコンビニに行かなければならなかった。",
+          "options": [
+            "out of order",
+            "on time",
+            "by all means",
+            "here and there"
+          ],
+          "answer": 0,
+          "explanation": "機械の故障は out of order です。",
+          "audio_file": "L20_Q015.wav"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "area_id": 4,
+      "title": "Lesson 21: 文法・会話 総合テスト",
+      "format": "choice",
+      "cheat_sheet": {
+        "title": "総合テスト攻略法",
+        "points": [
+          "文法事項（関係詞、仮定法、受動態、時制）のルールを思い出す。",
+          "会話文では発話者の意図（頼み事、誘い、お詫び）に素直に応答する。"
+        ]
+      },
+      "questions": [
+        {
+          "id": "L21_Q001",
+          "type": "choice",
+          "sentence": "If I had enough time, I ( ) with you to the concert.",
+          "translation": "もし十分な時間があれば、あなたと一緒にコンサートに行けるのに。",
+          "options": [
+            "could go",
+            "can go",
+            "went",
+            "have gone"
+          ],
+          "answer": 0,
+          "explanation": "現在の仮定法過去なので could go です。",
+          "audio_file": "L21_Q001.wav"
+        },
+        {
+          "id": "L21_Q002",
+          "type": "choice",
+          "sentence": "This is the hospital ( ) my sister was born ten years ago.",
+          "translation": "ここは私の妹が10年前に生まれた病院です。",
+          "options": [
+            "where",
+            "which",
+            "whose",
+            "that"
+          ],
+          "answer": 0,
+          "explanation": "場所を表す先行詞 the hospital に対して、後ろが完全な文なので関係副詞 where です。",
+          "audio_file": "L21_Q002.wav"
+        },
+        {
+          "id": "L21_Q003",
+          "type": "choice",
+          "sentence": "You look very tired. You ( ) stayed up late playing video games.",
+          "translation": "とても疲れているように見えるね。夜遅くまでゲームをしていたに違いない。",
+          "options": [
+            "must have",
+            "cannot have",
+            "needn't have",
+            "should have"
+          ],
+          "answer": 0,
+          "explanation": "「〜だったに違いない」という過去の確信推量は must have + 過去分詞 です。",
+          "audio_file": "L21_Q003.wav"
+        },
+        {
+          "id": "L21_Q004",
+          "type": "choice",
+          "sentence": "He was made ( ) the entire classroom after school.",
+          "translation": "彼は放課後、教室全体を掃除させられた。",
+          "options": [
+            "to clean",
+            "clean",
+            "cleaning",
+            "cleaned"
+          ],
+          "answer": 0,
+          "explanation": "使役動詞 make の受動態は be made to do（to不定詞）となります。",
+          "audio_file": "L21_Q004.wav"
+        },
+        {
+          "id": "L21_Q005",
+          "type": "choice",
+          "sentence": "When I arrived at the theater, the movie ( ) started.",
+          "translation": "私が映画館に到着した時、映画はすでに始まっていた。",
+          "options": [
+            "had already",
+            "has already",
+            "is already",
+            "was already"
+          ],
+          "answer": 0,
+          "explanation": "到着した過去より前に始まったので過去完了 had already です。",
+          "audio_file": "L21_Q005.wav"
+        },
+        {
+          "id": "L21_Q006",
+          "type": "choice",
+          "sentence": "A: May I speak to Mr. Davis?\nB: I'm sorry, he is ( ) another line right now.",
+          "translation": "A: デイビスさんはいらっしゃいますか？\nB: すみません、彼は現在別の電話に出ております。",
+          "options": [
+            "on",
+            "in",
+            "at",
+            "by"
+          ],
+          "answer": 0,
+          "explanation": "通話中は on the line / on another line です。",
+          "audio_file": "L21_Q006.wav"
+        },
+        {
+          "id": "L21_Q007",
+          "type": "choice",
+          "sentence": "A: How would you like your steak cooked?\nB: ( ), please.",
+          "translation": "A: ステーキの焼き加減はいかがなさいますか？\nB: （ ）でお願いします。",
+          "options": [
+            "Medium rare",
+            "With credit card",
+            "Very quickly",
+            "On the table"
+          ],
+          "answer": 0,
+          "explanation": "ステーキの焼き加減を聞かれているので Medium rare（ミディアムレア）と答えます。",
+          "audio_file": "L21_Q007.wav"
+        },
+        {
+          "id": "L21_Q008",
+          "type": "choice",
+          "sentence": "She has lived in Sendai ( ) she graduated from university.",
+          "translation": "彼女は大学を卒業して以来、ずっと仙台に住んでいる。",
+          "options": [
+            "since",
+            "for",
+            "during",
+            "while"
+          ],
+          "answer": 0,
+          "explanation": "「〜して以来ずっと」を表す接続詞は since です。",
+          "audio_file": "L21_Q008.wav"
+        },
+        {
+          "id": "L21_Q009",
+          "type": "choice",
+          "sentence": "The meeting was put ( ) until next Wednesday due to the typhoon.",
+          "translation": "台風のため、会議は来週の水曜日まで延期された。",
+          "options": [
+            "off",
+            "out",
+            "away",
+            "up"
+          ],
+          "answer": 0,
+          "explanation": "put off で「延期する」です。",
+          "audio_file": "L21_Q009.wav"
+        },
+        {
+          "id": "L21_Q010",
+          "type": "choice",
+          "sentence": "He gave me a lot of ( ) on how to study for the Eiken exam.",
+          "translation": "彼は英検の試験に向けてどう勉強すべきかについて、多くの助言をくれた。",
+          "options": [
+            "advice",
+            "advices",
+            "an advice",
+            "advises"
+          ],
+          "answer": 0,
+          "explanation": "advice は数えられない名詞（不可算名詞）なので複数形 advices や an advice にはならず advice のまま使います。",
+          "audio_file": "L21_Q010.wav"
+        },
+        {
+          "id": "L21_Q011",
+          "type": "choice",
+          "sentence": "A: Would you like some more coffee?\nB: No, thank you. I've had ( ).",
+          "translation": "A: コーヒーのおかわりはいかがですか？\nB: いいえ、結構です。もう十分いただきました。",
+          "options": [
+            "enough",
+            "much",
+            "too",
+            "little"
+          ],
+          "answer": 0,
+          "explanation": "「もう十分にいただきました」は I've had enough です。",
+          "audio_file": "L21_Q011.wav"
+        },
+        {
+          "id": "L21_Q012",
+          "type": "choice",
+          "sentence": "She is the student ( ) won the first prize in the national speech contest.",
+          "translation": "彼女は全国スピーチコンテストで優勝した生徒です。",
+          "options": [
+            "who",
+            "which",
+            "whose",
+            "whom"
+          ],
+          "answer": 0,
+          "explanation": "先行詞 the student（人）に対する主格の関係代名詞 who です。",
+          "audio_file": "L21_Q012.wav"
+        },
+        {
+          "id": "L21_Q013",
+          "type": "choice",
+          "sentence": "The heavier the rain became, ( ) difficult it was to drive safely.",
+          "translation": "雨が激しくなればなるほど、安全に運転することはより困難になった。",
+          "options": [
+            "the more",
+            "the most",
+            "more",
+            "most"
+          ],
+          "answer": 0,
+          "explanation": "The + 比較級 〜, the + 比較級 … の構文なので the more difficult となります。",
+          "audio_file": "L21_Q013.wav"
+        },
+        {
+          "id": "L21_Q014",
+          "type": "choice",
+          "sentence": "A: Can you lend me your dictionary for a moment?\nB: Sure, ( ) you are.",
+          "translation": "A: ちょっと辞書を貸してくれる？\nB: もちろん、はいどうぞ。",
+          "options": [
+            "here",
+            "there",
+            "where",
+            "how"
+          ],
+          "answer": 0,
+          "explanation": "物を手渡す際の「はい、どうぞ」は Here you are. です。",
+          "audio_file": "L21_Q014.wav"
+        },
+        {
+          "id": "L21_Q015",
+          "type": "choice",
+          "sentence": "It is essential for elementary students ( ) enough sleep every night.",
+          "translation": "小学生が毎晩十分な睡眠をとることは不可欠です。",
+          "options": [
+            "to get",
+            "getting",
+            "get",
+            "got"
+          ],
+          "answer": 0,
+          "explanation": "It is 形容詞 for 人 to do の形式主語構文なので to get が正解。",
+          "audio_file": "L21_Q015.wav"
+        }
+      ]
+    }
+  ]
+}
