@@ -393,7 +393,7 @@ class SceneQuiz:
         if self.quiz_mode == "daily_duo":
             self.app.text.draw_text_mini(104, 15, f"挑戦状 {q_num}/{q_total}問", 10)
         elif self.quiz_mode == "duo_section":
-            sec_id = self.lesson.get("section_id", 0)
+            sec_id = self.lesson.get("id") or self.lesson.get("section_id", 1)
             self.app.text.draw_text_mini(104, 15, f"Sec {sec_id:02d} ({q_num}/{q_total})", 11)
         else:
             self.app.text.draw_text_mini(104, 15, f"第{q_num}問 / 全{q_total}問", 7)
@@ -413,7 +413,17 @@ class SceneQuiz:
         pyxel.rect(12, 48, 296, 138, 0)
         pyxel.rectb(12, 48, 296, 138, 5)
 
-        sentence = self._format_dialogue(self.current_q.get("sentence", ""))
+        sentence = self.current_q.get("sentence", "")
+        if self.current_q.get("type") == "reorder" and "( )" in sentence:
+            total_slots = len(self.current_q.get("options", []))
+            selected = [w for _, w in self.selected_words]
+            slots = [
+                f"[{selected[i]}]" if i < len(selected) else f"({i + 1})"
+                for i in range(total_slots)
+            ]
+            sentence = sentence.replace("( )", " ".join(slots))
+
+        sentence = self._format_dialogue(sentence)
         self.app.text.draw_text(
             22,
             58,

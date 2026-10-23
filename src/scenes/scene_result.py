@@ -144,7 +144,7 @@ class SceneResult:
                     cleared_info.get("stars", 0), self.stars
                 )
             elif self.quiz_mode == "duo_section" and self.is_passed:
-                sid = str(lesson.get("section_id"))
+                sid = str(lesson.get("id") or lesson.get("section_id", 1))
                 cleared_info = slot_data.setdefault(
                     "duo_cleared_sections", {}
                 ).setdefault(sid, {})
