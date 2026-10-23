@@ -83,7 +83,7 @@ class SceneMap:
 
                 for idx, lesson in enumerate(lessons):
                     ly = 116 + idx * 76 - self.scroll_y
-                    if 16 <= mx <= 304 and ly <= my <= ly + 68:
+                    if 10 <= mx <= 310 and ly <= my <= ly + 68:
                         is_unlocked = self._is_lesson_unlocked(
                             lesson, idx, lessons, cleared_lessons
                         )
@@ -112,7 +112,7 @@ class SceneMap:
 
                 for idx, sec in enumerate(page_sections):
                     ly = 116 + idx * 76 - self.scroll_y
-                    if 16 <= mx <= 304 and ly <= my <= ly + 68:
+                    if 10 <= mx <= 310 and ly <= my <= ly + 68:
                         self.app.audio.play_se("tap")
                         self.app.start_duo_quiz(sec)
                         return
@@ -213,32 +213,32 @@ class SceneMap:
                 stars = clear_info.get("stars", 0)
 
                 border_col = 12 if is_cleared else (7 if is_unlocked else 5)
-                pyxel.rect(16, ly, 288, 68, 0)
-                pyxel.rectb(16, ly, 288, 68, border_col)
+                pyxel.rect(10, ly, 300, 68, 0)
+                pyxel.rectb(10, ly, 300, 68, border_col)
 
                 main_title, sub_title = self._split_title(lesson.get("title", ""))
                 title_col = 7 if is_unlocked else 5
                 # タイトルは幅270pxまで使って1行で美しく表示
                 self.app.text.draw_text(
-                    26, ly + 8, main_title, title_col, max_width=270
+                    18, ly + 8, main_title, title_col, max_width=270
                 )
 
                 fmt_str = "4択クイズ" if lesson.get("format") == "choice" else "並び替え"
                 self.app.text.draw_text_mini(
-                    26, ly + 30, f"{fmt_str} (10問)", 6
+                    18, ly + 30, f"{fmt_str} (10問)", 6
                 )
                 # 獲得報酬の明記 (PixelMplus 12pt)
                 self.app.text.draw_text_mini(
-                    26, ly + 48, "報酬: 1問100EXP+クリアでリンゴ2個 (★3で+肉1個)", 10 if is_unlocked else 5
+                    18, ly + 48, "報酬: 1問100EXP+クリアでリンゴ2個(★3で+肉1個)", 10 if is_unlocked else 5
                 )
 
                 if not is_unlocked:
-                    self.app.text.draw_text(236, ly + 26, "🔒ロック", 5)
+                    self.app.text.draw_text(244, ly + 26, "🔒ロック", 5)
                 elif is_cleared:
                     star_str = "★" * stars + "☆" * (3 - stars)
-                    self.app.text.draw_text(236, ly + 26, star_str, 10)
+                    self.app.text.draw_text(244, ly + 26, star_str, 10)
                 else:
-                    self.app.text.draw_text(236, ly + 26, "未クリア", 12)
+                    self.app.text.draw_text(244, ly + 26, "未クリア", 12)
 
         else:
             # DUOモード
@@ -283,12 +283,12 @@ class SceneMap:
                 stars = clear_info.get("stars", 0)
 
                 border_col = 11 if is_cleared else 5
-                pyxel.rect(16, ly, 288, 68, 0)
-                pyxel.rectb(16, ly, 288, 68, border_col)
+                pyxel.rect(10, ly, 300, 68, 0)
+                pyxel.rectb(10, ly, 300, 68, border_col)
 
                 # タイトル
                 sec_title = f"Section {sid:02d} ({q_count}問)"
-                self.app.text.draw_text(26, ly + 8, sec_title, 7, max_width=270)
+                self.app.text.draw_text(18, ly + 8, sec_title, 7, max_width=270)
 
                 # 例文番号範囲 (波ダッシュを半角ハイフンにして文字抜け解消)
                 if qs:
@@ -297,18 +297,18 @@ class SceneMap:
                     s_range = f"例文 No.{s_first} - {s_last}"
                 else:
                     s_range = "例文"
-                self.app.text.draw_text_mini(26, ly + 30, s_range, 6)
+                self.app.text.draw_text_mini(18, ly + 30, s_range, 6)
                 # 獲得報酬の明記 (PixelMplus 12pt)
                 self.app.text.draw_text_mini(
-                    26, ly + 48, "報酬: 1問100EXP+クリアでリンゴ2個 (★3で+肉1個)", 11 if is_cleared else 10
+                    18, ly + 48, "報酬: 1問100EXP+クリアでリンゴ2個(★3で+肉1個)", 11 if is_cleared else 10
                 )
 
                 # ステータス
                 if is_cleared:
                     star_str = "★" * stars + "☆" * (3 - stars)
-                    self.app.text.draw_text(236, ly + 26, star_str, 10)
+                    self.app.text.draw_text(244, ly + 26, star_str, 10)
                 else:
-                    self.app.text.draw_text(236, ly + 26, "自由挑戦", 11)
+                    self.app.text.draw_text(244, ly + 26, "自由挑戦", 11)
 
         # フッター帯（スクロール内容が下部に漏れないようにマスク）
         pyxel.rect(0, 565, 320, 75, 1)
