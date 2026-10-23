@@ -366,7 +366,7 @@ class SceneHome:
             # クリア済み: 黒背景＋暗灰枠(5)＋明灰文字(6)
             pyxel.rect(20, 345, 280, 44, 0)
             pyxel.rectb(20, 345, 280, 44, 5)
-            dt_title = "今日の挑戦状 (クリア済み)"
+            dt_title = "今日の挑戦状 (クリア済)"
             w_title = self.app.text.measure_text_width(dt_title)
             self.app.text.draw_text(20 + (280 - w_title) // 2, 358, dt_title, 6)
 

@@ -258,7 +258,7 @@ class SceneResult:
 
         if self.quiz_mode == "daily_duo":
             self.app.text.draw_text(
-                35, 159, "ごほうび   : 金のリンゴ +1個 GET！", 10, font_type="main"
+                35, 159, "ごほうび   : 金のリンゴ 1個GET", 10, font_type="main"
             )
         else:
             reward_str = f"リンゴ +{self.apples_awarded}"

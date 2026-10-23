@@ -211,12 +211,12 @@ class SceneQuiz:
     def _handle_answering_click(self, mx: int, my: int):
         # 1. 音声ボタン (x: 214, y: 6, 幅46, 高30)
         if 212 <= mx <= 262 and 4 <= my <= 38:
-            audio_file = (
-                self.current_q.get("audio_file")
-                or f"{self.current_q.get('id', '')}.wav"
-            )
+            audio_file = self.current_q.get("audio_file")
             reading_text = self._get_reading_text(self.current_q)
-            self.app.audio.play_voice(audio_file, text=reading_text)
+            if audio_file:
+                self.app.audio.play_voice(audio_file, text=reading_text)
+            else:
+                self.app.audio.speak_text(reading_text)
             return
 
         # 2. 要点あんちょこボタン (x: 266, y: 6, 幅46, 高30)
@@ -341,12 +341,12 @@ class SceneQuiz:
     def _handle_feedback_click(self, mx: int, my: int):
         # 1. 音声ボタン (x: 214, y: 6, 幅46, 高30) - 解説中も再聴可能
         if 212 <= mx <= 262 and 4 <= my <= 38:
-            audio_file = (
-                self.current_q.get("audio_file")
-                or f"{self.current_q.get('id', '')}.wav"
-            )
+            audio_file = self.current_q.get("audio_file")
             reading_text = self._get_reading_text(self.current_q)
-            self.app.audio.play_voice(audio_file, text=reading_text)
+            if audio_file:
+                self.app.audio.play_voice(audio_file, text=reading_text)
+            else:
+                self.app.audio.speak_text(reading_text)
             return
 
         # 2. 「つぎへすすむ」ボタン (x: 20, y: 550, 幅280, 高52)

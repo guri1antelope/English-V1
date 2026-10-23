@@ -107,29 +107,128 @@ class AudioEngine:
         }
         snd_id = sound_map.get(se_type)
         if snd_id is not None:
-            pyxel.play(0, snd_id)
+            try:
+                pyxel.play(0, snd_id)
+            except Exception:
+                pass
+
+        # Web環境では確実に鳴るWeb Audio APIシンセサイザーで発音
+        if IS_WEB:
+            self._play_web_synth_se(se_type)
+
+    def _play_web_synth_se(self, se_type: str):
+        """ブラウザのWeb Audio APIでレトロピコピコシンセ音を確実に合成・再生。"""
+        try:
+            import json
+
+            se_json = json.dumps(se_type)
+            js_code = (
+                "(function() {"
+                "const AudioCtx = window.AudioContext || window.webkitAudioContext;"
+                "if (!AudioCtx) return;"
+                "if (!window._eikenAudioCtx) {"
+                "  window._eikenAudioCtx = new AudioCtx();"
+                "}"
+                "const ctx = window._eikenAudioCtx;"
+                "if (ctx.state === 'suspended') {"
+                "  ctx.resume();"
+                "}"
+                "const now = ctx.currentTime;"
+                "const playTone = function(freq, type, startTime, duration, vol) {"
+                "  const osc = ctx.createOscillator();"
+                "  const gain = ctx.createGain();"
+                "  osc.type = type;"
+                "  osc.frequency.setValueAtTime(freq, startTime);"
+                "  gain.gain.setValueAtTime(vol || 0.15, startTime);"
+                "  gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);"
+                "  osc.connect(gain);"
+                "  gain.connect(ctx.destination);"
+                "  osc.start(startTime);"
+                "  osc.stop(startTime + duration);"
+                "};"
+                "const se = " + se_json + ";"
+                "if (se === 'tap') {"
+                "  playTone(580, 'square', now, 0.05, 0.12);"
+                "} else if (se === 'correct') {"
+                "  playTone(523.25, 'square', now, 0.08, 0.15);"
+                "  playTone(659.25, 'square', now + 0.08, 0.08, 0.15);"
+                "  playTone(783.99, 'square', now + 0.16, 0.08, 0.15);"
+                "  playTone(1046.50, 'square', now + 0.24, 0.18, 0.20);"
+                "} else if (se === 'wrong') {"
+                "  playTone(180, 'sawtooth', now, 0.15, 0.18);"
+                "  playTone(140, 'sawtooth', now + 0.15, 0.25, 0.18);"
+                "} else if (se === 'levelup') {"
+                "  playTone(261.63, 'square', now, 0.07, 0.15);"
+                "  playTone(329.63, 'square', now + 0.07, 0.07, 0.15);"
+                "  playTone(392.00, 'square', now + 0.14, 0.07, 0.15);"
+                "  playTone(523.25, 'square', now + 0.21, 0.07, 0.15);"
+                "  playTone(659.25, 'square', now + 0.28, 0.07, 0.15);"
+                "  playTone(783.99, 'square', now + 0.35, 0.07, 0.15);"
+                "  playTone(1046.50, 'square', now + 0.42, 0.25, 0.22);"
+                "} else if (se === 'cancel') {"
+                "  playTone(330, 'triangle', now, 0.06, 0.12);"
+                "  playTone(220, 'triangle', now + 0.06, 0.08, 0.12);"
+                "} else if (se === 'eat') {"
+                "  playTone(392, 'square', now, 0.06, 0.15);"
+                "  playTone(330, 'square', now + 0.07, 0.08, 0.15);"
+                "}"
+                "})();"
+            )
+            js.eval(js_code)
+        except Exception:
+            pass
+
+    def speak_text(self, text: str):
+        """Web Speech API（ブラウザ標準英語ネイティブ音声）で即座に発音。"""
+        if not self.voice_enabled or not text:
+            return
+        if IS_WEB:
+            try:
+                import json
+
+                text_json = json.dumps(text)
+                js_code = (
+                    "(function() {"
+                    "if (window.speechSynthesis) {"
+                    "  window.speechSynthesis.cancel();"
+                    "  const u = new SpeechSynthesisUtterance(" + text_json + ");"
+                    "  u.lang = 'en-US';"
+                    "  u.rate = 0.95;"
+                    "  window.speechSynthesis.speak(u);"
+                    "}"
+                    "})();"
+                )
+                js.eval(js_code)
+            except Exception:
+                pass
 
     def play_voice(self, filename: str | None = None, text: str | None = None):
         """英語音声を再生。
 
-        WAVファイルが存在すればWAVを再生し、
-        未生成または再生失敗時はWeb Speech API（ブラウザ標準英語ネイティブ音声）でフォールバック。
+        filename が指定されている場合は WAV を再生し、
+        未指定（またはDUO等でWAV未生成）の場合は speak_text で即座に発音。
         """
         if not self.voice_enabled:
             return
         if not filename and not text:
             return
 
+        # 1. filename が未指定の場合は即座に Web Speech API で発音
+        if not filename:
+            if text:
+                self.speak_text(text)
+            return
+
         filepath = os.path.join(self.voices_dir, filename) if filename else None
 
-        # 1. Webブラウザ環境
+        # 2. Webブラウザ環境での WAV 再生
         if IS_WEB:
             try:
                 import json
 
                 text_json = json.dumps(text or "")
-                file_rel = f"assets/voices/{filename}" if filename else ""
-                file_app = f"app/assets/voices/{filename}" if filename else ""
+                file_rel = f"assets/voices/{filename}"
+                file_app = f"app/assets/voices/{filename}"
 
                 js_code = (
                     "(function() {"
@@ -149,21 +248,19 @@ class AudioEngine:
                     "};"
                     "const wavFile = " + json.dumps(file_rel) + ";"
                     "const wavFallback = " + json.dumps(file_app) + ";"
-                    "if (!wavFile) {"
-                    "  speakFallback();"
-                    "  return;"
-                    "}"
-                    "const playWith = function(u, fb) {"
-                    "  audio.src = u;"
-                    "  const p = audio.play();"
-                    "  if (p && p.catch) {"
-                    "    p.catch(function(e) {"
-                    "      if (fb) { playWith(fb, null); }"
-                    "      else { speakFallback(); }"
-                    "    });"
+                    "audio.onerror = function() {"
+                    "  if (audio.src.indexOf('app/') === -1) {"
+                    "    audio.src = wavFallback;"
+                    "    audio.play().catch(function() { speakFallback(); });"
+                    "  } else {"
+                    "    speakFallback();"
                     "  }"
                     "};"
-                    "playWith(wavFile, wavFallback);"
+                    "audio.src = wavFile;"
+                    "const p = audio.play();"
+                    "if (p && p.catch) {"
+                    "  p.catch(function() { audio.onerror(); });"
+                    "}"
                     "})();"
                 )
                 js.eval(js_code)
@@ -171,7 +268,7 @@ class AudioEngine:
                 pass
             return
 
-        # 2. PC環境
+        # 3. PC環境
         if filepath and PYGAME_AVAILABLE and os.path.exists(filepath):
             try:
                 pygame.mixer.music.load(filepath)
