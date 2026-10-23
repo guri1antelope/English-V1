@@ -124,6 +124,7 @@ class AudioEngine:
             se_json = json.dumps(se_type)
             js_code = (
                 "(function() {"
+                "if (navigator.audioSession) { try { navigator.audioSession.type = 'playback'; } catch(e) {} }"
                 "const AudioCtx = window.AudioContext || window.webkitAudioContext;"
                 "if (!AudioCtx) return;"
                 "if (!window._eikenAudioCtx) {"
@@ -179,7 +180,7 @@ class AudioEngine:
             pass
 
     def speak_text(self, text: str):
-        """英検準2級と同一の HTML5 Audio パイプラインで確実に英語ネイティブ発音。"""
+        """Web Speech API（ブラウザ標準英語ネイティブ音声）で確実に発音。"""
         if not self.voice_enabled or not text:
             return
         if IS_WEB:
@@ -189,34 +190,22 @@ class AudioEngine:
                 text_json = json.dumps(text)
                 js_code = (
                     "(function() {"
+                    "if (!window.speechSynthesis) return;"
+                    "if (navigator.audioSession) { try { navigator.audioSession.type = 'playback'; } catch(e) {} }"
+                    "if (window.speechSynthesis.paused) { window.speechSynthesis.resume(); }"
                     "const text = " + text_json + ";"
-                    "if (!text) return;"
-                    "if (!window._duoAudio) { window._duoAudio = new Audio(); }"
-                    "const audio = window._duoAudio;"
-                    "audio.pause();"
-                    "audio.currentTime = 0;"
-                    "let played = false;"
-                    "const fallbackSpeechSynthesis = function() {"
-                    "  if (played) return;"
-                    "  if (window.speechSynthesis) {"
-                    "    if (window.speechSynthesis.paused) { window.speechSynthesis.resume(); }"
-                    "    const u = new SpeechSynthesisUtterance(text);"
-                    "    u.lang = 'en-US';"
-                    "    u.rate = 0.95;"
-                    "    window._currentUtterance = u;"
-                    "    u.onend = function() { window._currentUtterance = null; };"
-                    "    u.onerror = function() { window._currentUtterance = null; };"
-                    "    window.speechSynthesis.speak(u);"
-                    "  }"
-                    "};"
-                    "audio.onerror = function() { fallbackSpeechSynthesis(); };"
-                    "audio.onplaying = function() { played = true; };"
-                    "const encoded = encodeURIComponent(text);"
-                    "audio.src = 'https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=' + encoded;"
-                    "const p = audio.play();"
-                    "if (p && p.catch) {"
-                    "  p.catch(function() { fallbackSpeechSynthesis(); });"
+                    "const u = new SpeechSynthesisUtterance(text);"
+                    "u.lang = 'en-US';"
+                    "u.rate = 0.95;"
+                    "const voices = window.speechSynthesis.getVoices();"
+                    "if (voices && voices.length > 0) {"
+                    "  const en = voices.find(function(v) { return v.lang && (v.lang === 'en-US' || v.lang.indexOf('en') === 0); });"
+                    "  if (en) u.voice = en;"
                     "}"
+                    "window._currentUtterance = u;"
+                    "u.onend = function() { window._currentUtterance = null; };"
+                    "u.onerror = function(e) { window._currentUtterance = null; };"
+                    "window.speechSynthesis.speak(u);"
                     "})();"
                 )
                 js.eval(js_code)
