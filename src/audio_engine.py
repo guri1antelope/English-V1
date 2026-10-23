@@ -179,7 +179,7 @@ class AudioEngine:
             pass
 
     def speak_text(self, text: str):
-        """Web Speech API（ブラウザ標準英語ネイティブ音声）で即座に発音。"""
+        """Web Speech API（ブラウザ標準英語ネイティブ音声）で確実に発音。"""
         if not self.voice_enabled or not text:
             return
         if IS_WEB:
@@ -189,13 +189,21 @@ class AudioEngine:
                 text_json = json.dumps(text)
                 js_code = (
                     "(function() {"
-                    "if (window.speechSynthesis) {"
-                    "  window.speechSynthesis.cancel();"
-                    "  const u = new SpeechSynthesisUtterance(" + text_json + ");"
-                    "  u.lang = 'en-US';"
-                    "  u.rate = 0.95;"
-                    "  window.speechSynthesis.speak(u);"
+                    "if (!window.speechSynthesis) return;"
+                    "if (window.speechSynthesis.paused) { window.speechSynthesis.resume(); }"
+                    "const text = " + text_json + ";"
+                    "const u = new SpeechSynthesisUtterance(text);"
+                    "u.lang = 'en-US';"
+                    "u.rate = 0.95;"
+                    "const voices = window.speechSynthesis.getVoices();"
+                    "if (voices && voices.length > 0) {"
+                    "  const en = voices.find(function(v) { return v.lang && (v.lang === 'en-US' || v.lang.indexOf('en') === 0); });"
+                    "  if (en) u.voice = en;"
                     "}"
+                    "window._currentUtterance = u;"
+                    "u.onend = function() { window._currentUtterance = null; };"
+                    "u.onerror = function(e) { window._currentUtterance = null; };"
+                    "window.speechSynthesis.speak(u);"
                     "})();"
                 )
                 js.eval(js_code)

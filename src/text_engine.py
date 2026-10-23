@@ -105,6 +105,15 @@ class TextEngine:
         用例などのカッコブロックがはみ出る場合は、カッコの手前で美しく改行する。
         """
         lines = []
+        # スマートクオート・ダッシュのASCII正規化（等幅フォールバックによるはみ出しを完全防止）
+        text = (
+            text.replace("’", "'")
+            .replace("‘", "'")
+            .replace("“", '"')
+            .replace("”", '"')
+            .replace("—", "-")
+            .replace("–", "-")
+        )
         # 改行コードで事前分割
         raw_paragraphs = text.split("\n")
         paragraphs = []
@@ -137,20 +146,33 @@ class TextEngine:
             current_width = 0
 
             # 英単語・数字はアルファベット塊、スペースは個別、日本語・記号は1文字ずつ分割
+            # ( ) や (1) や [word] は句読点も含めてアトミックに保護
             words = []
             i = 0
             while i < len(para):
-                ch = para[i]
-                if ch.isascii() and (ch.isalnum() or ch in "_-"):
+                if para[i : i + 4] in ("( ).", "( ),", "( )?", "( )!", "( ):", "( );"):
+                    words.append(para[i : i + 4])
+                    i += 4
+                elif para[i : i + 3] == "( )":
+                    words.append("( )")
+                    i += 3
+                elif para[i : i + 3] in ("(1)", "(2)", "(3)", "(4)", "(5)", "(6)", "(7)", "(8)", "(9)"):
+                    words.append(para[i : i + 3])
+                    i += 3
+                elif para[i] == "[" and "]" in para[i : i + 40]:
+                    end_idx = para.find("]", i)
+                    words.append(para[i : end_idx + 1])
+                    i = end_idx + 1
+                elif para[i].isascii() and (para[i].isalnum() or para[i] in "_-'"):
                     start = i
-                    while i < len(para) and para[i].isascii() and (para[i].isalnum() or para[i] in "_-"):
+                    while i < len(para) and para[i].isascii() and (para[i].isalnum() or para[i] in "_-'"):
                         i += 1
                     words.append(para[start:i])
-                elif ch == " ":
+                elif para[i] == " ":
                     words.append(" ")
                     i += 1
                 else:
-                    words.append(ch)
+                    words.append(para[i])
                     i += 1
 
             for word in words:
@@ -167,8 +189,21 @@ class TextEngine:
                     # 改行が必要
                     # 行頭禁則の処理: 行頭禁則文字（句読点・！・？）が枠外にはみ出る場合、直前の1文字を巻き込んで次行へ送る
                     if word in KINSOKU_HEAD and current_line:
-                        carried = current_line[-1]
-                        current_line = current_line[:-1]
+                        if current_line.endswith("( )"):
+                            carried = "( )"
+                            current_line = current_line[:-3]
+                        elif current_line.endswith(")"):
+                            # 括弧閉じの前の括弧開きを探す
+                            open_p = current_line.rfind("(")
+                            if open_p != -1 and len(current_line) - open_p <= 10:
+                                carried = current_line[open_p:]
+                                current_line = current_line[:open_p]
+                            else:
+                                carried = current_line[-1]
+                                current_line = current_line[:-1]
+                        else:
+                            carried = current_line[-1]
+                            current_line = current_line[:-1]
                         if current_line:
                             lines.append(current_line)
                         new_start = (carried + word).lstrip()

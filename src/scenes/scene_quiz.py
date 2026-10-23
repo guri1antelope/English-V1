@@ -211,6 +211,7 @@ class SceneQuiz:
     def _handle_answering_click(self, mx: int, my: int):
         # 1. 音声ボタン (x: 214, y: 6, 幅46, 高30)
         if 212 <= mx <= 262 and 4 <= my <= 38:
+            self.app.audio.play_se("tap")
             audio_file = self.current_q.get("audio_file")
             reading_text = self._get_reading_text(self.current_q)
             if audio_file:
@@ -341,6 +342,7 @@ class SceneQuiz:
     def _handle_feedback_click(self, mx: int, my: int):
         # 1. 音声ボタン (x: 214, y: 6, 幅46, 高30) - 解説中も再聴可能
         if 212 <= mx <= 262 and 4 <= my <= 38:
+            self.app.audio.play_se("tap")
             audio_file = self.current_q.get("audio_file")
             reading_text = self._get_reading_text(self.current_q)
             if audio_file:
