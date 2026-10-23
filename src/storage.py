@@ -22,6 +22,18 @@ except ImportError:
 MAX_SLOTS = 4
 
 
+def get_local_today_str() -> str:
+    """端末の現地日付 (YYYY-MM-DD) を取得。Web環境ではブラウザのローカル時間を優先。"""
+    if IS_WEB:
+        try:
+            val = str(js.eval("new Date().toLocaleDateString('sv')"))
+            if len(val) == 10 and val[4] == "-" and val[7] == "-":
+                return val
+        except Exception:
+            pass
+    return datetime.date.today().isoformat()
+
+
 def sanitize_player_name(name: str) -> str:
     """プレイヤー名を安全な文字列にサニタイズ（最大8文字、記号排除）。"""
     # ひらがな、カタカナ、漢字、英数字のみ許可
@@ -31,7 +43,7 @@ def sanitize_player_name(name: str) -> str:
 
 def get_default_slot_data(slot_id: int, player_name: str, partner_id: int) -> dict:
     """初期セーブデータを生成。"""
-    today_str = datetime.date.today().isoformat()
+    today_str = get_local_today_str()
     return {
         "slot_id": slot_id,
         "player_name": sanitize_player_name(player_name),
@@ -49,6 +61,7 @@ def get_default_slot_data(slot_id: int, player_name: str, partner_id: int) -> di
         },
         "streak": 1,
         "last_date": today_str,
+        "last_login_date": "",
         "last_daily_challenge_date": "",
         "cleared_lessons": {},  # "L01": {"cleared": True, "stars": 3}
         "duo_cleared_sections": {},  # "1": {"cleared": True, "stars": 3}
@@ -131,6 +144,7 @@ class StorageManager:
 
             slot_data.setdefault("streak", 1)
             slot_data.setdefault("last_date", "")
+            slot_data.setdefault("last_login_date", "")
             slot_data.setdefault("last_daily_challenge_date", "")
 
             # food_inventory
@@ -159,20 +173,21 @@ class StorageManager:
 
         data["slot_id"] = slot_id
         # 日付・ストリーク更新チェック
-        today = datetime.date.today().isoformat()
-        last_date = data.get("last_date", today)
-        if last_date != today:
+        today = get_local_today_str()
+        last_date = data.get("last_date")
+        if last_date and last_date != today:
             # 連続日数の判定
             try:
                 d_last = datetime.date.fromisoformat(last_date)
                 d_today = datetime.date.fromisoformat(today)
-                if (d_today - d_last).days == 1:
+                diff = (d_today - d_last).days
+                if diff == 1:
                     data["streak"] = data.get("streak", 1) + 1
-                elif (d_today - d_last).days > 1:
+                elif diff > 1:
                     data["streak"] = 1
             except Exception:
-                data["streak"] = 1
-            data["last_date"] = today
+                pass
+        data["last_date"] = today
 
         self.slots[slot_id] = data
         json_str = json.dumps(data, ensure_ascii=False, indent=2)

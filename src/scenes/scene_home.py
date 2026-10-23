@@ -16,6 +16,69 @@ class SceneHome:
         self.jump_timer = 0
         self.heart_timer = 0
         self.speech_bubble = "今日も英語の勉強、一緒に頑張ろう！"
+        self.bonus_anim_timer = 0
+        self.bonus_exp = 0
+        self.bonus_streak = 1
+
+    def on_enter(self):
+        """ホーム画面入室時の処理（当日初回ログイン判定とボーナス付与）。"""
+        self._check_daily_login_bonus()
+
+    def _check_daily_login_bonus(self):
+        slot_data = self.app.get_current_slot_data()
+        if not slot_data:
+            return
+
+        import datetime
+        from storage import get_local_today_str
+
+        today = get_local_today_str()
+        last_login = slot_data.get("last_login_date", "")
+
+        # 当日すでに受け取り済みなら何もしない
+        if last_login == today:
+            return
+
+        # 連続日数の判定
+        streak = slot_data.get("streak", 1)
+        if last_login:
+            try:
+                d_last = datetime.date.fromisoformat(last_login)
+                d_today = datetime.date.fromisoformat(today)
+                diff = (d_today - d_last).days
+                if diff == 1:
+                    streak += 1
+                elif diff > 1:
+                    streak = 1
+                # diff <= 0 (時計ズレなど) はそのまま維持
+            except Exception:
+                streak = 1
+        else:
+            # 初回ログインボーナス（ウェルカムボーナス）
+            streak = max(1, streak)
+
+        # 経験値計算: 連続x日目 × 10pt
+        bonus_exp = streak * 10
+        partner = slot_data.setdefault("partner", {})
+        partner["exp"] = partner.get("exp", 0) + bonus_exp
+        self._check_level_up(partner)
+
+        # スロット保存
+        slot_data["streak"] = streak
+        slot_data["last_login_date"] = today
+        slot_data["last_date"] = today
+        self.app.storage.save_slot(self.app.current_slot, slot_data)
+
+        # 演出用フラグ・タイマー
+        self.bonus_anim_timer = 100  # 約3.3秒
+        self.bonus_exp = bonus_exp
+        self.bonus_streak = streak
+        self.partner_mood = "happy"
+        self.mood_timer = 100
+        self.jump_timer = 30
+        self.heart_timer = 50
+        self.speech_bubble = f"ログインボーナス！\n連続{streak}日目達成！"
+        self.app.audio.play_se("levelup")
 
     def update(self):
         self.frame += 1
@@ -25,6 +88,8 @@ class SceneHome:
             self.jump_timer -= 1
         if self.heart_timer > 0:
             self.heart_timer -= 1
+        if self.bonus_anim_timer > 0:
+            self.bonus_anim_timer -= 1
 
         # 気分のタイマーカウントダウン
         if self.mood_timer > 0:
@@ -38,6 +103,12 @@ class SceneHome:
             self._handle_click(mx, my)
 
     def _handle_click(self, mx: int, my: int):
+        # ログインボーナス演出中のタップで即スキップ
+        if self.bonus_anim_timer > 0:
+            self.bonus_anim_timer = 0
+            self.app.audio.play_se("tap")
+            return
+
         slot_data = self.app.get_current_slot_data()
         if not slot_data:
             return
@@ -277,8 +348,8 @@ class SceneHome:
 
         # メインナビゲーションボタン
         # 1. 「今日の挑戦状 (DUO 3問)」 (y: 345, 高44)
-        import datetime
-        today_str = datetime.date.today().isoformat()
+        from storage import get_local_today_str
+        today_str = get_local_today_str()
         is_daily_cleared = (slot_data.get("last_daily_challenge_date") == today_str)
 
         if not is_daily_cleared:
@@ -333,3 +404,53 @@ class SceneHome:
         self.app.text.draw_text(
             34, 570, "スロット選択へ", 6
         )
+
+        # 6. ログインボーナス演出ポップアップ（最前面）
+        if self.bonus_anim_timer > 0:
+            self._draw_login_bonus_popup()
+
+    def _draw_login_bonus_popup(self):
+        """ログインボーナスの華やかなアニメーション演出。"""
+        t = self.bonus_anim_timer
+        # 最初の20フレームでふわっと上に上昇、後半は定位置
+        float_y = max(0, 16 - (100 - t)) if t > 84 else 0
+        box_y = 110 - float_y
+
+        # 背景ボックス (黒背景 + 金色/オレンジの二重枠)
+        pyxel.rect(18, box_y, 284, 118, 0)
+        pyxel.rectb(18, box_y, 284, 118, 10)  # 外枠: 黄色
+        pyxel.rectb(20, box_y + 2, 280, 114, 9)  # 内枠: オレンジ
+
+        # タイトルバナー
+        title = "★ ログインボーナス ★"
+        tw = self.app.text.measure_text_width(title)
+        self.app.text.draw_text(18 + (284 - tw) // 2, box_y + 12, title, 10)
+
+        # 連続ログイン日数
+        streak_text = f"連続 {self.bonus_streak}日目 達成！"
+        sw = self.app.text.measure_text_width(streak_text)
+        self.app.text.draw_text(18 + (284 - sw) // 2, box_y + 36, streak_text, 7)
+
+        # 獲得EXPの大きな文字（ピカピカ点滅アニメーション）
+        exp_text = f"+{self.bonus_exp} EXP 獲得！"
+        ew = self.app.text.measure_text_width(exp_text)
+        exp_col = 10 if (self.frame // 4) % 2 == 0 else 7
+        self.app.text.draw_text(18 + (284 - ew) // 2, box_y + 64, exp_text, exp_col)
+
+        # タップで閉じる案内
+        guide = "- タップして閉じる -"
+        gw = self.app.text.measure_text_width(guide)
+        self.app.text.draw_text(18 + (284 - gw) // 2, box_y + 92, guide, 6)
+
+        # キラキラ・星パーティクル（周囲に散らす）
+        particles = [
+            (26, box_y + 16, 10),
+            (292, box_y + 18, 9),
+            (32, box_y + 95, 11),
+            (288, box_y + 90, 10),
+            (160 + (self.frame * 3) % 140 - 70, box_y - 6, 7),
+        ]
+        for px, py, col in particles:
+            pyxel.pset(px, py, col)
+            pyxel.pset(px + 1, py, col)
+            pyxel.pset(px, py + 1, col)
