@@ -27,8 +27,13 @@ if not IS_WEB:
 
 
 class AudioEngine:
-    def __init__(self, voices_dir: str = "assets/voices"):
+    def __init__(
+        self,
+        voices_dir: str = "assets/voices",
+        duo_voices_dir: str = "assets/voices_duo",
+    ):
         self.voices_dir = voices_dir
+        self.duo_voices_dir = duo_voices_dir
         self.sound_enabled = True
         self.voice_enabled = True
         self._setup_pyxel_sounds()
@@ -212,18 +217,88 @@ class AudioEngine:
             except Exception:
                 pass
 
-    def play_voice(self, filename: str | None = None, text: str | None = None):
+    def play_voice(
+        self,
+        filename: str | None = None,
+        text: str | None = None,
+        qid: str | None = None,
+    ):
         """英語音声を再生。
 
-        filename が指定されている場合は WAV を再生し、
-        未指定（またはDUO等でWAV未生成）の場合は speak_text で即座に発音。
+        1. qid または filename が 'DUO_' で始まる場合:
+           assets/voices_duo/{qid}.mp3 を HTML5 Audio で再生（iPhoneマナーモード貫通）
+        2. filename が指定されている場合は assets/voices/{filename} (WAV) を再生
+        3. いずれも利用不可の場合は speak_text(text) で Web Speech API フォールバック
         """
         if not self.voice_enabled:
             return
-        if not filename and not text:
-            return
 
-        # 1. filename が未指定の場合は即座に Web Speech API で発音
+        # DUO音声の判定
+        duo_id = None
+        if qid and str(qid).startswith("DUO_"):
+            duo_id = str(qid)
+        elif filename and str(filename).startswith("DUO_"):
+            duo_id = str(filename).replace(".mp3", "")
+
+        if duo_id:
+            if IS_WEB:
+                try:
+                    import json
+
+                    text_json = json.dumps(text or "")
+                    file_rel = f"assets/voices_duo/{duo_id}.mp3"
+                    file_app = f"app/assets/voices_duo/{duo_id}.mp3"
+
+                    js_code = (
+                        "(function() {"
+                        "if (navigator.audioSession) { try { navigator.audioSession.type = 'playback'; } catch(e) {} }"
+                        "if (!window._eikenVoiceAudio) { window._eikenVoiceAudio = new Audio(); }"
+                        "const audio = window._eikenVoiceAudio;"
+                        "audio.pause();"
+                        "audio.currentTime = 0;"
+                        "const fallbackText = " + text_json + ";"
+                        "const speakFallback = function() {"
+                        "  if (fallbackText && window.speechSynthesis) {"
+                        "    window.speechSynthesis.cancel();"
+                        "    const u = new SpeechSynthesisUtterance(fallbackText);"
+                        "    u.lang = 'en-US';"
+                        "    u.rate = 0.95;"
+                        "    window.speechSynthesis.speak(u);"
+                        "  }"
+                        "};"
+                        "const mp3File = " + json.dumps(file_rel) + ";"
+                        "const mp3Fallback = " + json.dumps(file_app) + ";"
+                        "audio.onerror = function() {"
+                        "  if (audio.src.indexOf('app/') === -1) {"
+                        "    audio.src = mp3Fallback;"
+                        "    audio.play().catch(function() { speakFallback(); });"
+                        "  } else {"
+                        "    speakFallback();"
+                        "  }"
+                        "};"
+                        "audio.src = mp3File;"
+                        "const p = audio.play();"
+                        "if (p && p.catch) {"
+                        "  p.catch(function() { audio.onerror(); });"
+                        "}"
+                        "})();"
+                    )
+                    js.eval(js_code)
+                except Exception:
+                    pass
+                return
+
+            # PC環境でのDUO再生
+            mp3_path = os.path.join(self.duo_voices_dir, f"{duo_id}.mp3")
+            if PYGAME_AVAILABLE and os.path.exists(mp3_path):
+                try:
+                    pygame.mixer.music.load(mp3_path)
+                    pygame.mixer.music.play()
+                    return
+                except Exception:
+                    pass
+
+        # 通常の英検WAV再生
         if not filename:
             if text:
                 self.speak_text(text)
@@ -231,7 +306,7 @@ class AudioEngine:
 
         filepath = os.path.join(self.voices_dir, filename) if filename else None
 
-        # 2. Webブラウザ環境での WAV 再生
+        # Webブラウザ環境での WAV 再生
         if IS_WEB:
             try:
                 import json
@@ -242,6 +317,7 @@ class AudioEngine:
 
                 js_code = (
                     "(function() {"
+                    "if (navigator.audioSession) { try { navigator.audioSession.type = 'playback'; } catch(e) {} }"
                     "if (!window._eikenVoiceAudio) { window._eikenVoiceAudio = new Audio(); }"
                     "const audio = window._eikenVoiceAudio;"
                     "audio.pause();"
@@ -278,7 +354,7 @@ class AudioEngine:
                 pass
             return
 
-        # 3. PC環境
+        # PC環境
         if filepath and PYGAME_AVAILABLE and os.path.exists(filepath):
             try:
                 pygame.mixer.music.load(filepath)

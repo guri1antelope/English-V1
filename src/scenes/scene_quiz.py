@@ -212,12 +212,10 @@ class SceneQuiz:
         # 1. 音声ボタン (x: 214, y: 6, 幅46, 高30)
         if 212 <= mx <= 262 and 4 <= my <= 38:
             self.app.audio.play_se("tap")
+            qid = self.current_q.get("id")
             audio_file = self.current_q.get("audio_file")
             reading_text = self._get_reading_text(self.current_q)
-            if audio_file:
-                self.app.audio.play_voice(audio_file, text=reading_text)
-            else:
-                self.app.audio.speak_text(reading_text)
+            self.app.audio.play_voice(audio_file, text=reading_text, qid=qid)
             return
 
         # 2. 要点あんちょこボタン (x: 266, y: 6, 幅46, 高30)
@@ -343,12 +341,10 @@ class SceneQuiz:
         # 1. 音声ボタン (x: 214, y: 6, 幅46, 高30) - 解説中も再聴可能
         if 212 <= mx <= 262 and 4 <= my <= 38:
             self.app.audio.play_se("tap")
+            qid = self.current_q.get("id")
             audio_file = self.current_q.get("audio_file")
             reading_text = self._get_reading_text(self.current_q)
-            if audio_file:
-                self.app.audio.play_voice(audio_file, text=reading_text)
-            else:
-                self.app.audio.speak_text(reading_text)
+            self.app.audio.play_voice(audio_file, text=reading_text, qid=qid)
             return
 
         # 2. 「つぎへすすむ」ボタン (x: 20, y: 550, 幅280, 高52)
