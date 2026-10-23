@@ -61,6 +61,7 @@ class SceneQuiz:
         self.quiz_mode = "duo_section"
         self.lesson = section
         self.questions = section.get("questions", [])[:]
+        random.shuffle(self.questions)
         self.current_q_idx = 0
         self.correct_count = 0
         self.total_exp_gained = 0
