@@ -91,11 +91,11 @@ class SceneReview:
         all_lessons = self.app.quiz_data.get("lessons", [])
 
         # 1. 4大エリア進捗グラフ (y: 48〜210)
-        pyxel.rect(15, 48, 290, 155, 0)
-        pyxel.rectb(15, 48, 290, 155, 5)
+        pyxel.rect(10, 48, 300, 155, 0)
+        pyxel.rectb(10, 48, 300, 155, 5)
 
         self.app.text.draw_text(
-            25, 54, "【英検準2級 エリア別進捗】", 12, font_type="main"
+            20, 54, "【英検準2級 エリア別進捗】", 12, font_type="main"
         )
 
         area_names = ["単語・熟語", "英文法", "会話表現", "実力テスト"]
@@ -112,7 +112,7 @@ class SceneReview:
             rate = cleared_l / max(1, total_l)
 
             self.app.text.draw_text(
-                25, ay, area_names[area_id - 1], 7, font_type="main"
+                20, ay, area_names[area_id - 1], 7, font_type="main"
             )
 
             pyxel.rect(115, ay + 3, 100, 10, 5)
@@ -125,27 +125,27 @@ class SceneReview:
             )
 
         # 2. DUO 3.0 & AI忘却曲線の状況 (y: 215〜415)
-        pyxel.rect(15, 215, 290, 205, 0)
-        pyxel.rectb(15, 215, 290, 205, 5)
+        pyxel.rect(10, 215, 300, 205, 0)
+        pyxel.rectb(10, 215, 300, 205, 5)
 
         # DUO 3.0進捗
         duo_sec_cnt = len(duo_cleared)
         self.app.text.draw_text(
-            25, 224, "【DUO 3.0 制覇進捗】", 11, font_type="main"
+            20, 224, "【DUO 3.0 制覇進捗】", 11, font_type="main"
         )
         self.app.text.draw_text(
-            25,
+            20,
             248,
             f"・クリア: {duo_sec_cnt} / 45 セクション",
             7,
             font_type="main",
         )
-        pyxel.rect(25, 268, 200, 10, 5)
+        pyxel.rect(20, 268, 200, 10, 5)
         duo_w = int(200 * (duo_sec_cnt / 45.0))
         if duo_w > 0:
-            pyxel.rect(25, 268, duo_w, 10, 11)  # 緑
+            pyxel.rect(20, 268, duo_w, 10, 11)  # 緑
         self.app.text.draw_text(
-            232, 265, f"{int(duo_sec_cnt/45.0*100)}%", 6, font_type="main"
+            228, 265, f"{int(duo_sec_cnt/45.0*100)}%", 6, font_type="main"
         )
 
         # AI忘却曲線の状況
@@ -156,28 +156,27 @@ class SceneReview:
         )
 
         self.app.text.draw_text(
-            25, 295, "【AI 記憶定着スコア】", 10, font_type="main"
+            20, 295, "【AI 記憶定着スコア】", 10, font_type="main"
         )
         self.app.text.draw_text(
-            25,
+            20,
             320,
-            f"・マスター済み (定着80%↑): {mastered_count} 問",
+            f"・マスター (定着80%以上): {mastered_count}問",
             7,
             font_type="main",
         )
         self.app.text.draw_text(
-            25,
+            20,
             344,
-            f"・要復習 (定着60%↓): {weak_count} 問",
+            f"・要復習   (定着60%未満): {weak_count}問",
             7,
             font_type="main",
         )
-        self.app.text.draw_text(
-            25,
-            372,
+        self.app.text.draw_text_mini(
+            20,
+            374,
             "忘却曲線に基づき苦手問題を自動選別！",
             6,
-            font_type="main",
         )
 
         # 3. 「AIおすすめ復習スタート」ボタン (y: 440〜492)
