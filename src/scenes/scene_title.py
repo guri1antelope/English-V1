@@ -281,13 +281,17 @@ class SceneTitle:
             pyxel.rect(20, py, 280, 54, 0)
             pyxel.rectb(20, py, 280, 54, 7)  # 統一白枠
 
-            # タマゴアイコン
+            # タマゴアイコン ＆ 幼体アイコン（孵化後の姿）を並列表示
             self.app.graphics.draw_partner(
-                45, py + 27, p_id, 1, mood="normal", scale=1
+                36, py + 27, p_id, 1, mood="normal", scale=1
+            )
+            self.app.text.draw_text_mini(51, py + 21, "▶", 10)
+            self.app.graphics.draw_partner(
+                72, py + 27, p_id, 2, mood="happy", scale=1
             )
             self.app.text.draw_text(
-                70, py + 8, p_name, 7, max_width=220
+                92, py + 8, p_name, 7, max_width=200
             )
-            self.app.text.draw_text(
-                70, py + 30, p_desc, 7, max_width=220
+            self.app.text.draw_text_mini(
+                92, py + 33, p_desc, 7
             )
