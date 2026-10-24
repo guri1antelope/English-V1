@@ -14,7 +14,33 @@ import pyxel
 class GraphicsManager:
     def __init__(self):
         self.has_title_icon = False
+        self.logo_w = 250
+        self.logo_h = 139
+        self.has_logo = False
+        self._load_title_logo()
         self._init_sprites()
+
+    def _load_title_logo(self):
+        """タイトルロゴ画像 (250x139) を Image bank 2 にロード。"""
+        candidates = [
+            os.path.join(os.path.dirname(__file__), "..", "assets", "images", "title_logo.png"),
+            os.path.join(os.path.dirname(__file__), "assets", "images", "title_logo.png"),
+            "assets/images/title_logo.png",
+            "app/assets/images/title_logo.png",
+        ]
+        for p in candidates:
+            if os.path.exists(p):
+                try:
+                    pyxel.images[2].load(0, 0, p)
+                    self.has_logo = True
+                    break
+                except Exception:
+                    pass
+
+    def draw_title_logo(self, x: int = 35, y: int = 14):
+        """タイトルロゴ画像を描画。"""
+        if self.has_logo:
+            pyxel.blt(x, y, 2, 0, 0, self.logo_w, self.logo_h, 0)
 
     def _init_sprites(self):
         """Image bank 0 にスプライトデータをプログラマブルに生成・展開。"""
