@@ -135,8 +135,8 @@ class SceneTitle:
             self._draw_partner_select()
 
     def _draw_slot_select(self):
-        # 1. 最上部: タイトルロゴ画像 (左右・上8px余白 x: 8, y: 8, 幅304, 高166)
-        self.app.graphics.draw_title_logo(8, 8)
+        # 1. 最上部: タイトルロゴ画像 (上下均等19px余白 x: 8, y: 19, 幅304, 高166)
+        self.app.graphics.draw_title_logo(8, 19)
 
         # 2. 案内テキスト (従来より24px下の y: 204)
         guide_txt = "好きなスロットを選んでプレイしてね"

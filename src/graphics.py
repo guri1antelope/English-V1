@@ -39,7 +39,7 @@ class GraphicsManager:
                 except Exception:
                     pass
 
-    def draw_title_logo(self, x: int = 8, y: int = 8):
+    def draw_title_logo(self, x: int = 8, y: int = 19):
         """タイトルロゴ画像を描画。"""
         if self.has_logo and self.logo_img:
             pyxel.blt(x, y, self.logo_img, 0, 0, self.logo_w, self.logo_h, 0)
