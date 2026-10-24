@@ -46,10 +46,10 @@ class SceneTitle:
                 self._handle_partner_select_click(mx, my)
 
     def _handle_slot_click(self, mx: int, my: int):
-        # 4つのスロットカード: 幅280, 高さ38, x:20, sy: 182, 226, 270, 314 (ピッチ44px)
+        # 4つのスロットカード: 幅280, 高さ34, x:20, sy: 202, 242, 282, 322 (ピッチ40px)
         for i in range(1, MAX_SLOTS + 1):
-            sy = 182 + (i - 1) * 44
-            if 20 <= mx <= 300 and sy <= my <= sy + 38:
+            sy = 202 + (i - 1) * 40
+            if 20 <= mx <= 300 and sy <= my <= sy + 34:
                 self.selected_slot = i
                 slot_data = self.app.storage.slots.get(i)
                 self.app.audio.play_se("tap")
@@ -135,29 +135,29 @@ class SceneTitle:
             self._draw_partner_select()
 
     def _draw_slot_select(self):
-        # 1. 最上部: タイトルロゴ画像 (x: 35, y: 12, 幅250, 高139)
-        self.app.graphics.draw_title_logo(35, 12)
+        # 1. 最上部: タイトルロゴ画像 (上下左右2px余白 x: 2, y: 2, 幅316, 高172)
+        self.app.graphics.draw_title_logo(2, 2)
 
-        # 2. 案内テキスト (y: 160)
+        # 2. 案内テキスト (y: 182)
         guide_txt = "好きなスロットを選んでプレイしてね"
         gw = self.app.text.measure_text_width(guide_txt, font_type="mini")
-        self.app.text.draw_text_mini(20 + (280 - gw) // 2, 160, guide_txt, 7)
+        self.app.text.draw_text_mini(20 + (280 - gw) // 2, 182, guide_txt, 7)
 
-        # 3. 4つのセーブスロット (y: 182〜352, 各幅280, 高38)
+        # 3. 4つのセーブスロット (y: 202〜356, 各幅280, 高34)
         partner_names = ["", "柴犬", "子猫", "ウサギ", "シマリス", "ペンギン"]
         for i in range(1, MAX_SLOTS + 1):
-            sy = 182 + (i - 1) * 44
+            sy = 202 + (i - 1) * 40
             slot_data = self.app.storage.slots.get(i)
 
-            pyxel.rect(20, sy, 280, 38, 0)
-            pyxel.rectb(20, sy, 280, 38, 7)  # 統一白枠
+            pyxel.rect(20, sy, 280, 34, 0)
+            pyxel.rectb(20, sy, 280, 34, 7)  # 統一白枠
 
             if slot_data:
                 # 既存データあり
                 pid = slot_data.get("partner", {}).get("id", 1)
                 stg = slot_data.get("partner", {}).get("stage", 1)
                 self.app.graphics.draw_partner(
-                    38, sy + 19, pid, stg, mood="happy", scale=1
+                    38, sy + 17, pid, stg, mood="happy", scale=1
                 )
 
                 pname = slot_data.get("player_name", "たろう")
@@ -167,45 +167,45 @@ class SceneTitle:
 
                 # 1行目: スロット番号とプレイヤー名
                 self.app.text.draw_text_mini(
-                    56, sy + 5, f"スロット{i}: {pname}", 7
+                    56, sy + 3, f"スロット{i}: {pname}", 7
                 )
                 # 2行目: 相棒名とクリア状況
                 self.app.text.draw_text_mini(
-                    56, sy + 21, f"{pname_disp} Lv.{plv} (進捗: {cleared_count}/21)", 7
+                    56, sy + 19, f"{pname_disp} Lv.{plv} (進捗: {cleared_count}/21)", 7
                 )
 
                 # 右側: 「つづきから ▶」
-                pyxel.rect(220, sy + 6, 74, 26, 0)
-                pyxel.rectb(220, sy + 6, 74, 26, 7)
+                pyxel.rect(220, sy + 4, 74, 26, 0)
+                pyxel.rectb(220, sy + 4, 74, 26, 7)
                 bw = self.app.text.measure_text_width("つづきから", font_type="mini")
                 self.app.text.draw_text_mini(
-                    220 + (74 - bw) // 2, sy + 13, "つづきから", 7
+                    220 + (74 - bw) // 2, sy + 11, "つづきから", 7
                 )
             else:
                 # 空きスロット
                 self.app.text.draw_text_mini(
-                    56, sy + 13, f"スロット{i}: ＋ 新規データをつくる", 7
+                    56, sy + 11, f"スロット{i}: ＋ 新規データをつくる", 7
                 )
 
-        # 4. 下部: あそびかた説明ボックス (y: 366〜596, 幅280, 高230)
-        pyxel.rect(20, 366, 280, 230, 0)
-        pyxel.rectb(20, 366, 280, 230, 7)
+        # 4. 下部: あそびかた説明ボックス (y: 366〜598, 幅280, 高232)
+        pyxel.rect(20, 366, 280, 232, 0)
+        pyxel.rectb(20, 366, 280, 232, 7)
 
-        # 見出し
+        # 見出し（12pt miniフォント）
         title_txt = "【 あそびかた 】"
-        tw = self.app.text.measure_text_width(title_txt)
-        self.app.text.draw_text(20 + (280 - tw) // 2, 376, title_txt, 7)
+        tw = self.app.text.measure_text_width(title_txt, font_type="mini")
+        self.app.text.draw_text_mini(20 + (280 - tw) // 2, 374, title_txt, 7)
 
         # 目的・ストーリーが伝わる5箇条
-        self.app.text.draw_text_mini(30, 404, "① 好きな動物（相棒）を選んでスタート！", 7)
-        self.app.text.draw_text_mini(30, 428, "② 英語の問題を解いてEXPとエサをゲット！", 7)
-        self.app.text.draw_text_mini(30, 452, "③ エサをあげて相棒を「究極体」へ進化！", 7)
-        self.app.text.draw_text_mini(30, 476, "④ 強く育てた相棒と一緒に最後のボスへ挑め！", 7)
-        self.app.text.draw_text_mini(30, 498, "　 （実力テストで英検準2級の合格力を判定！）", 7)
-        self.app.text.draw_text_mini(30, 524, "⑤ 忘却曲線AIの苦手特訓＆DUO560問で合格！", 7)
+        self.app.text.draw_text_mini(30, 398, "① 好きな動物（相棒）を選んでスタート！", 7)
+        self.app.text.draw_text_mini(30, 422, "② 英語の問題を解いてEXPとエサをゲット！", 7)
+        self.app.text.draw_text_mini(30, 446, "③ エサをあげて相棒を「究極体」へ進化！", 7)
+        self.app.text.draw_text_mini(30, 470, "④ 強く育てた相棒と一緒に最後のボスへ挑め！", 7)
+        self.app.text.draw_text_mini(30, 492, "　 （実力テストで英検準2級の合格力を判定！）", 7)
+        self.app.text.draw_text_mini(30, 518, "⑤ 忘却曲線AIの苦手特訓＆DUO560問で合格！", 7)
 
         # 応援メッセージ
-        self.app.text.draw_text_mini(30, 554, "★ 相棒と一緒に毎日コツコツ合格を目指そう！", 10)
+        self.app.text.draw_text_mini(30, 548, "★ 相棒と一緒に毎日コツコツ合格を目指そう！", 10)
 
         # 5. 最下部バージョン表記
         self.app.text.draw_text_mini(20, 608, "Version 1.0.1", 7)
