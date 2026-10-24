@@ -713,15 +713,19 @@ class SceneQuiz:
             self.app.text.draw_text(
                 120, 80, "◎ 正解！", 0
             )
+            earned_exp = getattr(self, "last_earned_exp", 100)
+            self.app.text.draw_text(
+                35, 114, f"獲得: {earned_exp} EXP", 11
+            )
             exp_details = []
             if getattr(self, "last_self_bonus", 0) > 0:
                 exp_details.append("+30 自力ボーナス")
             if self.last_speed_bonus > 0:
                 exp_details.append(f"+{self.last_speed_bonus} 速度ボーナス")
-            detail_str = f"  ({' / '.join(exp_details)})" if exp_details else ""
-            self.app.text.draw_text(
-                35, 116, f"獲得: {getattr(self, 'last_earned_exp', 100)} EXP{detail_str}", 7
-            )
+            if exp_details:
+                self.app.text.draw_text_mini(
+                    35, 131, f"（{' / '.join(exp_details)}）", 10
+                )
         else:
             pyxel.rect(20, 68, 280, 40, 8)
             # 中央揃え: 20 + (280 - 64) // 2 = 128
@@ -729,11 +733,11 @@ class SceneQuiz:
                 128, 80, "× 不正解", 7
             )
             self.app.text.draw_text(
-                35, 116, "獲得: 0 EXP", 7
+                35, 114, "獲得: 0 EXP", 7
             )
 
-        # 獲得EXPとの間隔を 16px 確保
-        card_y = 146
+        # 獲得EXPとの間隔を確保してカード配置
+        card_y = 148
         q_type = self.current_q.get("type", "choice")
 
         # 解答対比カードの描画（高さ52px・上下パディング8〜10px確保）
