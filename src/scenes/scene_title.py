@@ -190,7 +190,7 @@ class SceneTitle:
 
         # 目的・ストーリーが伝わる5箇条
         self.app.text.draw_text_mini(30, 452, "① 好きな動物（相棒）を選んでスタート！", 7)
-        self.app.text.draw_text_mini(30, 472, "② 英語の問題を解いてEXPとエサをゲット！", 7)
+        self.app.text.draw_text_mini(30, 472, "② 問題正解でEXP獲得！（自力ボーナス+30あり）", 7)
         self.app.text.draw_text_mini(30, 492, "③ エサをあげて相棒を「究極体」へ進化！", 7)
         self.app.text.draw_text_mini(30, 512, "④ 強く育てた相棒と一緒に最後のボスへ挑め！", 7)
         self.app.text.draw_text_mini(30, 530, "　 （実力テストで英検準2級の合格力を判定！）", 7)

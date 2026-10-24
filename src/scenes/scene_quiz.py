@@ -102,6 +102,7 @@ class SceneQuiz:
         self.state = "answering"
         self.show_cheatsheet = False
         self.show_translation = False  # 新しい問題では和訳を隠す
+        self.used_assistance = False  # 音声・和訳・要点ヒントの利用フラグ
         self.companion_mood = "normal"
         self.companion_say = "英語をじっくり読もう！"
         self.q_start_time = time.time()
@@ -188,7 +189,7 @@ class SceneQuiz:
         if not slot_data:
             return
         partner = slot_data.setdefault("partner", {})
-        partner["exp"] = partner.get("exp", 0) + self.total_exp_gained
+        partner["exp"] = partner.get("exp", 0) + max(0, self.total_exp_gained)
 
         # レベルアップ判定
         while True:
@@ -218,6 +219,7 @@ class SceneQuiz:
         # 1. 音声ボタン (x: 214, y: 6, 幅46, 高30)
         if 212 <= mx <= 262 and 4 <= my <= 38:
             self.app.audio.play_se("tap")
+            self.used_assistance = True
             qid = self.current_q.get("id")
             audio_file = self.current_q.get("audio_file")
             reading_text = self._get_reading_text(self.current_q)
@@ -228,6 +230,7 @@ class SceneQuiz:
         has_cheatsheet = bool(self.lesson and self.lesson.get("cheat_sheet"))
         if has_cheatsheet and 264 <= mx <= 314 and 4 <= my <= 38:
             self.show_cheatsheet = True
+            self.used_assistance = True
             self.app.audio.play_se("tap")
             return
 
@@ -244,6 +247,7 @@ class SceneQuiz:
             # 和訳トグルボタンの判定 (y: 444〜488)
             if 15 <= mx <= 305 and 444 <= my <= 488:
                 self.show_translation = True
+                self.used_assistance = True
                 self.app.audio.play_se("tap")
                 return
 
@@ -282,6 +286,7 @@ class SceneQuiz:
             # 並び替え時の和訳トグルボタン (y: 475〜517)
             if 15 <= mx <= 305 and 475 <= my <= 517:
                 self.show_translation = True
+                self.used_assistance = True
                 self.app.audio.play_se("tap")
                 return
 
@@ -329,9 +334,11 @@ class SceneQuiz:
 
         if is_correct:
             self.correct_count += 1
-            earned_exp = 100 + speed_bonus
+            self.last_self_bonus = 30 if not self.used_assistance else 0
+            earned_exp = 70 + self.last_self_bonus + speed_bonus
             if self.quiz_mode == "daily_duo":
                 earned_exp *= 3
+            self.last_earned_exp = earned_exp
             self.total_exp_gained += earned_exp
             self.companion_mood = "happy"
             self.companion_say = "やったね！大正解！"
@@ -706,13 +713,14 @@ class SceneQuiz:
             self.app.text.draw_text(
                 120, 80, "◎ 正解！", 0
             )
-            bonus_str = (
-                f"+{self.last_speed_bonus} EXP"
-                if self.last_speed_bonus > 0
-                else ""
-            )
+            exp_details = []
+            if getattr(self, "last_self_bonus", 0) > 0:
+                exp_details.append("+30 自力ボーナス")
+            if self.last_speed_bonus > 0:
+                exp_details.append(f"+{self.last_speed_bonus} 速度ボーナス")
+            detail_str = f"  ({' / '.join(exp_details)})" if exp_details else ""
             self.app.text.draw_text(
-                35, 116, f"獲得: 100 EXP  {bonus_str}", 7
+                35, 116, f"獲得: {getattr(self, 'last_earned_exp', 100)} EXP{detail_str}", 7
             )
         else:
             pyxel.rect(20, 68, 280, 40, 8)
