@@ -99,8 +99,8 @@ class SceneDataManage:
             self._handle_menu_click(mx, my)
 
     def _handle_menu_click(self, mx: int, my: int):
-        # 1. 「なまえを変更する」ボタン (x: 20, y: 220, 幅280, 高46)
-        if 20 <= mx <= 300 and 220 <= my <= 266:
+        # 1. 「なまえを変更する」ボタン (x: 20, y: 216, 幅280, 高46)
+        if 20 <= mx <= 300 and 216 <= my <= 262:
             slot_data = self.app.get_current_slot_data()
             self.input_name = slot_data.get("player_name", "") if slot_data else ""
             self.mode = "name_edit"
@@ -117,14 +117,14 @@ class SceneDataManage:
             self.app.audio.play_se("tap")
             return
 
-        # 3. 「このスロットを消去（初期化）」ボタン (x: 20, y: 360, 幅280, 高46)
-        if 20 <= mx <= 300 and 360 <= my <= 406:
+        # 3. 「このスロットを消去（初期化）」ボタン (x: 20, y: 350, 幅280, 高46)
+        if 20 <= mx <= 300 and 350 <= my <= 396:
             self.show_delete_dialog = True
             self.app.audio.play_se("cancel")
             return
 
-        # 4. 「ホームへもどる」ボタン (x: 20, y: 560, 幅130, 高40)
-        if 20 <= mx <= 150 and 560 <= my <= 600:
+        # 4. 「ホームへもどる」ボタン (x: 20, y: 550, 幅130, 高40)
+        if 20 <= mx <= 150 and 550 <= my <= 590:
             self.app.audio.play_se("cancel")
             self.app.change_scene("home")
             return
@@ -242,38 +242,38 @@ class SceneDataManage:
             nw = self.app.text.measure_text_width(self.notice_message)
             self.app.text.draw_text(16 + (288 - nw) // 2, 208, self.notice_message, 10)
 
-        # 機能ボタン一覧
-        # 1. 「なまえを変更する」ボタン (y: 236, 高46)
-        pyxel.rect(20, 236, 280, 46, 0)
-        pyxel.rectb(20, 236, 280, 46, 7)
+        # 機能ボタン一覧 (均等ピッチで配置)
+        # 1. 「なまえを変更する」ボタン (y: 216, 高46)
+        pyxel.rect(20, 216, 280, 46, 0)
+        pyxel.rectb(20, 216, 280, 46, 7)
         b1_txt = "なまえを変更する"
         w1 = self.app.text.measure_text_width(b1_txt)
-        self.app.text.draw_text(20 + (280 - w1) // 2, 251, b1_txt, 7)
+        self.app.text.draw_text(20 + (280 - w1) // 2, 231, b1_txt, 7)
 
-        # 2. 「引き継ぎコード発行」ボタン (y: 298, 高46)
-        pyxel.rect(20, 298, 280, 46, 0)
-        pyxel.rectb(20, 298, 280, 46, 7)
+        # 2. 「引き継ぎコード発行」ボタン (y: 280, 高46)
+        pyxel.rect(20, 280, 280, 46, 0)
+        pyxel.rectb(20, 280, 280, 46, 7)
         b2_txt = "引き継ぎコード発行"
         w2 = self.app.text.measure_text_width(b2_txt)
-        self.app.text.draw_text(20 + (280 - w2) // 2, 313, b2_txt, 7)
+        self.app.text.draw_text(20 + (280 - w2) // 2, 295, b2_txt, 7)
 
-        # 3. 「このスロットを消去（初期化）」ボタン (y: 376, 高46) - 警告枠
-        pyxel.rect(20, 376, 280, 46, 0)
-        pyxel.rectb(20, 376, 280, 46, 8)  # 赤枠
+        # 3. 「このスロットを消去（初期化）」ボタン (y: 350, 高46) - 警告枠
+        pyxel.rect(20, 350, 280, 46, 0)
+        pyxel.rectb(20, 350, 280, 46, 8)  # 赤枠
         b3_txt = "× このスロットを消去（初期化）"
         w3 = self.app.text.measure_text_width(b3_txt)
-        self.app.text.draw_text(20 + (280 - w3) // 2, 391, b3_txt, 8)
+        self.app.text.draw_text(20 + (280 - w3) // 2, 365, b3_txt, 8)
 
-        # 注意書き (y: 430〜470)
+        # 注意書き (y: 412)
         self.app.text.draw_text(
-            26, 436, "※スロットを消去するとデータは元に戻せません。", 7, max_width=268
+            26, 412, "※スロットを消去するとデータは元に戻せません。", 7, max_width=268
         )
 
-        # フッター「◀ ホームへもどる」ボタン
-        pyxel.rect(20, 560, 130, 40, 0)
-        pyxel.rectb(20, 560, 130, 40, 7)
+        # フッター「◀ ホームへもどる」ボタン (y: 550, 高40)
+        pyxel.rect(20, 550, 130, 40, 0)
+        pyxel.rectb(20, 550, 130, 40, 7)
         hw = self.app.text.measure_text_width("◀ ホームへ")
-        self.app.text.draw_text(20 + (130 - hw) // 2, 572, "◀ ホームへ", 7)
+        self.app.text.draw_text(20 + (130 - hw) // 2, 562, "◀ ホームへ", 7)
 
     def _draw_name_edit(self, slot_data: dict):
         # 名前編集タイトル

@@ -233,16 +233,16 @@ class SceneQuiz:
 
         q_type = self.current_q.get("type", "choice")
 
-        # 3. 4択ボタンの判定 (y: 195, 252, 309, 366, 高さ48)
+        # 3. 4択ボタンの判定 (y: 202, 262, 322, 382, 高さ48)
         if q_type == "choice":
             for i in range(len(self.shuffled_options)):
-                by = 195 + i * 57
+                by = 202 + i * 60
                 if 15 <= mx <= 305 and by <= my <= by + 48:
                     self._judge_choice(i)
                     return
 
-            # 和訳トグルボタンの判定 (y: 430〜472)
-            if 15 <= mx <= 305 and 430 <= my <= 472:
+            # 和訳トグルボタンの判定 (y: 444〜488)
+            if 15 <= mx <= 305 and 444 <= my <= 488:
                 self.show_translation = True
                 self.app.audio.play_se("tap")
                 return
@@ -370,8 +370,8 @@ class SceneQuiz:
             self.app.audio.play_voice(audio_file, text=reading_text, qid=qid)
             return
 
-        # 2. 「つぎへすすむ」ボタン (x: 20, y: 550, 幅280, 高52)
-        if 20 <= mx <= 300 and 550 <= my <= 602:
+        # 2. 「つぎへすすむ」ボタン (x: 20, y: 535〜585)
+        if 20 <= mx <= 300 and 530 <= my <= 590:
             self.app.audio.play_se("tap")
             if self.current_q_idx + 1 < len(self.questions):
                 self._load_question(self.current_q_idx + 1)
@@ -553,9 +553,9 @@ class SceneQuiz:
         )
 
     def _draw_choice_options(self):
-        """4択ボタンの描画 (各 高さ48px, 白枠 7)。"""
+        """4択ボタンの描画 (各 高さ48px, 間隔12pxで均等配置)。"""
         for i, opt in enumerate(self.shuffled_options):
-            by = 195 + i * 57
+            by = 202 + i * 60
             pyxel.rect(15, by, 290, 48, 0)
             pyxel.rectb(15, by, 290, 48, 7)  # 白枠
 
@@ -567,13 +567,13 @@ class SceneQuiz:
                 22, ty, opt_text, 7, font_type="english", max_width=270, line_spacing=2
             )
 
-        # 和訳ヒントボタン (y: 430〜472, 高さ42px統一)
-        pyxel.rect(15, 430, 290, 42, 0)
-        pyxel.rectb(15, 430, 290, 42, 7)  # 白枠
+        # 和訳ヒントボタン (y: 444〜488, 高さ44px統一)
+        pyxel.rect(15, 444, 290, 44, 0)
+        pyxel.rectb(15, 444, 290, 44, 7)  # 白枠
         hint_str = "▼ 日本語訳を見る（ヒント）"
         tw = self.app.text.measure_text_width(hint_str)
         self.app.text.draw_text(
-            15 + (290 - tw) // 2, 430 + (42 - 16) // 2, hint_str, 7
+            15 + (290 - tw) // 2, 444 + (44 - 16) // 2, hint_str, 7
         )
 
     def _draw_reorder_area(self):
@@ -650,7 +650,7 @@ class SceneQuiz:
 
     def _draw_companion_footer(self, q_type: str = "choice"):
         """相棒のセリフとタイムバー（速度ボーナスゲージ）。"""
-        cy = 535 if q_type == "reorder" else 495
+        cy = 535 if q_type == "reorder" else 504
         pyxel.rect(15, cy, 290, 54, 0)
         pyxel.rectb(15, cy, 290, 54, 7)
 
@@ -695,7 +695,7 @@ class SceneQuiz:
         )
 
     def _draw_feedback_modal(self):
-        """即時フィードバック画面（はみ出し防止構造）。"""
+        """即時フィードバック画面（ゆとりある余白・均等間隔配置）。"""
         pyxel.rect(10, 55, 300, 540, 0)
         border_col = 11 if self.last_is_correct else 8
         pyxel.rectb(10, 55, 300, 540, border_col)
@@ -721,41 +721,42 @@ class SceneQuiz:
                 128, 80, "× 不正解", 7
             )
             self.app.text.draw_text(
-                35, 116, "獲得: 0 EXP", 6
+                35, 116, "獲得: 0 EXP", 7
             )
 
-        card_y = 138
+        # 獲得EXPとの間隔を 16px 確保
+        card_y = 146
         q_type = self.current_q.get("type", "choice")
 
-        # 解答対比カードの描画
+        # 解答対比カードの描画（高さ52px・上下パディング8〜10px確保）
         if q_type == "choice":
             if self.last_is_correct:
-                # 正解時: 全幅カード
-                pyxel.rect(20, card_y, 280, 40, 0)
-                pyxel.rectb(20, card_y, 280, 40, 11)  # 緑枠
+                # 正解時: 全幅カード (高さ52px)
+                pyxel.rect(20, card_y, 280, 52, 0)
+                pyxel.rectb(20, card_y, 280, 52, 11)  # 緑枠
                 self.app.text.draw_text_mini(
-                    26, card_y + 4, "あなたの解答 (◎ 正解):", 11
+                    26, card_y + 8, "あなたの解答 (◎ 正解):", 11
                 )
                 self.app.text.draw_text(
                     26,
-                    card_y + 19,
+                    card_y + 26,
                     self.user_answer_text or "-",
                     7,
                     max_width=268,
                     font_type="english",
                 )
-                cur_y = card_y + 40 + 12
+                cur_y = card_y + 52 + 18
             else:
-                # 不正解時: 左右分割カード (幅135pxずつ)
+                # 不正解時: 左右分割カード (幅135px、高さ52px)
                 # 左: あなたの解答 (赤枠)
-                pyxel.rect(20, card_y, 135, 44, 0)
-                pyxel.rectb(20, card_y, 135, 44, 8)
+                pyxel.rect(20, card_y, 135, 52, 0)
+                pyxel.rectb(20, card_y, 135, 52, 8)
                 self.app.text.draw_text_mini(
-                    26, card_y + 4, "あなたの解答 (×)", 8
+                    26, card_y + 8, "あなたの解答 (×)", 8
                 )
                 self.app.text.draw_text(
                     26,
-                    card_y + 20,
+                    card_y + 26,
                     self.user_answer_text or "-",
                     8,
                     max_width=123,
@@ -763,48 +764,48 @@ class SceneQuiz:
                 )
 
                 # 右: 正解 (緑枠)
-                pyxel.rect(165, card_y, 135, 44, 0)
-                pyxel.rectb(165, card_y, 135, 44, 11)
+                pyxel.rect(165, card_y, 135, 52, 0)
+                pyxel.rectb(165, card_y, 135, 52, 11)
                 self.app.text.draw_text_mini(
-                    171, card_y + 4, "正解 (◎)", 11
+                    171, card_y + 8, "正解 (◎)", 11
                 )
                 self.app.text.draw_text(
                     171,
-                    card_y + 20,
+                    card_y + 26,
                     self.correct_answer_text or "-",
                     11,
                     max_width=123,
                     font_type="english",
                 )
-                cur_y = card_y + 44 + 12
+                cur_y = card_y + 52 + 18
         elif q_type == "reorder":
             if self.last_is_correct:
                 # 正解時: 全幅カード
-                pyxel.rect(20, card_y, 280, 38, 0)
-                pyxel.rectb(20, card_y, 280, 38, 11)
+                pyxel.rect(20, card_y, 280, 52, 0)
+                pyxel.rectb(20, card_y, 280, 52, 11)
                 self.app.text.draw_text_mini(
-                    26, card_y + 3, "あなたの並び替え (◎ 正解):", 11
+                    26, card_y + 8, "あなたの並び替え (◎ 正解):", 11
                 )
                 self.app.text.draw_text(
                     26,
-                    card_y + 18,
+                    card_y + 26,
                     self.user_answer_text or "-",
                     7,
                     max_width=268,
                     font_type="english",
                 )
-                cur_y = card_y + 38 + 12
+                cur_y = card_y + 52 + 18
             else:
-                # 不正解時: 上下2段カード (各36px)
+                # 不正解時: 上下2段カード (各42px)
                 # 上段: あなたの解答
-                pyxel.rect(20, card_y, 280, 36, 0)
-                pyxel.rectb(20, card_y, 280, 36, 8)
+                pyxel.rect(20, card_y, 280, 42, 0)
+                pyxel.rectb(20, card_y, 280, 42, 8)
                 self.app.text.draw_text_mini(
-                    26, card_y + 3, "あなたの並び替え (×):", 8
+                    26, card_y + 6, "あなたの並び替え (×):", 8
                 )
                 self.app.text.draw_text(
                     26,
-                    card_y + 17,
+                    card_y + 22,
                     self.user_answer_text or "-",
                     8,
                     max_width=268,
@@ -812,25 +813,25 @@ class SceneQuiz:
                 )
 
                 # 下段: 正しい並び順
-                next_card_y = card_y + 40
-                pyxel.rect(20, next_card_y, 280, 36, 0)
-                pyxel.rectb(20, next_card_y, 280, 36, 11)
+                next_card_y = card_y + 48
+                pyxel.rect(20, next_card_y, 280, 42, 0)
+                pyxel.rectb(20, next_card_y, 280, 42, 11)
                 self.app.text.draw_text_mini(
-                    26, next_card_y + 3, "正しい並び順 (◎):", 11
+                    26, next_card_y + 6, "正しい並び順 (◎):", 11
                 )
                 self.app.text.draw_text(
                     26,
-                    next_card_y + 17,
+                    next_card_y + 22,
                     self.correct_answer_text or "-",
                     11,
                     max_width=268,
                     font_type="english",
                 )
-                cur_y = next_card_y + 36 + 12
+                cur_y = next_card_y + 42 + 18
         else:
             cur_y = card_y
 
-        # 正解の英文表示
+        # 正解の英文表示 (見出しから本文まで18px)
         self.app.text.draw_text(
             22, cur_y, "【正しい英文】", 7
         )
@@ -859,24 +860,24 @@ class SceneQuiz:
             line_spacing=3,
         )
 
-        # 日本語訳（10pxの間隔）
+        # 日本語訳（本文から14pxの間隔）
         feedback_trans = self._format_dialogue(self.current_q.get("translation", ""))
         next_y2 = self.app.text.draw_text(
             22,
-            next_y + 10,
+            next_y + 14,
             f"訳: {feedback_trans}",
             7,
             max_width=276,
             line_spacing=3,
         )
 
-        # ポイント解説（12pxの間隔）
+        # ポイント解説（日本語訳から18pxの間隔、見出しから本文まで18px）
         self.app.text.draw_text(
-            22, next_y2 + 12, "【ポイント解説】", 7
+            22, next_y2 + 18, "【ポイント解説】", 7
         )
         self.app.text.draw_text(
             22,
-            next_y2 + 30,
+            next_y2 + 36,
             self.current_q.get("explanation", ""),
             7,
             max_width=276,

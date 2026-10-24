@@ -197,26 +197,26 @@ class SceneHome:
                 self.app.start_daily_duo_quiz()
             return
 
-        # 2. 「レッスンへ進む」ボタン (x:20, y:398, 幅280, 高46)
-        if 20 <= mx <= 300 and 398 <= my <= 444:
+        # 2. 「レッスンへ進む」ボタン (x:20, y:401, 幅280, 高46)
+        if 20 <= mx <= 300 and 401 <= my <= 447:
             self.app.audio.play_se("tap")
             self.app.change_scene("map")
             return
 
-        # 3. 「進捗状況・復習レッスン」ボタン (x:20, y:452, 幅280, 高44)
-        if 20 <= mx <= 300 and 452 <= my <= 496:
+        # 3. 「進捗状況・復習レッスン」ボタン (x:20, y:459, 幅280, 高44)
+        if 20 <= mx <= 300 and 459 <= my <= 503:
             self.app.audio.play_se("tap")
             self.app.change_scene("review")
             return
 
-        # 4. 「記録・データ管理」ボタン (x:20, y:504, 幅280, 高42)
-        if 20 <= mx <= 300 and 504 <= my <= 546:
+        # 4. 「記録・データ管理」ボタン (x:20, y:515, 幅280, 高42)
+        if 20 <= mx <= 300 and 515 <= my <= 557:
             self.app.audio.play_se("tap")
             self.app.change_scene("data_manage")
             return
 
-        # 5. 「スロット選択へもどる」ボタン (x:20, y:560, 幅140, 高38)
-        if 20 <= mx <= 160 and 560 <= my <= 598:
+        # 5. 「スロット選択へもどる」ボタン (x:20, y:572, 幅140, 高38)
+        if 20 <= mx <= 160 and 572 <= my <= 610:
             self.app.audio.play_se("cancel")
             self.app.change_scene("title")
             return
@@ -304,10 +304,10 @@ class SceneHome:
         if self.heart_timer > 0:
             self.app.text.draw_text_mini(154, 104 + bounce_y, "♥", 8)
 
-        # 相棒の名前と状態
+        # 相棒の名前と状態 (y: 212 に引き上げてバーとの間に8pxの余白を確保)
         p_title = f"{species_names[pid]} ({stage_names[pstage]})"
         self.app.text.draw_text(
-            90, 218, p_title, 7
+            90, 212, p_title, 7
         )
 
         # ステータスバー（Lv, EXP）
@@ -346,7 +346,7 @@ class SceneHome:
         self.app.text.draw_text_mini(212, 292, f"金リンゴ {gold_cnt}個", 7 if gold_cnt > 0 else 5)
         self.app.text.draw_text_mini(212, 312, "+300 EXP", 10 if gold_cnt > 0 else 5)
 
-        # メインナビゲーションボタン
+        # メインナビゲーションボタン (均等間隔12pxで配置)
         # 1. 「今日の挑戦状 (DUO 3問)」 (y: 345, 高44)
         from storage import get_local_today_str
         today_str = get_local_today_str()
@@ -370,38 +370,38 @@ class SceneHome:
             w_title = self.app.text.measure_text_width(dt_title)
             self.app.text.draw_text(20 + (280 - w_title) // 2, 358, dt_title, 7)
 
-        # 2. 「レッスンへ進む」 (黒背景＋白枠＋白文字, y: 398, 高46)
-        pyxel.rect(20, 398, 280, 46, 0)
-        pyxel.rectb(20, 398, 280, 46, 7)
+        # 2. 「レッスンへ進む」 (黒背景＋白枠＋白文字, y: 401, 高46)
+        pyxel.rect(20, 401, 280, 46, 0)
+        pyxel.rectb(20, 401, 280, 46, 7)
         btn_l_text = "▶ レッスンへ進む！"
         w_l = self.app.text.measure_text_width(btn_l_text)
         self.app.text.draw_text(
-            20 + (280 - w_l) // 2, 398 + (46 - 16) // 2, btn_l_text, 7
+            20 + (280 - w_l) // 2, 401 + (46 - 16) // 2, btn_l_text, 7
         )
 
-        # 3. 「進捗状況・復習レッスン」 (黒背景＋白枠＋白文字, y: 452, 高44)
-        pyxel.rect(20, 452, 280, 44, 0)
-        pyxel.rectb(20, 452, 280, 44, 7)
+        # 3. 「進捗状況・復習レッスン」 (黒背景＋白枠＋白文字, y: 459, 高44)
+        pyxel.rect(20, 459, 280, 44, 0)
+        pyxel.rectb(20, 459, 280, 44, 7)
         btn_r1_text = "進捗状況・復習レッスン"
         w_r1 = self.app.text.measure_text_width(btn_r1_text)
         self.app.text.draw_text(
-            20 + (280 - w_r1) // 2, 452 + (44 - 16) // 2, btn_r1_text, 7
+            20 + (280 - w_r1) // 2, 459 + (44 - 16) // 2, btn_r1_text, 7
         )
 
-        # 4. 「記録・データ管理」 (黒背景＋白枠＋白文字, y: 504, 高42)
-        pyxel.rect(20, 504, 280, 42, 0)
-        pyxel.rectb(20, 504, 280, 42, 7)
+        # 4. 「記録・データ管理」 (黒背景＋白枠＋白文字, y: 515, 高42)
+        pyxel.rect(20, 515, 280, 42, 0)
+        pyxel.rectb(20, 515, 280, 42, 7)
         btn_r2_text = "記録・データ管理"
         w_r2 = self.app.text.measure_text_width(btn_r2_text)
         self.app.text.draw_text(
-            20 + (280 - w_r2) // 2, 504 + (42 - 16) // 2, btn_r2_text, 7
+            20 + (280 - w_r2) // 2, 515 + (42 - 16) // 2, btn_r2_text, 7
         )
 
-        # 5. フッターボタン (黒背景＋白枠＋白文字, y: 560, 高38)
-        pyxel.rect(20, 560, 140, 38, 0)
-        pyxel.rectb(20, 560, 140, 38, 7)
+        # 5. フッターボタン (黒背景＋白枠＋白文字, y: 572, 高38)
+        pyxel.rect(20, 572, 140, 38, 0)
+        pyxel.rectb(20, 572, 140, 38, 7)
         self.app.text.draw_text(
-            28, 570, "◀ スロット選択へ", 7
+            28, 582, "◀ スロット選択へ", 7
         )
 
         # 6. ログインボーナス演出ポップアップ（最前面）

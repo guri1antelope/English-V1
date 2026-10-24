@@ -168,8 +168,8 @@ class SceneResult:
         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
             mx, my = pyxel.mouse_x, pyxel.mouse_y
 
-            # 左ボタン (x: 20, y: 535, 幅130, 高48)
-            if 20 <= mx <= 150 and 535 <= my <= 583:
+            # 左ボタン (x: 20, y: 515, 幅130, 高48)
+            if 20 <= mx <= 150 and 515 <= my <= 565:
                 self.app.audio.play_se("tap")
                 if self.quiz_mode == "daily_duo":
                     self.app.change_scene("home")
@@ -177,8 +177,8 @@ class SceneResult:
                     self.app.change_scene("map")
                 return
 
-            # 右ボタン (x: 170, y: 535, 幅130, 高48)
-            if 170 <= mx <= 300 and 535 <= my <= 583:
+            # 右ボタン (x: 170, y: 515, 幅130, 高48)
+            if 170 <= mx <= 300 and 515 <= my <= 565:
                 self.app.audio.play_se("tap")
                 if self.quiz_mode == "daily_duo":
                     self.app.change_scene("home")
@@ -298,10 +298,10 @@ class SceneResult:
         mood = "happy" if self.is_passed else "sad"
 
         self.app.graphics.draw_partner(
-            160, 350, pid, pstage, mood=mood, frame=self.frame, scale=3
+            160, 315, pid, pstage, mood=mood, frame=self.frame, scale=3
         )
 
-        # セリフ吹き出し (幅280, 高52, y: 445〜497)
+        # セリフ吹き出し (幅280, 高52, y: 415〜467)
         if self.quiz_mode == "daily_duo":
             speech = "すごい！今日の挑戦状クリア！\nお部屋で金のリンゴを食べてね！"
         elif self.quiz_mode == "duo_section":
@@ -316,15 +316,15 @@ class SceneResult:
                 if self.is_passed
                 else "次はきっと8問以上正解できるよ！"
             )
-        pyxel.rect(20, 445, 280, 52, 0)
-        pyxel.rectb(20, 445, 280, 52, 7)
+        pyxel.rect(20, 415, 280, 52, 0)
+        pyxel.rectb(20, 415, 280, 52, 7)
         self.app.text.draw_text(
-            30, 453, speech, 7, font_type="main", max_width=260, line_spacing=3
+            30, 423, speech, 7, font_type="main", max_width=260, line_spacing=3
         )
 
-        # フッターナビゲーションボタン
-        pyxel.rect(20, 535, 130, 48, 0)
-        pyxel.rectb(20, 535, 130, 48, 7)
+        # フッターナビゲーションボタン (y: 515〜563)
+        pyxel.rect(20, 515, 130, 48, 0)
+        pyxel.rectb(20, 515, 130, 48, 7)
         if self.quiz_mode == "daily_duo":
             btn_left_text = "◀ ホームへ"
             btn_right_text = "お部屋へ ▶"
@@ -337,12 +337,12 @@ class SceneResult:
 
         w_bl = self.app.text.measure_text_width(btn_left_text)
         self.app.text.draw_text(
-            20 + (130 - w_bl) // 2, 550, btn_left_text, 7, font_type="main"
+            20 + (130 - w_bl) // 2, 530, btn_left_text, 7, font_type="main"
         )
 
-        pyxel.rect(170, 535, 130, 48, 0)
-        pyxel.rectb(170, 535, 130, 48, 7)
+        pyxel.rect(170, 515, 130, 48, 0)
+        pyxel.rectb(170, 515, 130, 48, 7)
         w_br = self.app.text.measure_text_width(btn_right_text)
         self.app.text.draw_text(
-            170 + (130 - w_br) // 2, 550, btn_right_text, 7, font_type="main"
+            170 + (130 - w_br) // 2, 530, btn_right_text, 7, font_type="main"
         )

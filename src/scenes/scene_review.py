@@ -171,15 +171,15 @@ class SceneReview:
             230, 304, f"{weak_count}問", 7, font_type="main"
         )
 
-        # 注釈文を2行に分割して枠内・画面内に綺麗に収容
+        # 「・要復習」の「要」の開始位置（x: 40）に完全に揃えてインデント配置
         self.app.text.draw_text_mini(
-            24,
+            40,
             336,
             "※忘却曲線に基づき、苦手な問題を",
             7,
         )
         self.app.text.draw_text_mini(
-            24,
+            40,
             354,
             "　自動選別して復習出題します",
             7,
