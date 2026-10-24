@@ -394,8 +394,8 @@ class SceneQuiz:
 
         # 1. 「◀ やめる」ボタン (x: 6, y: 6, 幅64, 高30) - はみ出し解消
         pyxel.rect(6, 6, 64, 30, 0)
-        pyxel.rectb(6, 6, 64, 30, 5)
-        self.app.text.draw_text_mini(10, 15, "◀ やめる", 6)
+        pyxel.rectb(6, 6, 64, 30, 7)
+        self.app.text.draw_text_mini(10, 15, "◀ やめる", 7)
 
         # 2. ミニ相棒アイコン (x: 76, y: 8)
         slot_data = self.app.get_current_slot_data()
@@ -419,20 +419,20 @@ class SceneQuiz:
         else:
             self.app.text.draw_text_mini(104, 15, f"第{q_num}問 / 全{q_total}問", 7)
 
-        # 音声ボタン (214, 6, 幅46, 高30) - 統一セカンダリ枠・完全中央揃え
+        # 音声ボタン (214, 6, 幅46, 高30) - 白枠・白文字
         pyxel.rect(214, 6, 46, 30, 0)
-        pyxel.rectb(214, 6, 46, 30, 12)
+        pyxel.rectb(214, 6, 46, 30, 7)
         self.app.text.draw_text(214 + (46 - 16) // 2, 6 + (30 - 16) // 2, "音", 7)
 
-        # 要点ボタン (266, 6, 幅46, 高30) - 統一セカンダリ枠・完全中央揃え（cheat_sheetが存在する場合のみ）
+        # 要点ボタン (266, 6, 幅46, 高30) - 白枠・白文字（cheat_sheetが存在する場合のみ）
         if bool(self.lesson and self.lesson.get("cheat_sheet")):
             pyxel.rect(266, 6, 46, 30, 0)
-            pyxel.rectb(266, 6, 46, 30, 12)
+            pyxel.rectb(266, 6, 46, 30, 7)
             self.app.text.draw_text(266 + (46 - 32) // 2, 6 + (30 - 16) // 2, "要点", 7)
 
         # 問題エリア (y: 48〜185) - 英語ファースト: 英文のみをゆったり表示
         pyxel.rect(12, 48, 296, 138, 0)
-        pyxel.rectb(12, 48, 296, 138, 5)
+        pyxel.rectb(12, 48, 296, 138, 7)
 
         sentence = self.current_q.get("sentence", "")
         if self.current_q.get("type") == "reorder" and "( )" in sentence:
@@ -553,11 +553,11 @@ class SceneQuiz:
         )
 
     def _draw_choice_options(self):
-        """4択ボタンの描画 (各 高さ48px, 統一水色枠 12)。"""
+        """4択ボタンの描画 (各 高さ48px, 白枠 7)。"""
         for i, opt in enumerate(self.shuffled_options):
             by = 195 + i * 57
             pyxel.rect(15, by, 290, 48, 0)
-            pyxel.rectb(15, by, 290, 48, 12)  # 統一操作カラー: 水色
+            pyxel.rectb(15, by, 290, 48, 7)  # 白枠
 
             opt_text = f"[{i + 1}]  {opt}"
             lines = self.app.text.wrap_text(opt_text, max_width=270, font_type="english")
@@ -569,7 +569,7 @@ class SceneQuiz:
 
         # 和訳ヒントボタン (y: 430〜472, 高さ42px統一)
         pyxel.rect(15, 430, 290, 42, 0)
-        pyxel.rectb(15, 430, 290, 42, 12)  # 統一セカンダリ枠
+        pyxel.rectb(15, 430, 290, 42, 7)  # 白枠
         hint_str = "▼ 日本語訳を見る（ヒント）"
         tw = self.app.text.measure_text_width(hint_str)
         self.app.text.draw_text(
@@ -580,9 +580,9 @@ class SceneQuiz:
         """並び替え解答枠と単語チップの描画。"""
         # 1. 解答スロット枠 (y: 195〜255)
         pyxel.rect(15, 195, 290, 60, 0)
-        pyxel.rectb(15, 195, 290, 60, 5)  # 落ち着いた暗灰枠
+        pyxel.rectb(15, 195, 290, 60, 7)  # 白枠
         self.app.text.draw_text(
-            22, 200, "【解答ライン】", 6
+            22, 200, "【解答ライン】", 7
         )
 
         # 並べられた単語 (白文字)
@@ -601,7 +601,7 @@ class SceneQuiz:
                 22,
                 222,
                 "下の単語チップをタップしてね",
-                6,
+                7,
             )
 
         # 2. 単語チップ一覧 (y: 265〜415, 幅96px, 高さ38px)
@@ -611,7 +611,7 @@ class SceneQuiz:
             cx = 12 + col * 98
             cy = 265 + row * 44
             pyxel.rect(cx, cy, 96, 38, 0)
-            pyxel.rectb(cx, cy, 96, 38, 12)  # 水色枠
+            pyxel.rectb(cx, cy, 96, 38, 7)  # 白枠
             tw = self.app.text.measure_text_width(word)
             tx = cx + (96 - tw) // 2 if tw <= 90 else cx + 4
             self.app.text.draw_text(
@@ -619,20 +619,19 @@ class SceneQuiz:
             )
 
         # 3. ボタン（戻す・決定）
-        # 戻すボタン: 統一キャンセル枠（黒背景＋暗灰枠＋明灰文字）
+        # 戻すボタン: 白枠＋白文字
         pyxel.rect(15, 425, 90, 42, 0)
-        pyxel.rectb(15, 425, 90, 42, 5)
+        pyxel.rectb(15, 425, 90, 42, 7)
         rw = self.app.text.measure_text_width("１つ戻す")
         self.app.text.draw_text(
-            15 + (90 - rw) // 2, 425 + (42 - 16) // 2, "１つ戻す", 6
+            15 + (90 - rw) // 2, 425 + (42 - 16) // 2, "１つ戻す", 7
         )
 
-        # 決定ボタン: 有効時は水色プライマリ、無効時も視認可能な明灰文字
+        # 決定ボタン: 有効時は白枠＋白文字、無効時は暗灰
         ready = (not self.remaining_words) and bool(self.selected_words)
-        btn_bg = 12 if ready else 0
         btn_border = 7 if ready else 5
-        btn_text = 0 if ready else 6
-        pyxel.rect(115, 425, 190, 42, btn_bg)
+        btn_text = 7 if ready else 5
+        pyxel.rect(115, 425, 190, 42, 0)
         pyxel.rectb(115, 425, 190, 42, btn_border)
         ready_str = "▶ これで決定！"
         ready_w = self.app.text.measure_text_width(ready_str)
@@ -642,7 +641,7 @@ class SceneQuiz:
 
         # 和訳ヒントボタン (y: 475〜517, 高さ42px統一)
         pyxel.rect(15, 475, 290, 42, 0)
-        pyxel.rectb(15, 475, 290, 42, 12)  # 統一セカンダリ枠
+        pyxel.rectb(15, 475, 290, 42, 7)  # 白枠
         hint_str = "▼ 日本語訳を見る（ヒント）"
         tw = self.app.text.measure_text_width(hint_str)
         self.app.text.draw_text(
@@ -653,7 +652,7 @@ class SceneQuiz:
         """相棒のセリフとタイムバー（速度ボーナスゲージ）。"""
         cy = 535 if q_type == "reorder" else 495
         pyxel.rect(15, cy, 290, 54, 0)
-        pyxel.rectb(15, cy, 290, 54, 5)
+        pyxel.rectb(15, cy, 290, 54, 7)
 
         slot_data = self.app.get_current_slot_data()
         partner = slot_data.get("partner", {}) if slot_data else {}
@@ -833,7 +832,7 @@ class SceneQuiz:
 
         # 正解の英文表示
         self.app.text.draw_text(
-            22, cur_y, "【正しい英文】", 6
+            22, cur_y, "【正しい英文】", 7
         )
         cur_y += 18
         full_sentence = self.current_q.get("sentence", "")
@@ -866,14 +865,14 @@ class SceneQuiz:
             22,
             next_y + 10,
             f"訳: {feedback_trans}",
-            6,
+            7,
             max_width=276,
             line_spacing=3,
         )
 
         # ポイント解説（12pxの間隔）
         self.app.text.draw_text(
-            22, next_y2 + 12, "【ポイント解説】", 12
+            22, next_y2 + 12, "【ポイント解説】", 7
         )
         self.app.text.draw_text(
             22,
@@ -884,13 +883,13 @@ class SceneQuiz:
             line_spacing=3,
         )
 
-        # 「次へ進む」ボタン (y: 535〜585) - 統一プライマリボタン
-        pyxel.rect(20, 535, 280, 48, 12)
+        # 「次へ進む」ボタン (y: 535〜585) - 黒背景＋白枠＋白文字
+        pyxel.rect(20, 535, 280, 48, 0)
         pyxel.rectb(20, 535, 280, 48, 7)
         nxt_str = "▶ 次へ進む！"
         ntw = self.app.text.measure_text_width(nxt_str)
         self.app.text.draw_text(
-            20 + (280 - ntw) // 2, 535 + (48 - 16) // 2, nxt_str, 0
+            20 + (280 - ntw) // 2, 535 + (48 - 16) // 2, nxt_str, 7
         )
 
     def _draw_cheatsheet_modal(self):

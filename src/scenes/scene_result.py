@@ -218,7 +218,7 @@ class SceneResult:
                 w1 = self.app.text.measure_text_width(t_title)
                 w2 = self.app.text.measure_text_width(sub_text)
                 self.app.text.draw_text(20 + (280 - w1) // 2, 33, t_title, 8, font_type="main")
-                self.app.text.draw_text(20 + (280 - w2) // 2, 57, sub_text, 6, font_type="main")
+                self.app.text.draw_text(20 + (280 - w2) // 2, 57, sub_text, 7, font_type="main")
         else:
             border_col = 11 if self.is_passed else 8
             pyxel.rectb(20, 25, 280, 60, border_col)
@@ -235,11 +235,11 @@ class SceneResult:
                 w1 = self.app.text.measure_text_width(t_title)
                 w2 = self.app.text.measure_text_width(sub_text)
                 self.app.text.draw_text(20 + (280 - w1) // 2, 33, t_title, 8, font_type="main")
-                self.app.text.draw_text(20 + (280 - w2) // 2, 57, sub_text, 6, font_type="main")
+                self.app.text.draw_text(20 + (280 - w2) // 2, 57, sub_text, 7, font_type="main")
 
         # スコアカード (y: 95〜235)
         pyxel.rect(20, 95, 280, 135, 0)
-        pyxel.rectb(20, 95, 280, 135, 5)
+        pyxel.rectb(20, 95, 280, 135, 7)
 
         self.app.text.draw_text(
             35,
@@ -317,14 +317,14 @@ class SceneResult:
                 else "次はきっと8問以上正解できるよ！"
             )
         pyxel.rect(20, 445, 280, 52, 0)
-        pyxel.rectb(20, 445, 280, 52, 5)
+        pyxel.rectb(20, 445, 280, 52, 7)
         self.app.text.draw_text(
             30, 453, speech, 7, font_type="main", max_width=260, line_spacing=3
         )
 
         # フッターナビゲーションボタン
         pyxel.rect(20, 535, 130, 48, 0)
-        pyxel.rectb(20, 535, 130, 48, 5)
+        pyxel.rectb(20, 535, 130, 48, 7)
         if self.quiz_mode == "daily_duo":
             btn_left_text = "◀ ホームへ"
             btn_right_text = "お部屋へ ▶"
@@ -337,12 +337,11 @@ class SceneResult:
 
         w_bl = self.app.text.measure_text_width(btn_left_text)
         self.app.text.draw_text(
-            20 + (130 - w_bl) // 2, 550, btn_left_text, 6, font_type="main"
+            20 + (130 - w_bl) // 2, 550, btn_left_text, 7, font_type="main"
         )
 
         pyxel.rect(170, 535, 130, 48, 0)
-        pyxel.rectb(170, 535, 130, 48, 12)
-        pyxel.rectb(171, 536, 128, 46, 7)
+        pyxel.rectb(170, 535, 130, 48, 7)
         w_br = self.app.text.measure_text_width(btn_right_text)
         self.app.text.draw_text(
             170 + (130 - w_br) // 2, 550, btn_right_text, 7, font_type="main"

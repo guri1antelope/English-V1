@@ -144,49 +144,46 @@ class SceneMap:
         pyxel.cls(1)  # 濃紺背景
 
         # 最上部モード切替タブ (y: 8〜34)
-        # 1. 英検準2級タブ (x: 10, w: 145, h: 26) - 高コントラスト（黒背景＋水色枠＋白文字）
+        # 1. 英検準2級タブ (x: 10, w: 145, h: 26) - 高コントラスト（黒背景＋白枠＋白文字）
         is_eiken = (self.mode == "eiken")
-        eiken_border = 12 if is_eiken else 5
-        eiken_col = 7 if is_eiken else 6
+        eiken_border = 7 if is_eiken else 5
         pyxel.rect(10, 8, 145, 26, 0)
         pyxel.rectb(10, 8, 145, 26, eiken_border)
         eiken_lbl = "英検準２級"
         w_e = self.app.text.measure_text_width(eiken_lbl)
-        self.app.text.draw_text(10 + (145 - w_e) // 2, 13, eiken_lbl, eiken_col)
+        self.app.text.draw_text(10 + (145 - w_e) // 2, 13, eiken_lbl, 7)
 
-        # 2. DUOの森タブ (x: 165, w: 145, h: 26) - 高コントラスト（黒背景＋緑枠＋白文字）
+        # 2. DUOの森タブ (x: 165, w: 145, h: 26) - 高コントラスト（黒背景＋白枠＋白文字）
         is_duo = (self.mode == "duo")
-        duo_border = 11 if is_duo else 5
-        duo_col = 7 if is_duo else 6
+        duo_border = 7 if is_duo else 5
         pyxel.rect(165, 8, 145, 26, 0)
         pyxel.rectb(165, 8, 145, 26, duo_border)
         duo_lbl = "DUOの森 (560問)"
         w_d = self.app.text.measure_text_width(duo_lbl)
-        self.app.text.draw_text(165 + (145 - w_d) // 2, 13, duo_lbl, duo_col)
+        self.app.text.draw_text(165 + (145 - w_d) // 2, 13, duo_lbl, 7)
 
         slot_data = self.app.get_current_slot_data()
 
         if self.mode == "eiken":
-            # 4大エリアタブ (y: 38〜70) - 高コントラスト（選択中は黒背景＋水色枠＋白文字）
+            # 4大エリアタブ (y: 38〜70) - 高コントラスト（選択中は黒背景＋白枠＋白文字）
             tab_names = ["単語", "文法", "会話", "テスト"]
             for i in range(1, 5):
                 tx = 10 + (i - 1) * 76
                 is_active = self.selected_area_id == i
-                border_col = 12 if is_active else 5
-                text_col = 7 if is_active else 6
+                border_col = 7 if is_active else 5
 
                 pyxel.rect(tx, 38, 72, 32, 0)
                 pyxel.rectb(tx, 38, 72, 32, border_col)
                 name = tab_names[i - 1]
                 tw = self.app.text.measure_text_width(name)
-                self.app.text.draw_text(tx + (72 - tw) // 2, 46, name, text_col)
+                self.app.text.draw_text(tx + (72 - tw) // 2, 46, name, 7)
 
             # エリア説明 (y: 74〜110, max_width=288)
             area_info = self.app.quiz_data.get("areas", [])[
                 self.selected_area_id - 1
             ]
             self.app.text.draw_text(
-                16, 76, area_info.get("description", ""), 6, max_width=288, line_spacing=2
+                16, 76, area_info.get("description", ""), 7, max_width=288, line_spacing=2
             )
 
             # レッスンカード一覧 (y: 116〜560) - 高さ68px・ピッチ76pxでゆったり配置
@@ -212,24 +209,24 @@ class SceneMap:
                 is_cleared = clear_info.get("cleared", False)
                 stars = clear_info.get("stars", 0)
 
-                border_col = 12 if is_cleared else (7 if is_unlocked else 5)
+                border_col = 7 if is_unlocked else 5
                 pyxel.rect(10, ly, 300, 68, 0)
                 pyxel.rectb(10, ly, 300, 68, border_col)
 
                 main_title, sub_title = self._split_title(lesson.get("title", ""))
                 title_col = 7 if is_unlocked else 5
-                # タイトルは幅270pxまで使って1行で美しく表示
+                # タイトルは幅260pxまで使って1行で美しく表示
                 self.app.text.draw_text(
-                    18, ly + 8, main_title, title_col, max_width=270
+                    22, ly + 8, main_title, title_col, max_width=260
                 )
 
                 fmt_str = "4択クイズ" if lesson.get("format") == "choice" else "並び替え"
                 self.app.text.draw_text_mini(
-                    18, ly + 30, f"{fmt_str} (10問)", 6
+                    22, ly + 30, f"{fmt_str} (10問)", 7 if is_unlocked else 5
                 )
                 # 獲得報酬の明記 (PixelMplus 12pt)
                 self.app.text.draw_text_mini(
-                    18, ly + 48, "クリア報酬: リンゴ2個 (★3で+肉1個)", 10 if is_unlocked else 5
+                    22, ly + 48, "クリア報酬: リンゴ2個 (★3で+肉1個)", 10 if is_unlocked else 5
                 )
 
                 if not is_unlocked:
@@ -240,7 +237,7 @@ class SceneMap:
                     status_col = 10
                 else:
                     status_str = "未クリア"
-                    status_col = 12
+                    status_col = 7
                 sw = self.app.text.measure_text_width(status_str)
                 self.app.text.draw_text(294 - sw, ly + 26, status_str, status_col)
 
@@ -251,18 +248,17 @@ class SceneMap:
             page_xs = [10, 114, 216]
             for p, px in enumerate(page_xs):
                 is_active = (self.duo_page == p)
-                border_col = 11 if is_active else 5
-                text_col = 7 if is_active else 6
+                border_col = 7 if is_active else 5
 
                 pyxel.rect(px, 38, 94, 32, 0)
                 pyxel.rectb(px, 38, 94, 32, border_col)
                 lbl = page_labels[p]
                 tw = self.app.text.measure_text_width(lbl)
-                self.app.text.draw_text(px + (94 - tw) // 2, 46, lbl, text_col)
+                self.app.text.draw_text(px + (94 - tw) // 2, 46, lbl, 7)
 
             # DUO説明文 (y: 74〜110, 2行でスッキリ収めてカードとの衝突を完全防止)
             self.app.text.draw_text(
-                16, 76, "DUO 3.0全560例文の特訓ダンジョン！\n重要単語と熟語をマスターしよう！", 6, max_width=288, line_spacing=2
+                16, 76, "DUO 3.0全560例文の特訓ダンジョン！\n重要単語と熟語をマスターしよう！", 7, max_width=288, line_spacing=2
             )
 
             # DUOセクション一覧 (y: 116〜560) - 高さ68px・ピッチ76px
@@ -286,13 +282,13 @@ class SceneMap:
                 is_cleared = clear_info.get("cleared", False)
                 stars = clear_info.get("stars", 0)
 
-                border_col = 11 if is_cleared else 5
+                border_col = 7
                 pyxel.rect(10, ly, 300, 68, 0)
                 pyxel.rectb(10, ly, 300, 68, border_col)
 
                 # タイトル
                 sec_title = f"Section {sid:02d} ({q_count}問)"
-                self.app.text.draw_text(18, ly + 8, sec_title, 7, max_width=270)
+                self.app.text.draw_text(22, ly + 8, sec_title, 7, max_width=260)
 
                 # 例文番号範囲 (波ダッシュを半角ハイフンにして文字抜け解消)
                 if qs:
@@ -301,10 +297,10 @@ class SceneMap:
                     s_range = f"例文 No.{s_first} - {s_last}"
                 else:
                     s_range = "例文"
-                self.app.text.draw_text_mini(18, ly + 30, s_range, 6)
+                self.app.text.draw_text_mini(22, ly + 30, s_range, 7)
                 # 獲得報酬の明記 (PixelMplus 12pt)
                 self.app.text.draw_text_mini(
-                    18, ly + 48, "クリア報酬: リンゴ2個 (★3で+肉1個)", 11 if is_cleared else 10
+                    22, ly + 48, "クリア報酬: リンゴ2個 (★3で+肉1個)", 10
                 )
 
                 # ステータス（クリア時のみ右余白16pxで星を表示、未クリア時は非表示）
@@ -318,8 +314,8 @@ class SceneMap:
 
         # フッター「◀ ホームへ」ボタン
         pyxel.rect(20, 570, 120, 40, 0)
-        pyxel.rectb(20, 570, 120, 40, 5)
+        pyxel.rectb(20, 570, 120, 40, 7)
         hw = self.app.text.measure_text_width("◀ ホームへ")
         self.app.text.draw_text(
-            20 + (120 - hw) // 2, 570 + (40 - 16) // 2, "◀ ホームへ", 6
+            20 + (120 - hw) // 2, 570 + (40 - 16) // 2, "◀ ホームへ", 7
         )

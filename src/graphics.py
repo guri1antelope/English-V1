@@ -560,14 +560,10 @@ class GraphicsManager:
 
     def draw_title_banner(self, x: int, y: int, text_engine):
         """タイトル看板（アイコン＋タイトル文字）を描画。"""
-        # 看板枠（黒背景＋水色外枠＋白内枠）
+        # 看板枠（黒背景＋白外枠＋白内枠）
         pyxel.rect(x, y, 288, 88, 0)
-        pyxel.rectb(x, y, 288, 88, 12)
+        pyxel.rectb(x, y, 288, 88, 7)
         pyxel.rectb(x + 2, y + 2, 284, 84, 7)
-        pyxel.pset(x + 4, y + 4, 10)
-        pyxel.pset(x + 284, y + 4, 10)
-        pyxel.pset(x + 4, y + 84, 10)
-        pyxel.pset(x + 284, y + 84, 10)
 
         # アプリアイコン描画（72x72）
         if self.has_title_icon:
@@ -575,30 +571,27 @@ class GraphicsManager:
         else:
             # フォールバック: 柴犬のドット絵アイコン
             pyxel.rect(x + 8, y + 8, 72, 72, 1)
-            pyxel.rectb(x + 8, y + 8, 72, 72, 12)
+            pyxel.rectb(x + 8, y + 8, 72, 72, 7)
             self.draw_partner(x + 44, y + 44, 1, 2, mood="happy", scale=2)
 
-        # タイトルテキスト（右側）
-        text_engine.draw_text(x + 90, y + 12, "目指せ英検準２級", 10)  # 金色/黄色
-        text_engine.draw_text(x + 90, y + 34, "小動物と学ぶ", 7)       # 白
-        text_engine.draw_text(x + 90, y + 56, "合格育成ゲーム！", 12)  # 水色
+        # タイトルテキスト（右側: 落ち着いた白文字に統一）
+        text_engine.draw_text(x + 90, y + 12, "目指せ英検準２級", 7)
+        text_engine.draw_text(x + 90, y + 34, "小動物と学ぶ", 7)
+        text_engine.draw_text(x + 90, y + 56, "合格育成ゲーム！", 7)
 
     def draw_title_mascots(self, x: int, y: int, text_engine):
         """タイトル画面下部の相棒集合ステージを描画。"""
-        # ステージ枠（黒下地＋水色枠＋暗灰内枠）
+        # ステージ枠（黒下地＋白外枠＋暗灰内枠）
         pyxel.rect(x, y, 288, 195, 0)
-        pyxel.rectb(x, y, 288, 195, 12)
+        pyxel.rectb(x, y, 288, 195, 7)
         pyxel.rectb(x + 2, y + 2, 284, 191, 5)
 
-        # ステージ見出しリボン（完全中央揃え）
-        pyxel.rect(x + 44, y - 10, 200, 20, 12)
+        # ステージ見出しリボン（黒背景＋白枠＋白文字でくっきり視認）
+        pyxel.rect(x + 44, y - 10, 200, 20, 0)
+        pyxel.rectb(x + 44, y - 10, 200, 20, 7)
         ribbon_str = "５ひきの相棒たち"
         rw = text_engine.measure_text_width(ribbon_str)
-        text_engine.draw_text(x + 44 + (200 - rw) // 2, y - 8, ribbon_str, 0)
-
-        # 星飾り
-        pyxel.blt(x + 8, y + 8, 0, 32, 0, 16, 16, 0)
-        pyxel.blt(x + 264, y + 8, 0, 32, 0, 16, 16, 0)
+        text_engine.draw_text(x + 44 + (200 - rw) // 2, y - 8, ribbon_str, 7)
 
         # 芝生グラウンドライン
         pyxel.rect(x + 6, y + 110, 276, 4, 3)   # 深緑
@@ -619,12 +612,12 @@ class GraphicsManager:
         pyxel.blt(x + 69, y + 119, 0, 0, 16, 16, 16, 0)
         pyxel.blt(x + 204, y + 119, 0, 16, 16, 16, 16, 0)
 
-        # キャッチコピーメッセージ（完全中央揃え）
-        cp1 = "毎日楽しく合格をめざそう！"
+        # キャッチコピーメッセージ（育成システムの役割を明記）
+        cp1 = "問題を解いてエサをあげよう！"
         w1 = text_engine.measure_text_width(cp1)
-        text_engine.draw_text((320 - w1) // 2, y + 140, cp1, 10)
+        text_engine.draw_text((320 - w1) // 2, y + 140, cp1, 7)
 
-        cp2 = "（英検準２級 完全対応）"
+        cp2 = "相棒がどんどん進化するよ！"
         w2 = text_engine.measure_text_width(cp2)
         text_engine.draw_text((320 - w2) // 2, y + 165, cp2, 7)
 

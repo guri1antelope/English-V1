@@ -74,9 +74,9 @@ class SceneReview:
     def draw(self):
         pyxel.cls(1)  # 濃紺背景
 
-        # ヘッダー (y: 10〜42, 水色枠＋白文字中央揃え)
+        # ヘッダー (y: 10〜42, 白枠＋白文字中央揃え)
         pyxel.rect(10, 10, 300, 32, 0)
-        pyxel.rectb(10, 10, 300, 32, 12)  # 水色枠
+        pyxel.rectb(10, 10, 300, 32, 7)  # 白枠
         hdr_txt = "進捗状況・復習レッスン"
         hw = self.app.text.measure_text_width(hdr_txt)
         self.app.text.draw_text(10 + (300 - hw) // 2, 18, hdr_txt, 7)
@@ -92,7 +92,7 @@ class SceneReview:
 
         # 1. 学習進捗グラフ (y: 48〜230, 高さ182)
         pyxel.rect(10, 48, 300, 182, 0)
-        pyxel.rectb(10, 48, 300, 182, 5)
+        pyxel.rectb(10, 48, 300, 182, 7)
 
         self.app.text.draw_text(
             20, 54, "【各コース 学習進捗】", 7, font_type="main"
@@ -122,7 +122,7 @@ class SceneReview:
                 pyxel.rect(115, ay + 3, gw, 10, 11 if rate >= 1.0 else 7)
 
             self.app.text.draw_text(
-                222, ay, f"{cleared_l}/{total_l}", 6 if cleared_l == 0 else 7, font_type="main"
+                222, ay, f"{cleared_l}/{total_l}", 7, font_type="main"
             )
 
         # DUO 3.0（英検と同じ縦カラム x:20, x:115, x:222 で完全に整列）
@@ -139,12 +139,12 @@ class SceneReview:
             pyxel.rect(115, duo_y + 3, duo_w, 10, 11 if duo_rate >= 1.0 else 7)
 
         self.app.text.draw_text(
-            222, duo_y, f"{duo_sec_cnt}/45", 6 if duo_sec_cnt == 0 else 7, font_type="main"
+            222, duo_y, f"{duo_sec_cnt}/45", 7, font_type="main"
         )
 
         # 2. AI忘却曲線の状況 (y: 240〜395, 高さ155)
         pyxel.rect(10, 240, 300, 155, 0)
-        pyxel.rectb(10, 240, 300, 155, 5)
+        pyxel.rectb(10, 240, 300, 155, 7)
 
         mastery = slot_data.get("mastery", {}) if slot_data else {}
         weak_count = sum(1 for m in mastery.values() if m.get("score", 50) < 60)
@@ -153,35 +153,41 @@ class SceneReview:
         )
 
         self.app.text.draw_text(
-            20, 248, "【AI 記憶定着スコア】", 10, font_type="main"
+            20, 248, "【AI 記憶定着スコア】", 7, font_type="main"
         )
 
-        # 階層インデント (x: 30) で視認性を向上
+        # 階層インデント (x: 24) かつ数値を右寄せ配置して重複を完全防止
         self.app.text.draw_text(
-            30, 276, "・マスター済 (定着80%以上)", 7, font_type="main"
+            24, 276, "・マスター済 (80%以上)", 7, font_type="main"
         )
         self.app.text.draw_text(
-            222, 276, f"{mastered_count}問", 10 if mastered_count > 0 else 6, font_type="main"
-        )
-
-        self.app.text.draw_text(
-            30, 304, "・要復習     (定着60%未満)", 7, font_type="main"
-        )
-        self.app.text.draw_text(
-            222, 304, f"{weak_count}問", 8 if weak_count > 0 else 6, font_type="main"
+            230, 276, f"{mastered_count}問", 7, font_type="main"
         )
 
+        self.app.text.draw_text(
+            24, 304, "・要復習 (60%未満)", 7, font_type="main"
+        )
+        self.app.text.draw_text(
+            230, 304, f"{weak_count}問", 7, font_type="main"
+        )
+
+        # 注釈文を2行に分割して枠内・画面内に綺麗に収容
         self.app.text.draw_text_mini(
-            30,
+            24,
             336,
-            "※忘却曲線に基づき苦手問題を自動選別して出題します",
-            6,
+            "※忘却曲線に基づき、苦手な問題を",
+            7,
+        )
+        self.app.text.draw_text_mini(
+            24,
+            354,
+            "　自動選別して復習出題します",
+            7,
         )
 
         # 3. 「AIおすすめ復習スタート」ボタン (y: 415〜467)
         pyxel.rect(20, 415, 280, 52, 0)
-        pyxel.rectb(20, 415, 280, 52, 11)
-        pyxel.rectb(21, 416, 278, 50, 7)
+        pyxel.rectb(20, 415, 280, 52, 7)
         btn1_str = "▶ AIおすすめ復習を始める！"
         b1w = self.app.text.measure_text_width(btn1_str)
         self.app.text.draw_text(
@@ -190,8 +196,8 @@ class SceneReview:
 
         # フッター戻るボタン (y: 560〜600)
         pyxel.rect(20, 560, 130, 40, 0)
-        pyxel.rectb(20, 560, 130, 40, 5)
+        pyxel.rectb(20, 560, 130, 40, 7)
         hw = self.app.text.measure_text_width("◀ ホームへ")
         self.app.text.draw_text(
-            20 + (130 - hw) // 2, 560 + (40 - 16) // 2, "◀ ホームへ", 6
+            20 + (130 - hw) // 2, 560 + (40 - 16) // 2, "◀ ホームへ", 7
         )

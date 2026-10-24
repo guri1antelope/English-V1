@@ -190,7 +190,7 @@ class SceneDataManage:
 
         # ヘッダー (y: 10〜42)
         pyxel.rect(10, 10, 300, 32, 0)
-        pyxel.rectb(10, 10, 300, 32, 12)
+        pyxel.rectb(10, 10, 300, 32, 7)
         hdr_txt = "記録・データ管理"
         hw = self.app.text.measure_text_width(hdr_txt)
         self.app.text.draw_text(10 + (300 - hw) // 2, 18, hdr_txt, 7)
@@ -223,17 +223,17 @@ class SceneDataManage:
 
         # プレイヤー情報カード (y: 52〜200)
         pyxel.rect(16, 52, 288, 148, 0)
-        pyxel.rectb(16, 52, 288, 148, 5)
+        pyxel.rectb(16, 52, 288, 148, 7)
 
         # 相棒アイコン
         self.app.graphics.draw_partner(62, 110, pid, stg, mood="happy", scale=2)
 
         # ステータステキスト
-        self.app.text.draw_text(115, 64, f"スロット {self.app.current_slot}", 6)
+        self.app.text.draw_text(115, 64, f"スロット {self.app.current_slot}", 7)
         self.app.text.draw_text(115, 84, f"なまえ: {pname}", 7)
-        self.app.text.draw_text(115, 108, f"相棒Lv: Lv.{plv} (連続{streak}日)", 12)
-        self.app.text.draw_text(115, 132, f"英検クリア: {cleared_eiken} / 21", 10)
-        self.app.text.draw_text(115, 156, f"DUO制覇: {cleared_duo} / 45", 11)
+        self.app.text.draw_text(115, 108, f"相棒Lv: Lv.{plv} (連続{streak}日)", 7)
+        self.app.text.draw_text(115, 132, f"英検クリア: {cleared_eiken} / 21", 7)
+        self.app.text.draw_text(115, 156, f"DUO制覇: {cleared_duo} / 45", 7)
 
         # トースト通知（名前変更後など）
         if self.notice_timer > 0 and self.notice_message:
@@ -245,14 +245,14 @@ class SceneDataManage:
         # 機能ボタン一覧
         # 1. 「なまえを変更する」ボタン (y: 236, 高46)
         pyxel.rect(20, 236, 280, 46, 0)
-        pyxel.rectb(20, 236, 280, 46, 12)
+        pyxel.rectb(20, 236, 280, 46, 7)
         b1_txt = "なまえを変更する"
         w1 = self.app.text.measure_text_width(b1_txt)
         self.app.text.draw_text(20 + (280 - w1) // 2, 251, b1_txt, 7)
 
         # 2. 「引き継ぎコード発行」ボタン (y: 298, 高46)
         pyxel.rect(20, 298, 280, 46, 0)
-        pyxel.rectb(20, 298, 280, 46, 12)
+        pyxel.rectb(20, 298, 280, 46, 7)
         b2_txt = "引き継ぎコード発行"
         w2 = self.app.text.measure_text_width(b2_txt)
         self.app.text.draw_text(20 + (280 - w2) // 2, 313, b2_txt, 7)
@@ -266,14 +266,14 @@ class SceneDataManage:
 
         # 注意書き (y: 430〜470)
         self.app.text.draw_text(
-            26, 436, "※スロットを消去するとデータは元に戻せません。", 5, max_width=268
+            26, 436, "※スロットを消去するとデータは元に戻せません。", 7, max_width=268
         )
 
         # フッター「◀ ホームへもどる」ボタン
         pyxel.rect(20, 560, 130, 40, 0)
-        pyxel.rectb(20, 560, 130, 40, 5)
+        pyxel.rectb(20, 560, 130, 40, 7)
         hw = self.app.text.measure_text_width("◀ ホームへ")
-        self.app.text.draw_text(20 + (130 - hw) // 2, 572, "◀ ホームへ", 6)
+        self.app.text.draw_text(20 + (130 - hw) // 2, 572, "◀ ホームへ", 7)
 
     def _draw_name_edit(self, slot_data: dict):
         # 名前編集タイトル
@@ -282,7 +282,7 @@ class SceneDataManage:
 
         # 名前表示枠 (y: 110〜160)
         pyxel.rect(20, 110, 280, 48, 0)
-        pyxel.rectb(20, 110, 280, 48, 12)
+        pyxel.rectb(20, 110, 280, 48, 7)
         display_name = self.input_name if self.input_name else "＿＿＿＿"
         self.app.text.draw_text(35, 126, f"なまえ: {display_name}", 7)
 
@@ -308,24 +308,24 @@ class SceneDataManage:
         # 操作ボタン
         # 「けす」
         pyxel.rect(20, 485, 60, 34, 0)
-        pyxel.rectb(20, 485, 60, 34, 5)
+        pyxel.rectb(20, 485, 60, 34, 7)
         self.app.text.draw_text(34, 494, "けす", 7)
 
         # 「切替」
         pyxel.rect(90, 485, 60, 34, 0)
-        pyxel.rectb(90, 485, 60, 34, 12)
-        self.app.text.draw_text(104, 494, "切替", 12)
+        pyxel.rectb(90, 485, 60, 34, 7)
+        self.app.text.draw_text(104, 494, "切替", 7)
 
         # 下部決定ボタン
         # 「やめる」
         pyxel.rect(20, 545, 110, 40, 0)
-        pyxel.rectb(20, 545, 110, 40, 5)
-        self.app.text.draw_text(48, 557, "やめる", 6)
+        pyxel.rectb(20, 545, 110, 40, 7)
+        self.app.text.draw_text(48, 557, "やめる", 7)
 
         # 「保存する」
-        pyxel.rect(160, 545, 140, 40, 12)
+        pyxel.rect(160, 545, 140, 40, 0)
         pyxel.rectb(160, 545, 140, 40, 7)
-        self.app.text.draw_text(194, 557, "保存する ▶", 0)
+        self.app.text.draw_text(194, 557, "保存する ▶", 7)
 
     def _draw_delete_dialog(self):
         # 画面暗転マスク
@@ -348,8 +348,8 @@ class SceneDataManage:
 
         # 「やめる」
         pyxel.rect(170, 340, 110, 42, 0)
-        pyxel.rectb(170, 340, 110, 42, 5)
-        self.app.text.draw_text(196, 353, "やめる", 6)
+        pyxel.rectb(170, 340, 110, 42, 7)
+        self.app.text.draw_text(196, 353, "やめる", 7)
 
     def _copy_to_clipboard(self, text: str):
         """クリップボードに引き継ぎコードをコピー。"""
@@ -393,14 +393,14 @@ class SceneDataManage:
         pyxel.rectb(15, 110, 290, 175, 7)
         pyxel.rectb(16, 111, 288, 173, 11)
 
-        self.app.text.draw_text(25, 122, "【引き継ぎコード】", 10)
+        self.app.text.draw_text(25, 122, "【引き継ぎコード】", 7)
         self.app.text.draw_text_mini(
-            25, 144, "※別端末・ブラウザのスロットに復元できます", 6
+            25, 144, "※別端末・ブラウザのスロットに復元できます", 7
         )
 
         # コード表示枠
         pyxel.rect(25, 162, 270, 44, 1)
-        pyxel.rectb(25, 162, 270, 44, 5)
+        pyxel.rectb(25, 162, 270, 44, 7)
         short_code = (
             self.exported_code[:28] + "..."
             if len(self.exported_code) > 28
@@ -408,13 +408,13 @@ class SceneDataManage:
         )
         self.app.text.draw_text_mini(32, 172, short_code, 7)
         self.app.text.draw_text_mini(
-            32, 188, f"({len(self.exported_code)}文字の暗号化データ)", 5
+            32, 188, f"({len(self.exported_code)}文字の暗号化データ)", 7
         )
 
         # 1. 「コピー」ボタン (x: 25〜165, y: 220〜262, 幅140, 高42)
         btn_copy_bg = 11 if self.copy_done else 0
-        btn_copy_border = 7 if self.copy_done else 11
-        btn_copy_text_col = 0 if self.copy_done else 11
+        btn_copy_border = 7
+        btn_copy_text_col = 0 if self.copy_done else 7
         pyxel.rect(25, 220, 140, 42, btn_copy_bg)
         pyxel.rectb(25, 220, 140, 42, btn_copy_border)
         copy_lbl = "✔ コピー完了！" if self.copy_done else "📋 コードをコピー"
@@ -425,9 +425,9 @@ class SceneDataManage:
 
         # 2. 「閉じる」ボタン (x: 175〜295, y: 220〜262, 幅120, 高42)
         pyxel.rect(175, 220, 120, 42, 0)
-        pyxel.rectb(175, 220, 120, 42, 5)
+        pyxel.rectb(175, 220, 120, 42, 7)
         close_lbl = "閉じる"
         clw = self.app.text.measure_text_width(close_lbl)
         self.app.text.draw_text(
-            175 + (120 - clw) // 2, 220 + (42 - 16) // 2, close_lbl, 6
+            175 + (120 - clw) // 2, 220 + (42 - 16) // 2, close_lbl, 7
         )

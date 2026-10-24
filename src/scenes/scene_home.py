@@ -272,13 +272,13 @@ class SceneHome:
 
         # ヘッダー情報（プレイヤー名・連続日数）
         pyxel.rect(10, 10, 300, 34, 0)
-        pyxel.rectb(10, 10, 300, 34, 5)
+        pyxel.rectb(10, 10, 300, 34, 7)
         self.app.text.draw_text(20, 18, f"{player_name}の部屋", 7)
-        self.app.text.draw_text(205, 18, f"連続 {streak}日目", 6)
+        self.app.text.draw_text(205, 18, f"連続 {streak}日目", 7)
 
-        # セリフ吹き出し (黒背景・暗灰枠・白文字, 幅300pxでヘッダーと統一・高さ52pxで2行完全収容)
+        # セリフ吹き出し (黒背景・白枠・白文字, 幅300pxでヘッダーと統一・高さ52pxで2行完全収容)
         pyxel.rect(10, 50, 300, 52, 0)
-        pyxel.rectb(10, 50, 300, 52, 5)
+        pyxel.rectb(10, 50, 300, 52, 7)
         self.app.text.draw_text(
             20,
             58,
@@ -312,16 +312,16 @@ class SceneHome:
 
         # ステータスバー（Lv, EXP）
         pyxel.rect(20, 236, 280, 44, 0)
-        pyxel.rectb(20, 236, 280, 44, 5)
+        pyxel.rectb(20, 236, 280, 44, 7)
 
         self.app.text.draw_text(26, 250, f"Lv.{plv}", 7)
 
         # EXPゲージ（幅218pxに拡大してゆったり表示）
-        self.app.text.draw_text_mini(72, 242, f"EXP {pexp} / {req_exp}", 12)
+        self.app.text.draw_text_mini(72, 242, f"EXP {pexp} / {req_exp}", 7)
         pyxel.rect(72, 258, 218, 10, 5)
         exp_w = int(218 * min(1.0, pexp / max(1, req_exp)))
         if exp_w > 0:
-            pyxel.rect(72, 258, exp_w, 10, 12)  # 水色
+            pyxel.rect(72, 258, exp_w, 10, 11)  # 緑
 
         # ごはんボタン（3種独立: リンゴ / お肉 / 金のリンゴ）
         apple_cnt = food.get("apple", 0)
@@ -330,20 +330,20 @@ class SceneHome:
 
         # 1. リンゴボタン (20, 288, 幅86, 高44)
         pyxel.rect(20, 288, 86, 44, 0)
-        pyxel.rectb(20, 288, 86, 44, 11 if apple_cnt > 0 else 5)
+        pyxel.rectb(20, 288, 86, 44, 7 if apple_cnt > 0 else 5)
         self.app.text.draw_text_mini(24, 292, f"リンゴ {apple_cnt}個", 7 if apple_cnt > 0 else 5)
         self.app.text.draw_text_mini(24, 312, "+50 EXP", 11 if apple_cnt > 0 else 5)
 
         # 2. お肉ボタン (114, 288, 幅86, 高44)
         pyxel.rect(114, 288, 86, 44, 0)
-        pyxel.rectb(114, 288, 86, 44, 11 if meat_cnt > 0 else 5)
+        pyxel.rectb(114, 288, 86, 44, 7 if meat_cnt > 0 else 5)
         self.app.text.draw_text_mini(118, 292, f"お肉 {meat_cnt}個", 7 if meat_cnt > 0 else 5)
         self.app.text.draw_text_mini(118, 312, "+120 EXP", 11 if meat_cnt > 0 else 5)
 
         # 3. 金のリンゴボタン (208, 288, 幅92, 高44)
         pyxel.rect(208, 288, 92, 44, 0)
-        pyxel.rectb(208, 288, 92, 44, 10 if gold_cnt > 0 else 5)
-        self.app.text.draw_text_mini(212, 292, f"金リンゴ {gold_cnt}個", 10 if gold_cnt > 0 else 5)
+        pyxel.rectb(208, 288, 92, 44, 7 if gold_cnt > 0 else 5)
+        self.app.text.draw_text_mini(212, 292, f"金リンゴ {gold_cnt}個", 7 if gold_cnt > 0 else 5)
         self.app.text.draw_text_mini(212, 312, "+300 EXP", 10 if gold_cnt > 0 else 5)
 
         # メインナビゲーションボタン
@@ -353,56 +353,55 @@ class SceneHome:
         is_daily_cleared = (slot_data.get("last_daily_challenge_date") == today_str)
 
         if not is_daily_cleared:
-            # 未クリア: 黒背景＋金色枠(10)＋金色文字(10)
+            # 未クリア: 黒背景＋白枠(7)＋黄色文字(10)
             pyxel.rect(20, 345, 280, 44, 0)
-            pyxel.rectb(20, 345, 280, 44, 10)
-            dt_title = "今日の挑戦状 (DUO 3問)"
+            pyxel.rectb(20, 345, 280, 44, 7)
+            dt_title = "★ 今日の挑戦状 (DUO 3問)"
             dt_sub = "EXP 3倍 + 金のリンゴGET！"
             w_title = self.app.text.measure_text_width(dt_title)
             w_sub = self.app.text.measure_text_width(dt_sub)
             self.app.text.draw_text(20 + (280 - w_title) // 2, 349, dt_title, 10)
             self.app.text.draw_text(20 + (280 - w_sub) // 2, 369, dt_sub, 7)
         else:
-            # クリア済み: 黒背景＋暗灰枠(5)＋明灰文字(6)
+            # クリア済み: 黒背景＋白枠(7)＋白文字(7)
             pyxel.rect(20, 345, 280, 44, 0)
-            pyxel.rectb(20, 345, 280, 44, 5)
+            pyxel.rectb(20, 345, 280, 44, 7)
             dt_title = "今日の挑戦状 (クリア済)"
             w_title = self.app.text.measure_text_width(dt_title)
-            self.app.text.draw_text(20 + (280 - w_title) // 2, 358, dt_title, 6)
+            self.app.text.draw_text(20 + (280 - w_title) // 2, 358, dt_title, 7)
 
-        # 2. 「レッスンへ進む」 (プライマリボタン規格: 黒背景＋水色・白二重枠＋白文字, y: 398, 高46)
+        # 2. 「レッスンへ進む」 (黒背景＋白枠＋白文字, y: 398, 高46)
         pyxel.rect(20, 398, 280, 46, 0)
-        pyxel.rectb(20, 398, 280, 46, 12)
-        pyxel.rectb(21, 399, 278, 44, 7)
+        pyxel.rectb(20, 398, 280, 46, 7)
         btn_l_text = "▶ レッスンへ進む！"
         w_l = self.app.text.measure_text_width(btn_l_text)
         self.app.text.draw_text(
             20 + (280 - w_l) // 2, 398 + (46 - 16) // 2, btn_l_text, 7
         )
 
-        # 3. 「進捗状況・復習レッスン」 (セカンダリボタン規格: 黒背景＋水色枠＋白文字, y: 452, 高44)
+        # 3. 「進捗状況・復習レッスン」 (黒背景＋白枠＋白文字, y: 452, 高44)
         pyxel.rect(20, 452, 280, 44, 0)
-        pyxel.rectb(20, 452, 280, 44, 12)
+        pyxel.rectb(20, 452, 280, 44, 7)
         btn_r1_text = "進捗状況・復習レッスン"
         w_r1 = self.app.text.measure_text_width(btn_r1_text)
         self.app.text.draw_text(
             20 + (280 - w_r1) // 2, 452 + (44 - 16) // 2, btn_r1_text, 7
         )
 
-        # 4. 「記録・データ管理」 (セカンダリボタン規格: 黒背景＋水色枠＋白文字, y: 504, 高42)
+        # 4. 「記録・データ管理」 (黒背景＋白枠＋白文字, y: 504, 高42)
         pyxel.rect(20, 504, 280, 42, 0)
-        pyxel.rectb(20, 504, 280, 42, 12)
+        pyxel.rectb(20, 504, 280, 42, 7)
         btn_r2_text = "記録・データ管理"
         w_r2 = self.app.text.measure_text_width(btn_r2_text)
         self.app.text.draw_text(
             20 + (280 - w_r2) // 2, 504 + (42 - 16) // 2, btn_r2_text, 7
         )
 
-        # 5. フッターボタン (キャンセルボタン規格: 黒背景＋暗灰枠＋明灰文字, y: 560, 高38)
+        # 5. フッターボタン (黒背景＋白枠＋白文字, y: 560, 高38)
         pyxel.rect(20, 560, 140, 38, 0)
-        pyxel.rectb(20, 560, 140, 38, 5)
+        pyxel.rectb(20, 560, 140, 38, 7)
         self.app.text.draw_text(
-            34, 570, "スロット選択へ", 6
+            28, 570, "◀ スロット選択へ", 7
         )
 
         # 6. ログインボーナス演出ポップアップ（最前面）

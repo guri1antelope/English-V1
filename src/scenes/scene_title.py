@@ -138,19 +138,16 @@ class SceneTitle:
         # 1. タイトル看板（アプリアイコン＋タイトル文字）
         self.app.graphics.draw_title_banner(16, 14, self.app.text)
 
-        # 2. セーブスロット案内
-        self.app.text.draw_text(112, 112, "だれがあそぶ？", 7)
-
         # 3. 4つのセーブスロット
         partner_names = ["", "しばいぬ", "トラネコ", "ウサギ", "シマリス", "ペンギン"]
         for i in range(1, MAX_SLOTS + 1):
-            sy = 132 + (i - 1) * 56
+            sy = 122 + (i - 1) * 58
             slot_data = self.app.storage.slots.get(i)
 
             if slot_data:
                 # 既存データあり
                 pyxel.rect(20, sy, 280, 50, 0)
-                pyxel.rectb(20, sy, 280, 50, 12)  # 水色枠
+                pyxel.rectb(20, sy, 280, 50, 7)  # 統一白枠
                 # アイコン表示
                 pid = slot_data.get("partner", {}).get("id", 1)
                 stg = slot_data.get("partner", {}).get("stage", 1)
@@ -162,55 +159,50 @@ class SceneTitle:
                 plv = slot_data.get("partner", {}).get("level", 1)
                 cleared_count = len(slot_data.get("cleared_lessons", {}))
 
-                # 1行目: スロット番号とプレイヤー名（12ptで文字被り防止）
+                # 1行目: スロット番号とプレイヤー名
                 self.app.text.draw_text_mini(
                     62, sy + 10, f"スロット{i}: {pname}", 7
                 )
-                # 右上: 「▶ 続きから」アクションバッジ（12ptフォントで上下左右中央配置・高コントラスト）
+                # 右上: 「▶ 続きから」アクションバッジ
                 pyxel.rect(194, sy + 6, 96, 18, 0)
-                pyxel.rectb(194, sy + 6, 96, 18, 12)
+                pyxel.rectb(194, sy + 6, 96, 18, 7)
                 cw = self.app.text.measure_text_width("▶ 続きから", font_type="mini")
                 self.app.text.draw_text_mini(
                     194 + (96 - cw) // 2, sy + 6 + (18 - 12) // 2, "▶ 続きから", 7
                 )
 
-                # 2行目: 相棒名とクリア状況（進捗も12ptで統一）
+                # 2行目: 相棒名とクリア状況
                 partner_display = partner_names[pid] if 1 <= pid < len(partner_names) else "相棒"
                 self.app.text.draw_text_mini(
                     62,
                     sy + 30,
                     f"{partner_display} Lv.{plv}",
-                    6,
+                    7,
                 )
                 self.app.text.draw_text_mini(
                     196,
                     sy + 30,
                     f"進捗: {cleared_count}/21",
-                    12,
+                    7,
                 )
             else:
                 # 空きスロット
                 pyxel.rect(20, sy, 280, 50, 0)
-                pyxel.rectb(20, sy, 280, 50, 5)  # 暗灰枠
+                pyxel.rectb(20, sy, 280, 50, 7)  # 統一白枠
                 self.app.text.draw_text_mini(
                     62,
                     sy + 19,
                     f"スロット{i}: ＋ 新規開始",
-                    6,
+                    7,
                 )
 
-        # 4. ガイド文（完全中央揃え）
-        guide_str = "タップしてセーブデータを選択"
-        gw = self.app.text.measure_text_width(guide_str)
-        self.app.text.draw_text((320 - gw) // 2, 362, guide_str, 6)
+        # 4. 下部マスコット集合ステージ (x: 16, 幅: 288 -> 枠範囲: 16〜304)
+        self.app.graphics.draw_title_mascots(16, 385, self.app.text)
 
-        # 5. 下部マスコット集合ステージ (x: 16, 幅: 288 -> 枠範囲: 16〜304)
-        self.app.graphics.draw_title_mascots(16, 395, self.app.text)
-
-        # 6. 最下部バージョン表記（PixelMplus 12pt, 枠幅に合わせて左右配置）
-        self.app.text.draw_text_mini(16, 602, "Version 1.0.0", 5)
+        # 5. 最下部バージョン表記
+        self.app.text.draw_text_mini(16, 602, "Version 1.0.1", 7)
         gw_author = self.app.text.measure_text_width("@2026 gurita", font_type="mini")
-        self.app.text.draw_text_mini(304 - gw_author, 602, "@2026 gurita", 5)
+        self.app.text.draw_text_mini(304 - gw_author, 602, "@2026 gurita", 7)
 
     def _draw_name_input(self):
         # 名前入力画面
@@ -223,7 +215,7 @@ class SceneTitle:
 
         # 名前表示枠
         pyxel.rect(20, 90, 280, 48, 0)
-        pyxel.rectb(20, 90, 280, 48, 12)
+        pyxel.rectb(20, 90, 280, 48, 7)
         display_name = self.input_name if self.input_name else "＿＿＿＿"
         self.app.text.draw_text(
             40, 106, f"なまえ: {display_name}", 7
@@ -245,24 +237,24 @@ class SceneTitle:
                 kx = gx_start + c * gw
                 ky = gy_start + r * gh
                 pyxel.rect(kx, ky, gw - 2, gh - 2, 0)
-                pyxel.rectb(kx, ky, gw - 2, gh - 2, 5)
+                pyxel.rectb(kx, ky, gw - 2, gh - 2, 7)
                 self.app.text.draw_text(
                     kx + 6, ky + 5, char, 7
                 )
 
         # ボタン類（けす、切替、決定）
         pyxel.rect(20, 565, 60, 36, 0)
-        pyxel.rectb(20, 565, 60, 36, 5)  # 統一キャンセル枠
+        pyxel.rectb(20, 565, 60, 36, 7)  # 統一白枠
         kw = self.app.text.measure_text_width("けす")
-        self.app.text.draw_text(20 + (60 - kw) // 2, 575, "けす", 6)
+        self.app.text.draw_text(20 + (60 - kw) // 2, 575, "けす", 7)
 
         pyxel.rect(90, 565, 65, 36, 0)
-        pyxel.rectb(90, 565, 65, 36, 5)
+        pyxel.rectb(90, 565, 65, 36, 7)
         mode_label = "ABC" if self.keyboard_mode == "kana" else "かな"
         mw = self.app.text.measure_text_width(mode_label)
         self.app.text.draw_text(90 + (65 - mw) // 2, 575, mode_label, 7)
 
-        pyxel.rect(170, 565, 130, 36, 12)  # 統一プライマリボタン
+        pyxel.rect(170, 565, 130, 36, 11)  # 決定アクションボタン（緑背景＋白枠＋黒文字）
         pyxel.rectb(170, 565, 130, 36, 7)
         dw = self.app.text.measure_text_width("決定！")
         self.app.text.draw_text(170 + (130 - dw) // 2, 575, "決定！", 0)
@@ -273,7 +265,7 @@ class SceneTitle:
             35, 45, "最初の相棒（タマゴ）を選択", 7
         )
         self.app.text.draw_text(
-            35, 70, "育てると立派な姿に進化するよ！", 6
+            35, 70, "育てると立派な姿に進化するよ！", 7
         )
 
         partner_info = [
@@ -287,7 +279,7 @@ class SceneTitle:
         for p_id, p_name, p_desc in partner_info:
             py = 175 + (p_id - 1) * 62
             pyxel.rect(20, py, 280, 54, 0)
-            pyxel.rectb(20, py, 280, 54, 12)  # 水色枠
+            pyxel.rectb(20, py, 280, 54, 7)  # 統一白枠
 
             # タマゴアイコン
             self.app.graphics.draw_partner(
@@ -297,5 +289,5 @@ class SceneTitle:
                 70, py + 8, p_name, 7, max_width=220
             )
             self.app.text.draw_text(
-                70, py + 30, p_desc, 6, max_width=220
+                70, py + 30, p_desc, 7, max_width=220
             )
