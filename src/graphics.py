@@ -14,15 +14,15 @@ import pyxel
 class GraphicsManager:
     def __init__(self):
         self.has_title_icon = False
-        self.logo_w = 316
-        self.logo_h = 172
+        self.logo_w = 304
+        self.logo_h = 166
         self.logo_img = None
         self.has_logo = False
         self._load_title_logo()
         self._init_sprites()
 
     def _load_title_logo(self):
-        """タイトルロゴ画像 (316x172) を Image インスタンスにロード。"""
+        """タイトルロゴ画像 (304x166) を Image インスタンスにロード。"""
         candidates = [
             os.path.join(os.path.dirname(__file__), "..", "assets", "images", "title_logo.png"),
             os.path.join(os.path.dirname(__file__), "assets", "images", "title_logo.png"),
@@ -39,7 +39,7 @@ class GraphicsManager:
                 except Exception:
                     pass
 
-    def draw_title_logo(self, x: int = 2, y: int = 2):
+    def draw_title_logo(self, x: int = 8, y: int = 8):
         """タイトルロゴ画像を描画。"""
         if self.has_logo and self.logo_img:
             pyxel.blt(x, y, self.logo_img, 0, 0, self.logo_w, self.logo_h, 0)
