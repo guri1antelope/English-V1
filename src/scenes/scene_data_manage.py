@@ -21,6 +21,7 @@ class SceneDataManage:
         self.exported_code = ""
         self.show_code_dialog = False
         self.show_delete_dialog = False
+        self.copy_done = False
         self.notice_message = ""
         self.notice_timer = 0
 
@@ -43,6 +44,7 @@ class SceneDataManage:
         self.mode = "menu"
         self.show_code_dialog = False
         self.show_delete_dialog = False
+        self.copy_done = False
         self.notice_message = ""
         self.notice_timer = 0
 
@@ -72,10 +74,20 @@ class SceneDataManage:
 
             # 2. 引き継ぎコードダイアログ
             if self.show_code_dialog:
-                # 「閉じる」ボタン (x: 220, y: 200, 幅70, 高32)
-                if 220 <= mx <= 290 and 200 <= my <= 232:
+                # 「コピーする」ボタン (x: 25〜165, y: 220〜262)
+                if 25 <= mx <= 165 and 220 <= my <= 262:
+                    self._copy_to_clipboard(self.exported_code)
+                    return
+                # 「閉じる」ボタン (x: 175〜295, y: 220〜262)
+                if 175 <= mx <= 295 and 220 <= my <= 262:
                     self.show_code_dialog = False
                     self.app.audio.play_se("cancel")
+                    return
+                # 枠外タップで閉じる (枠: x: 15〜305, y: 110〜285)
+                if mx < 15 or mx > 305 or my < 110 or my > 285:
+                    self.show_code_dialog = False
+                    self.app.audio.play_se("cancel")
+                    return
                 return
 
             # 3. 名前編集モード
@@ -100,6 +112,7 @@ class SceneDataManage:
             self.exported_code = self.app.storage.export_backup_code(
                 self.app.current_slot
             )
+            self.copy_done = False
             self.show_code_dialog = True
             self.app.audio.play_se("tap")
             return
@@ -338,27 +351,83 @@ class SceneDataManage:
         pyxel.rectb(170, 340, 110, 42, 5)
         self.app.text.draw_text(196, 353, "やめる", 6)
 
-    def _draw_code_dialog(self):
-        # ダイアログ枠
-        pyxel.rect(15, 120, 290, 160, 0)
-        pyxel.rectb(15, 120, 290, 160, 12)
+    def _copy_to_clipboard(self, text: str):
+        """クリップボードに引き継ぎコードをコピー。"""
+        if not text:
+            return
+        try:
+            import js  # type: ignore
+            import json
 
-        self.app.text.draw_text(25, 135, "引き継ぎコード", 10)
-        self.app.text.draw_text(
-            25, 155, "別ブラウザ・端末で復元できます", 6, font_type="mini"
+            text_json = json.dumps(text)
+            js_code = (
+                "(function() {"
+                "  if (navigator.clipboard && navigator.clipboard.writeText) {"
+                "    navigator.clipboard.writeText(" + text_json + ").catch(function() {"
+                "      const ta = document.createElement('textarea');"
+                "      ta.value = " + text_json + ";"
+                "      document.body.appendChild(ta);"
+                "      ta.select();"
+                "      document.execCommand('copy');"
+                "      document.body.removeChild(ta);"
+                "    });"
+                "  } else {"
+                "    const ta = document.createElement('textarea');"
+                "    ta.value = " + text_json + ";"
+                "    document.body.appendChild(ta);"
+                "    ta.select();"
+                "    document.execCommand('copy');"
+                "    document.body.removeChild(ta);"
+                "  }"
+                "})();"
+            )
+            js.eval(js_code)
+        except Exception:
+            pass
+        self.copy_done = True
+        self.app.audio.play_se("correct")
+
+    def _draw_code_dialog(self):
+        # ダイアログ枠 (x: 15, y: 110, 幅: 290, 高: 175)
+        pyxel.rect(15, 110, 290, 175, 0)
+        pyxel.rectb(15, 110, 290, 175, 7)
+        pyxel.rectb(16, 111, 288, 173, 11)
+
+        self.app.text.draw_text(25, 122, "【引き継ぎコード】", 10)
+        self.app.text.draw_text_mini(
+            25, 144, "※別端末・ブラウザのスロットに復元できます", 6
         )
 
-        # コード表示
-        pyxel.rect(25, 180, 270, 38, 1)
-        pyxel.rectb(25, 180, 270, 38, 5)
+        # コード表示枠
+        pyxel.rect(25, 162, 270, 44, 1)
+        pyxel.rectb(25, 162, 270, 44, 5)
         short_code = (
             self.exported_code[:28] + "..."
             if len(self.exported_code) > 28
             else self.exported_code
         )
-        self.app.text.draw_text_mini(32, 192, short_code, 7)
+        self.app.text.draw_text_mini(32, 172, short_code, 7)
+        self.app.text.draw_text_mini(
+            32, 188, f"({len(self.exported_code)}文字の暗号化データ)", 5
+        )
 
-        # 「閉じる」ボタン
-        pyxel.rect(220, 230, 70, 32, 0)
-        pyxel.rectb(220, 230, 70, 32, 5)
-        self.app.text.draw_text(236, 238, "閉じる", 6)
+        # 1. 「コピー」ボタン (x: 25〜165, y: 220〜262, 幅140, 高42)
+        btn_copy_bg = 11 if self.copy_done else 0
+        btn_copy_border = 7 if self.copy_done else 11
+        btn_copy_text_col = 0 if self.copy_done else 11
+        pyxel.rect(25, 220, 140, 42, btn_copy_bg)
+        pyxel.rectb(25, 220, 140, 42, btn_copy_border)
+        copy_lbl = "✔ コピー完了！" if self.copy_done else "📋 コードをコピー"
+        cw = self.app.text.measure_text_width(copy_lbl)
+        self.app.text.draw_text(
+            25 + (140 - cw) // 2, 220 + (42 - 16) // 2, copy_lbl, btn_copy_text_col
+        )
+
+        # 2. 「閉じる」ボタン (x: 175〜295, y: 220〜262, 幅120, 高42)
+        pyxel.rect(175, 220, 120, 42, 0)
+        pyxel.rectb(175, 220, 120, 42, 5)
+        close_lbl = "閉じる"
+        clw = self.app.text.measure_text_width(close_lbl)
+        self.app.text.draw_text(
+            175 + (120 - clw) // 2, 220 + (42 - 16) // 2, close_lbl, 6
+        )

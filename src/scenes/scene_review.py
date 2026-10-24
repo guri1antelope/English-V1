@@ -17,8 +17,8 @@ class SceneReview:
         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
             mx, my = pyxel.mouse_x, pyxel.mouse_y
 
-            # 1. 「AIおすすめ復習スタート」ボタン (x: 20, y: 440, 幅280, 高52)
-            if 20 <= mx <= 300 and 440 <= my <= 492:
+            # 1. 「AIおすすめ復習スタート」ボタン (x: 20, y: 415, 幅280, 高52)
+            if 20 <= mx <= 300 and 415 <= my <= 467:
                 self._start_ai_review()
                 return
 
@@ -90,17 +90,18 @@ class SceneReview:
         )
         all_lessons = self.app.quiz_data.get("lessons", [])
 
-        # 1. 4大エリア進捗グラフ (y: 48〜210)
-        pyxel.rect(10, 48, 300, 155, 0)
-        pyxel.rectb(10, 48, 300, 155, 5)
+        # 1. 学習進捗グラフ (y: 48〜230, 高さ182)
+        pyxel.rect(10, 48, 300, 182, 0)
+        pyxel.rectb(10, 48, 300, 182, 5)
 
         self.app.text.draw_text(
-            20, 54, "【英検準2級 エリア別進捗】", 12, font_type="main"
+            20, 54, "【各コース 学習進捗】", 7, font_type="main"
         )
 
+        # 英検 4エリア
         area_names = ["単語・熟語", "英文法", "会話表現", "実力テスト"]
         for area_id in range(1, 5):
-            ay = 78 + (area_id - 1) * 30
+            ay = 76 + (area_id - 1) * 26
             area_ls = [l for l in all_lessons if l.get("area_id") == area_id]
             total_l = len(area_ls)
             cleared_l = sum(
@@ -118,37 +119,33 @@ class SceneReview:
             pyxel.rect(115, ay + 3, 100, 10, 5)
             gw = int(100 * rate)
             if gw > 0:
-                pyxel.rect(115, ay + 3, gw, 10, 12)  # 水色
+                pyxel.rect(115, ay + 3, gw, 10, 11 if rate >= 1.0 else 7)
 
             self.app.text.draw_text(
-                222, ay, f"{cleared_l}/{total_l}", 6, font_type="main"
+                222, ay, f"{cleared_l}/{total_l}", 6 if cleared_l == 0 else 7, font_type="main"
             )
 
-        # 2. DUO 3.0 & AI忘却曲線の状況 (y: 215〜415)
-        pyxel.rect(10, 215, 300, 205, 0)
-        pyxel.rectb(10, 215, 300, 205, 5)
-
-        # DUO 3.0進捗
+        # DUO 3.0（英検と同じ縦カラム x:20, x:115, x:222 で完全に整列）
+        duo_y = 76 + 4 * 26
         duo_sec_cnt = len(duo_cleared)
+        duo_rate = duo_sec_cnt / 45.0
+
         self.app.text.draw_text(
-            20, 224, "【DUO 3.0 制覇進捗】", 11, font_type="main"
+            20, duo_y, "DUO 3.0", 7, font_type="main"
         )
-        self.app.text.draw_text(
-            20,
-            248,
-            f"・クリア: {duo_sec_cnt} / 45 セクション",
-            7,
-            font_type="main",
-        )
-        pyxel.rect(20, 268, 200, 10, 5)
-        duo_w = int(200 * (duo_sec_cnt / 45.0))
+        pyxel.rect(115, duo_y + 3, 100, 10, 5)
+        duo_w = int(100 * duo_rate)
         if duo_w > 0:
-            pyxel.rect(20, 268, duo_w, 10, 11)  # 緑
+            pyxel.rect(115, duo_y + 3, duo_w, 10, 11 if duo_rate >= 1.0 else 7)
+
         self.app.text.draw_text(
-            228, 265, f"{int(duo_sec_cnt/45.0*100)}%", 6, font_type="main"
+            222, duo_y, f"{duo_sec_cnt}/45", 6 if duo_sec_cnt == 0 else 7, font_type="main"
         )
 
-        # AI忘却曲線の状況
+        # 2. AI忘却曲線の状況 (y: 240〜395, 高さ155)
+        pyxel.rect(10, 240, 300, 155, 0)
+        pyxel.rectb(10, 240, 300, 155, 5)
+
         mastery = slot_data.get("mastery", {}) if slot_data else {}
         weak_count = sum(1 for m in mastery.values() if m.get("score", 50) < 60)
         mastered_count = sum(
@@ -156,37 +153,39 @@ class SceneReview:
         )
 
         self.app.text.draw_text(
-            20, 295, "【AI 記憶定着スコア】", 10, font_type="main"
+            20, 248, "【AI 記憶定着スコア】", 10, font_type="main"
+        )
+
+        # 階層インデント (x: 30) で視認性を向上
+        self.app.text.draw_text(
+            30, 276, "・マスター済 (定着80%以上)", 7, font_type="main"
         )
         self.app.text.draw_text(
-            20,
-            320,
-            f"・マスター (定着80%以上): {mastered_count}問",
-            7,
-            font_type="main",
+            222, 276, f"{mastered_count}問", 10 if mastered_count > 0 else 6, font_type="main"
+        )
+
+        self.app.text.draw_text(
+            30, 304, "・要復習     (定着60%未満)", 7, font_type="main"
         )
         self.app.text.draw_text(
-            20,
-            344,
-            f"・要復習   (定着60%未満): {weak_count}問",
-            7,
-            font_type="main",
+            222, 304, f"{weak_count}問", 8 if weak_count > 0 else 6, font_type="main"
         )
+
         self.app.text.draw_text_mini(
-            20,
-            374,
-            "忘却曲線に基づき苦手問題を自動選別！",
+            30,
+            336,
+            "※忘却曲線に基づき苦手問題を自動選別して出題します",
             6,
         )
 
-        # 3. 「AIおすすめ復習スタート」ボタン (y: 440〜492)
-        pyxel.rect(20, 440, 280, 52, 0)
-        pyxel.rectb(20, 440, 280, 52, 12)
-        pyxel.rectb(21, 441, 278, 50, 7)
+        # 3. 「AIおすすめ復習スタート」ボタン (y: 415〜467)
+        pyxel.rect(20, 415, 280, 52, 0)
+        pyxel.rectb(20, 415, 280, 52, 11)
+        pyxel.rectb(21, 416, 278, 50, 7)
         btn1_str = "▶ AIおすすめ復習を始める！"
         b1w = self.app.text.measure_text_width(btn1_str)
         self.app.text.draw_text(
-            20 + (280 - b1w) // 2, 440 + (52 - 16) // 2, btn1_str, 7
+            20 + (280 - b1w) // 2, 415 + (52 - 16) // 2, btn1_str, 7
         )
 
         # フッター戻るボタン (y: 560〜600)

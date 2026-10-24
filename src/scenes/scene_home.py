@@ -330,21 +330,21 @@ class SceneHome:
 
         # 1. リンゴボタン (20, 288, 幅86, 高44)
         pyxel.rect(20, 288, 86, 44, 0)
-        pyxel.rectb(20, 288, 86, 44, 12 if apple_cnt > 0 else 5)
-        self.app.text.draw_text_mini(26, 292, f"リンゴ:{apple_cnt}", 7 if apple_cnt > 0 else 5)
-        self.app.text.draw_text_mini(26, 312, "+50EXP", 12 if apple_cnt > 0 else 5)
+        pyxel.rectb(20, 288, 86, 44, 11 if apple_cnt > 0 else 5)
+        self.app.text.draw_text_mini(24, 292, f"リンゴ {apple_cnt}個", 7 if apple_cnt > 0 else 5)
+        self.app.text.draw_text_mini(24, 312, "+50 EXP", 11 if apple_cnt > 0 else 5)
 
         # 2. お肉ボタン (114, 288, 幅86, 高44)
         pyxel.rect(114, 288, 86, 44, 0)
-        pyxel.rectb(114, 288, 86, 44, 12 if meat_cnt > 0 else 5)
-        self.app.text.draw_text_mini(120, 292, f"お肉:{meat_cnt}", 7 if meat_cnt > 0 else 5)
-        self.app.text.draw_text_mini(120, 312, "+120EXP", 12 if meat_cnt > 0 else 5)
+        pyxel.rectb(114, 288, 86, 44, 11 if meat_cnt > 0 else 5)
+        self.app.text.draw_text_mini(118, 292, f"お肉 {meat_cnt}個", 7 if meat_cnt > 0 else 5)
+        self.app.text.draw_text_mini(118, 312, "+120 EXP", 11 if meat_cnt > 0 else 5)
 
         # 3. 金のリンゴボタン (208, 288, 幅92, 高44)
         pyxel.rect(208, 288, 92, 44, 0)
         pyxel.rectb(208, 288, 92, 44, 10 if gold_cnt > 0 else 5)
-        self.app.text.draw_text_mini(214, 292, f"金リンゴ:{gold_cnt}", 10 if gold_cnt > 0 else 5)
-        self.app.text.draw_text_mini(214, 312, "+300EXP", 10 if gold_cnt > 0 else 5)
+        self.app.text.draw_text_mini(212, 292, f"金リンゴ {gold_cnt}個", 10 if gold_cnt > 0 else 5)
+        self.app.text.draw_text_mini(212, 312, "+300 EXP", 10 if gold_cnt > 0 else 5)
 
         # メインナビゲーションボタン
         # 1. 「今日の挑戦状 (DUO 3問)」 (y: 345, 高44)
