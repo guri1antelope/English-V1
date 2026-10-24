@@ -19,6 +19,8 @@ class GraphicsManager:
         self.logo_img = None
         self.has_logo = False
         self._load_title_logo()
+        self.partner_images = {}
+        self._load_partner_images()
         self._init_sprites()
 
     def _load_title_logo(self):
@@ -43,6 +45,35 @@ class GraphicsManager:
         """タイトルロゴ画像を描画。"""
         if self.has_logo and self.logo_img:
             pyxel.blt(x, y, self.logo_img, 0, 0, self.logo_w, self.logo_h, 0)
+
+    def _load_partner_images(self):
+        """新キャラクター画像（48x48, 24x24）をロード。"""
+        base_candidates = [
+            os.path.join(os.path.dirname(__file__), "..", "assets", "images", "characters"),
+            os.path.join(os.path.dirname(__file__), "assets", "images", "characters"),
+            "assets/images/characters",
+            "app/assets/images/characters",
+        ]
+        char_dir = None
+        for b in base_candidates:
+            if os.path.exists(b):
+                char_dir = b
+                break
+        if not char_dir:
+            return
+
+        for pid in range(1, 6):
+            for stg in range(1, 5):
+                for sz in (72, 48, 24):
+                    fname = f"partner_{pid}_stage_{stg}_{sz}.png"
+                    fpath = os.path.join(char_dir, fname)
+                    if os.path.exists(fpath):
+                        try:
+                            im = pyxel.Image(sz, sz)
+                            im.load(0, 0, fpath)
+                            self.partner_images[(pid, stg, sz)] = im
+                        except Exception:
+                            pass
 
     def _init_sprites(self):
         """Image bank 0 にスプライトデータをプログラマブルに生成・展開。"""
@@ -252,7 +283,28 @@ class GraphicsManager:
             bob = -2 if (frame % 20 < 10) else 0  # ピョンピョン跳ねる
 
         y_offset = cy + bob
+        target_size = 72 if scale >= 3 else (48 if scale >= 2 else 24)
 
+        # 1. 新グラフィック画像がロードされていればテクスチャ描画
+        img = self.partner_images.get((partner_id, stage, target_size))
+        size = target_size
+        if not img and target_size == 72:
+            img = self.partner_images.get((partner_id, stage, 48))
+            size = 48
+        if img:
+            pyxel.blt(
+                cx - size // 2,
+                y_offset - size // 2,
+                img,
+                0,
+                0,
+                size,
+                size,
+                0,
+            )
+            return
+
+        # 2. フォールバック（画像がない場合）
         if stage == 1:
             # タマゴ形態（全種共通、カラーのみ少し異なる）
             self._draw_egg(cx, y_offset, partner_id, scale)
