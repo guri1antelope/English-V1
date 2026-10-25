@@ -759,37 +759,44 @@ class SceneQuiz:
                 )
                 cur_y = card_y + 52 + 18
             else:
-                # 不正解時: 左右分割カード (幅135px、高さ52px)
-                # 左: あなたの解答 (赤枠)
-                pyxel.rect(20, card_y, 135, 52, 0)
-                pyxel.rectb(20, card_y, 135, 52, 8)
+                # 不正解時: 全幅上下2段カード (行数に応じて高さを動的計算し、文字被りを完全防止)
+                # 上段: あなたの解答 (赤枠)
+                user_ans = self.user_answer_text or "-"
+                u_lines = self.app.text.wrap_text(user_ans, max_width=268, font_type="english")
+                u_card_h = 24 + max(1, len(u_lines)) * 17
+                pyxel.rect(20, card_y, 280, u_card_h, 0)
+                pyxel.rectb(20, card_y, 280, u_card_h, 8)
                 self.app.text.draw_text_mini(
-                    26, card_y + 8, "あなたの解答 (×)", 8
+                    26, card_y + 6, "あなたの解答 (×):", 8
                 )
                 self.app.text.draw_text(
                     26,
-                    card_y + 26,
-                    self.user_answer_text or "-",
+                    card_y + 22,
+                    user_ans,
                     8,
-                    max_width=123,
+                    max_width=268,
                     font_type="english",
                 )
 
-                # 右: 正解 (緑枠)
-                pyxel.rect(165, card_y, 135, 52, 0)
-                pyxel.rectb(165, card_y, 135, 52, 11)
+                # 下段: 正解 (緑枠)
+                next_card_y = card_y + u_card_h + 6
+                corr_ans = self.correct_answer_text or "-"
+                c_lines = self.app.text.wrap_text(corr_ans, max_width=268, font_type="english")
+                c_card_h = 24 + max(1, len(c_lines)) * 17
+                pyxel.rect(20, next_card_y, 280, c_card_h, 0)
+                pyxel.rectb(20, next_card_y, 280, c_card_h, 11)
                 self.app.text.draw_text_mini(
-                    171, card_y + 8, "正解 (◎)", 11
+                    26, next_card_y + 6, "正解 (◎):", 11
                 )
                 self.app.text.draw_text(
-                    171,
-                    card_y + 26,
-                    self.correct_answer_text or "-",
+                    26,
+                    next_card_y + 22,
+                    corr_ans,
                     11,
-                    max_width=123,
+                    max_width=268,
                     font_type="english",
                 )
-                cur_y = card_y + 52 + 18
+                cur_y = next_card_y + c_card_h + 16
         elif q_type == "reorder":
             if self.last_is_correct:
                 # 正解時: 全幅カード
@@ -808,38 +815,43 @@ class SceneQuiz:
                 )
                 cur_y = card_y + 52 + 18
             else:
-                # 不正解時: 上下2段カード (各42px)
-                # 上段: あなたの解答
-                pyxel.rect(20, card_y, 280, 42, 0)
-                pyxel.rectb(20, card_y, 280, 42, 8)
+                # 不正解時: 全幅上下2段カード (動的高さ計算)
+                user_ans = self.user_answer_text or "-"
+                u_lines = self.app.text.wrap_text(user_ans, max_width=268, font_type="english")
+                u_card_h = 24 + max(1, len(u_lines)) * 17
+                pyxel.rect(20, card_y, 280, u_card_h, 0)
+                pyxel.rectb(20, card_y, 280, u_card_h, 8)
                 self.app.text.draw_text_mini(
                     26, card_y + 6, "あなたの並び替え (×):", 8
                 )
                 self.app.text.draw_text(
                     26,
                     card_y + 22,
-                    self.user_answer_text or "-",
+                    user_ans,
                     8,
                     max_width=268,
                     font_type="english",
                 )
 
                 # 下段: 正しい並び順
-                next_card_y = card_y + 48
-                pyxel.rect(20, next_card_y, 280, 42, 0)
-                pyxel.rectb(20, next_card_y, 280, 42, 11)
+                next_card_y = card_y + u_card_h + 6
+                corr_ans = self.correct_answer_text or "-"
+                c_lines = self.app.text.wrap_text(corr_ans, max_width=268, font_type="english")
+                c_card_h = 24 + max(1, len(c_lines)) * 17
+                pyxel.rect(20, next_card_y, 280, c_card_h, 0)
+                pyxel.rectb(20, next_card_y, 280, c_card_h, 11)
                 self.app.text.draw_text_mini(
                     26, next_card_y + 6, "正しい並び順 (◎):", 11
                 )
                 self.app.text.draw_text(
                     26,
                     next_card_y + 22,
-                    self.correct_answer_text or "-",
+                    corr_ans,
                     11,
                     max_width=268,
                     font_type="english",
                 )
-                cur_y = next_card_y + 42 + 18
+                cur_y = next_card_y + c_card_h + 16
         else:
             cur_y = card_y
 
