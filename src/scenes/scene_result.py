@@ -129,9 +129,18 @@ class SceneResult:
             elif self.new_level >= 30 and old_stage == 3:
                 new_stage = 4
 
-            partner["stage"] = new_stage
-            self.new_stage = new_stage
-            self.evolved = new_stage > old_stage
+            if new_stage > old_stage:
+                self.evolved = True
+                self.new_stage = new_stage
+                # お部屋（ホーム）入室時に感動的な進化演出を再生させる
+                slot_data["pending_evolution"] = {
+                    "old_stage": old_stage,
+                    "new_stage": new_stage,
+                }
+            else:
+                self.evolved = False
+                self.new_stage = old_stage
+                partner["stage"] = old_stage
 
             # クリア記録の保存
             if self.quiz_mode == "eiken" and self.is_passed:
@@ -171,7 +180,7 @@ class SceneResult:
             # 左ボタン (x: 20, y: 515, 幅130, 高48)
             if 20 <= mx <= 150 and 515 <= my <= 565:
                 self.app.audio.play_se("tap")
-                if self.quiz_mode == "daily_duo":
+                if self.evolved or self.quiz_mode == "daily_duo":
                     self.app.change_scene("home")
                 else:
                     self.app.change_scene("map")
@@ -270,12 +279,12 @@ class SceneResult:
 
         # レベルアップ・進化メッセージ
         if self.evolved:
-            pyxel.rect(30, 190, 260, 28, 0)
-            pyxel.rectb(30, 190, 260, 28, 10)
+            pyxel.rect(20, 190, 280, 28, 0)
+            pyxel.rectb(20, 190, 280, 28, 10)
             self.app.text.draw_text(
-                55,
+                28,
                 196,
-                "あたらしい姿に進化したよ！",
+                "★ 進化の兆し！ お部屋へ行ってみよう！ ★",
                 10,
                 font_type="main",
             )
@@ -302,7 +311,9 @@ class SceneResult:
         )
 
         # セリフ吹き出し (幅280, 高52, y: 415〜467)
-        if self.quiz_mode == "daily_duo":
+        if self.evolved:
+            speech = "からだの奥から光があふれてきたよ！\nお部屋にいってみよう！"
+        elif self.quiz_mode == "daily_duo":
             speech = "すごい！今日の挑戦状クリア！\nお部屋で金のリンゴを食べてね！"
         elif self.quiz_mode == "duo_section":
             speech = (
@@ -325,7 +336,10 @@ class SceneResult:
         # フッターナビゲーションボタン (y: 515〜563)
         pyxel.rect(20, 515, 130, 48, 0)
         pyxel.rectb(20, 515, 130, 48, 7)
-        if self.quiz_mode == "daily_duo":
+        if self.evolved:
+            btn_left_text = "◀ お部屋へ(進化)"
+            btn_right_text = "もう一回！ ▶"
+        elif self.quiz_mode == "daily_duo":
             btn_left_text = "◀ ホームへ"
             btn_right_text = "お部屋へ ▶"
         elif self.quiz_mode == "duo_section":

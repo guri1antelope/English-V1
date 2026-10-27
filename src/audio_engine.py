@@ -94,10 +94,28 @@ class AudioEngine:
             speed=4,
         )
 
+        # サウンド 6: タマゴの揺れ・ヒビ
+        pyxel.sounds[6].set(
+            notes="c3 e3 g3",
+            tones="p p p",
+            volumes="3 4 5",
+            effects="n n n",
+            speed=3,
+        )
+
+        # サウンド 7: 進化ファンファーレ
+        pyxel.sounds[7].set(
+            notes="c3 c3 c3 e3 g3 c4",
+            tones="s s s s s s",
+            volumes="4 4 5 5 6 7",
+            effects="n n n n n f",
+            speed=5,
+        )
+
     def play_se(self, se_type: str):
         """効果音を再生。
 
-        se_type: 'tap', 'correct', 'wrong', 'levelup', 'cancel', 'eat'
+        se_type: 'tap', 'correct', 'wrong', 'levelup', 'cancel', 'eat', 'egg_crack', 'evolve'
         """
         if not self.sound_enabled:
             return
@@ -109,6 +127,8 @@ class AudioEngine:
             "levelup": 3,
             "cancel": 4,
             "eat": 5,
+            "egg_crack": 6,
+            "evolve": 7,
         }
         snd_id = sound_map.get(se_type)
         if snd_id is not None:
@@ -177,6 +197,17 @@ class AudioEngine:
                 "} else if (se === 'eat') {"
                 "  playTone(392, 'square', now, 0.06, 0.15);"
                 "  playTone(330, 'square', now + 0.07, 0.08, 0.15);"
+                "} else if (se === 'egg_crack') {"
+                "  playTone(520, 'triangle', now, 0.04, 0.16);"
+                "  playTone(680, 'square', now + 0.04, 0.05, 0.18);"
+                "} else if (se === 'evolve') {"
+                "  playTone(523.25, 'square', now, 0.10, 0.20);"
+                "  playTone(523.25, 'square', now + 0.12, 0.10, 0.20);"
+                "  playTone(523.25, 'square', now + 0.24, 0.10, 0.20);"
+                "  playTone(659.25, 'square', now + 0.36, 0.15, 0.22);"
+                "  playTone(783.99, 'square', now + 0.52, 0.18, 0.22);"
+                "  playTone(1046.50, 'square', now + 0.72, 0.45, 0.25);"
+                "  playTone(1318.51, 'square', now + 0.72, 0.45, 0.15);"
                 "}"
                 "})();"
             )

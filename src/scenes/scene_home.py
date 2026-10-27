@@ -4,7 +4,49 @@ Displays companion animal (large animated sprite), status bars (Lv, EXP, Fullnes
 feeding interaction, and navigation to Lesson Map and Review.
 """
 
+import math
 import pyxel
+
+COMPANION_SPECIES = ["", "柴犬", "子猫", "ウサギ", "シマリス", "ペンギン"]
+
+# 種族ごとの各成長段階（0..4）の名称と説明
+STAGE_INFO = {
+    1: [
+        ("", ""),
+        ("しばいぬのタマゴ", "ふしぎなタマゴ"),
+        ("こいぬ", "元気いっぱいの小犬"),
+        ("柴犬", "りっぱな成犬"),
+        ("師範柴犬", "英語マスターの達人犬"),
+    ],
+    2: [
+        ("", ""),
+        ("トラネコのタマゴ", "ふしぎなタマゴ"),
+        ("こねこ", "好奇心旺盛な子猫"),
+        ("トラネコ", "堂々としたトラネコ"),
+        ("キャットマスター", "知恵あふれる大賢猫"),
+    ],
+    3: [
+        ("", ""),
+        ("ウサギのタマゴ", "ふしぎなタマゴ"),
+        ("こうさぎ", "ぴょんぴょん跳ねる子ウサギ"),
+        ("ロップイヤー", "優しいロップイヤー"),
+        ("プリンセスバニー", "気品ある王室ウサギ"),
+    ],
+    4: [
+        ("", ""),
+        ("シマリスのタマゴ", "ふしぎなタマゴ"),
+        ("こリス", "すばしっこい子リス"),
+        ("シマリス", "森のしっかり者リス"),
+        ("ドングリ賢者", "英単語を知り尽くした賢者"),
+    ],
+    5: [
+        ("", ""),
+        ("ペンギンのタマゴ", "ふしぎなタマゴ"),
+        ("ペンギンヒナ", "ふわふわの赤ちゃんペンギン"),
+        ("ペンギン成鳥", "立派に泳げる大人のペンギン"),
+        ("キャプテンペンギン", "海を渡る偉大な船長ペンギン"),
+    ],
+}
 
 
 class SceneHome:
@@ -19,9 +61,24 @@ class SceneHome:
         self.bonus_anim_timer = 0
         self.bonus_exp = 0
         self.bonus_streak = 1
+        # 進化演出用
+        self.evolution_anim = None
+        # 成長ロードマップモーダル
+        self.show_growth_roadmap = False
 
     def on_enter(self):
-        """ホーム画面入室時の処理（当日初回ログイン判定とボーナス付与）。"""
+        """ホーム画面入室時の処理（進化保留チェックとログインボーナス）。"""
+        slot_data = self.app.get_current_slot_data()
+        if slot_data:
+            pending = slot_data.pop("pending_evolution", None)
+            if pending:
+                self.app.storage.save_slot(self.app.current_slot, slot_data)
+                self._trigger_evolution(
+                    pending.get("old_stage", 1),
+                    pending.get("new_stage", 2),
+                    slot_data.get("partner", {}).get("id", 1),
+                )
+                return
         self._check_daily_login_bonus()
 
     def _check_daily_login_bonus(self):
@@ -83,6 +140,18 @@ class SceneHome:
     def update(self):
         self.frame += 1
 
+        # 進化演出の更新（最優先）
+        if self.evolution_anim and self.evolution_anim["active"]:
+            self._update_evolution()
+            return
+
+        # 成長ロードマップ表示中はクリックで閉じるのみ
+        if self.show_growth_roadmap:
+            if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+                self.show_growth_roadmap = False
+                self.app.audio.play_se("cancel")
+            return
+
         # アニメーション用タイマー
         if self.jump_timer > 0:
             self.jump_timer -= 1
@@ -102,6 +171,58 @@ class SceneHome:
             mx, my = pyxel.mouse_x, pyxel.mouse_y
             self._handle_click(mx, my)
 
+    def _trigger_evolution(self, old_stage: int, new_stage: int, pid: int):
+        """進化演出を開始。"""
+        self.evolution_anim = {
+            "active": True,
+            "timer": 0,
+            "old_stage": old_stage,
+            "new_stage": new_stage,
+            "pid": pid,
+            "fanfare_played": False,
+            "ready_to_close": False,
+        }
+
+    def _update_evolution(self):
+        """進化演出のフレーム更新。"""
+        anim = self.evolution_anim
+        if not anim:
+            return
+        anim["timer"] += 1
+        t = anim["timer"]
+
+        # フェーズ1: タマゴ・相棒の激しい揺れ＆ヒビ音 (t: 1〜70)
+        if t in (15, 35, 55):
+            self.app.audio.play_se("egg_crack")
+
+        # フェーズ2: 覚醒・新形態切り替え (t: 80)
+        if t == 80:
+            slot_data = self.app.get_current_slot_data()
+            if slot_data:
+                partner = slot_data.setdefault("partner", {})
+                partner["stage"] = anim["new_stage"]
+                self.app.storage.save_slot(self.app.current_slot, slot_data)
+            if not anim["fanfare_played"]:
+                self.app.audio.play_se("evolve")
+                anim["fanfare_played"] = True
+
+        # フェーズ3: 完了（タップで閉じられる） (t >= 100)
+        if t >= 100:
+            anim["ready_to_close"] = True
+
+        # タップで終了
+        if anim["ready_to_close"] and pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+            pid = anim["pid"]
+            new_stg = anim["new_stage"]
+            new_name = STAGE_INFO.get(pid, [("", "")])[new_stg][0]
+            self.speech_bubble = f"あたらしい姿に進化したよ！\nこれからよろしくね！"
+            self.partner_mood = "happy"
+            self.mood_timer = 120
+            self.jump_timer = 30
+            self.heart_timer = 50
+            self.evolution_anim = None
+            self.app.audio.play_se("tap")
+
     def _handle_click(self, mx: int, my: int):
         # ログインボーナス演出中のタップで即スキップ
         if self.bonus_anim_timer > 0:
@@ -116,13 +237,22 @@ class SceneHome:
         partner = slot_data.get("partner", {})
         food = slot_data.get("food_inventory", {})
 
+        # 「成長きろく」ボタン（相棒の名前の右横: x:216〜300, y:204〜236）
+        if 216 <= mx <= 300 and 204 <= my <= 236:
+            self.show_growth_roadmap = True
+            self.app.audio.play_se("tap")
+            return
+
         # 相棒自身をタップ (cx:160, cy:150, 半径50)
         if 110 <= mx <= 210 and 100 <= my <= 200:
             self.partner_mood = "happy"
             self.mood_timer = 60
-            self.speech_bubble = (
-                "なでてくれてありがとう！元気が出てきたよ！"
-            )
+            self.jump_timer = 15
+            self.heart_timer = 30
+            pid = partner.get("id", 1)
+            pstage = partner.get("stage", 1)
+            pname = STAGE_INFO.get(pid, [("", "")])[pstage][0]
+            self.speech_bubble = f"なでてくれてありがとう！\n元気いっぱいだよ！"
             self.app.audio.play_se("levelup")
             return
 
@@ -245,8 +375,8 @@ class SceneHome:
                 new_stage = 4
 
             if new_stage > stage:
-                partner["stage"] = new_stage
-                self.speech_bubble = "すごい！\nあたらしい姿に進化したよ！！"
+                # 劇的な進化演出をトリガー
+                self._trigger_evolution(stage, new_stage, partner.get("id", 1))
 
     def draw(self):
         pyxel.cls(1)  # 濃紺背景
@@ -266,9 +396,6 @@ class SceneHome:
         pexp = partner.get("exp", 0)
         req_exp = plv * 100
         pfull = partner.get("fullness", 50)
-
-        species_names = ["", "柴犬", "子猫", "ウサギ", "シマリス", "ペンギンヒナ"]
-        stage_names = ["", "タマゴ", "幼体", "成体", "究極体"]
 
         # ヘッダー情報（プレイヤー名・連続日数）
         pyxel.rect(10, 10, 300, 34, 0)
@@ -305,23 +432,34 @@ class SceneHome:
             self.app.text.draw_text_mini(154, 104 + bounce_y, "♥", 8)
 
         # 相棒の名前と状態 (y: 212 に引き上げてバーとの間に8pxの余白を確保)
-        p_title = f"{species_names[pid]} ({stage_names[pstage]})"
-        self.app.text.draw_text(
-            90, 212, p_title, 7
-        )
+        p_title = STAGE_INFO.get(pid, [("", "")])[pstage][0]
+        self.app.text.draw_text(24, 212, p_title, 7)
 
-        # ステータスバー（Lv, EXP）
+        # 「成長きろく」ボタン（相棒の名前の右横: x:216, y:206, 幅84, 高24）
+        pyxel.rect(216, 206, 84, 24, 0)
+        pyxel.rectb(216, 206, 84, 24, 12)  # 水色枠
+        self.app.text.draw_text_mini(224, 212, "★成長きろく", 12)
+
+        # ステータスバー（Lv, 次の進化目標, EXPゲージ）
         pyxel.rect(20, 236, 280, 44, 0)
         pyxel.rectb(20, 236, 280, 44, 7)
 
-        self.app.text.draw_text(26, 250, f"Lv.{plv}", 7)
+        self.app.text.draw_text(26, 244, f"Lv.{plv}", 7)
 
-        # EXPゲージ（幅218pxに拡大してゆったり表示）
-        self.app.text.draw_text_mini(72, 242, f"EXP {pexp} / {req_exp}", 7)
-        pyxel.rect(72, 258, 218, 10, 5)
-        exp_w = int(218 * min(1.0, pexp / max(1, req_exp)))
+        # 次の成長目標 (Lv.5 / Lv.15 / Lv.30)
+        next_lv = 5 if pstage == 1 else (15 if pstage == 2 else (30 if pstage == 3 else None))
+        if next_lv:
+            rem = max(0, next_lv - plv)
+            self.app.text.draw_text_mini(26, 264, f"次まであと{rem}Lv", 10)
+        else:
+            self.app.text.draw_text_mini(26, 264, "★最終形態", 11)
+
+        # EXPゲージ
+        self.app.text.draw_text_mini(116, 242, f"EXP {pexp} / {req_exp}", 7)
+        pyxel.rect(116, 258, 174, 10, 5)
+        exp_w = int(174 * min(1.0, pexp / max(1, req_exp)))
         if exp_w > 0:
-            pyxel.rect(72, 258, exp_w, 10, 11)  # 緑
+            pyxel.rect(116, 258, exp_w, 10, 11)  # 緑
 
         # ごはんボタン（3種独立: リンゴ / お肉 / 金のリンゴ）
         apple_cnt = food.get("apple", 0)
@@ -404,9 +542,17 @@ class SceneHome:
             28, 582, "◀ スロット選択へ", 7
         )
 
-        # 6. ログインボーナス演出ポップアップ（最前面）
+        # 6. ログインボーナス演出ポップアップ
         if self.bonus_anim_timer > 0:
             self._draw_login_bonus_popup()
+
+        # 7. 進化演出カットシーン（最前面）
+        if self.evolution_anim and self.evolution_anim["active"]:
+            self._draw_evolution_cutscene()
+
+        # 8. 成長ロードマップモーダル（最前面）
+        elif self.show_growth_roadmap:
+            self._draw_growth_roadmap_modal()
 
     def _draw_login_bonus_popup(self):
         """ログインボーナスの華やかなアニメーション演出。"""
@@ -453,3 +599,202 @@ class SceneHome:
             pyxel.pset(px, py, col)
             pyxel.pset(px + 1, py, col)
             pyxel.pset(px, py + 1, col)
+
+    def _draw_evolution_cutscene(self):
+        """ドラマチックな進化演出カットシーン（揺れ・ヒビ・光・新形態登場）。"""
+        anim = self.evolution_anim
+        if not anim:
+            return
+        t = anim["timer"]
+        pid = anim["pid"]
+        old_stg = anim["old_stage"]
+        new_stg = anim["new_stage"]
+
+        old_name = STAGE_INFO.get(pid, [("", "")])[old_stg][0]
+        new_name = STAGE_INFO.get(pid, [("", "")])[new_stg][0]
+        new_desc = STAGE_INFO.get(pid, [("", "")])[new_stg][1]
+
+        # 画面全域を黒の暗幕で覆う
+        pyxel.rect(0, 0, 320, 640, 0)
+
+        # 背景の星屑パーティクル
+        for i in range(16):
+            sx = (i * 37 + (self.frame * 2)) % 320
+            sy = (i * 53 + (self.frame * 3)) % 640
+            pyxel.pset(sx, sy, 7 if (i + self.frame // 4) % 2 == 0 else 10)
+
+        if t < 75:
+            # --- フェーズ1: 予兆・相棒の激しい揺れ＆ヒビ音 ---
+            pyxel.rect(20, 60, 280, 64, 0)
+            pyxel.rectb(20, 60, 280, 64, 10)
+            pyxel.rectb(22, 62, 276, 60, 7)
+            t_msg = "おや……！？"
+            t_sub = "相棒の様子がいつもと違う……！"
+            w1 = self.app.text.measure_text_width(t_msg)
+            w2 = self.app.text.measure_text_width(t_sub)
+            self.app.text.draw_text(20 + (280 - w1) // 2, 72, t_msg, 10)
+            self.app.text.draw_text(20 + (280 - w2) // 2, 98, t_sub, 7)
+
+            # プルプル震え演出
+            shake_amp = min(10, 2 + t // 8)
+            shake_x = int(math.sin(t * 0.8) * shake_amp)
+            shake_y = int(abs(math.cos(t * 0.8)) * (shake_amp // 2))
+
+            # 進化前の相棒を描画（スケール4）
+            self.app.graphics.draw_partner(
+                160 + shake_x, 260 - shake_y, pid, old_stg, mood="happy", frame=self.frame, scale=4
+            )
+
+            # ヒビ割れ・汗・ビックリマーク演出
+            if t > 20:
+                self.app.text.draw_text(160 + shake_x + 36, 200, "！", 10)
+            if t > 40:
+                self.app.text.draw_text(160 + shake_x - 48, 210, "！", 9)
+            if t > 55:
+                self.app.text.draw_text_mini(160 + shake_x + 40, 240, "ピキッ", 7)
+
+            self.app.text.draw_text_mini(70, 490, "光が溢れ出そうとしている……！", 12)
+
+        elif t < 85:
+            # --- フェーズ2: まばゆい光のフラッシュ点滅 ---
+            flash_col = 7 if (t % 2 == 0) else 10
+            pyxel.rect(0, 0, 320, 640, flash_col)
+            for ang in range(0, 360, 30):
+                rad = math.radians(ang + t * 5)
+                ex = int(160 + math.cos(rad) * 220)
+                ey = int(260 + math.sin(rad) * 220)
+                pyxel.line(160, 260, ex, ey, 0 if flash_col == 7 else 7)
+
+        else:
+            # --- フェーズ3: 祝！ 新形態のお披露目 ---
+            # 祝祭リボン
+            pyxel.rect(30, 40, 260, 42, 10)
+            pyxel.rectb(30, 40, 260, 42, 7)
+            banner_text = "★ SHINKA SUCCESS!! ★"
+            bw = self.app.text.measure_text_width(banner_text)
+            self.app.text.draw_text(30 + (260 - bw) // 2, 52, banner_text, 0)
+
+            # 新形態キャラクター（大きく堂々と表示、バウンス）
+            b_jump = -8 if (t // 6) % 2 == 1 else 0
+            self.app.graphics.draw_partner(
+                160, 225 + b_jump, pid, new_stg, mood="happy", frame=self.frame, scale=4
+            )
+
+            # 周囲のカラフルパーティクル（花火風）
+            for i in range(8):
+                rad = math.radians(i * 45 + (self.frame * 3))
+                dist = 68 + (t % 15) * 2
+                px = int(160 + math.cos(rad) * dist)
+                py = int(225 + math.sin(rad) * dist)
+                pcol = [9, 10, 11, 12, 14][(i + t // 5) % 5]
+                pyxel.circ(px, py, 2, pcol)
+
+            # 進化完了カード (幅280, 高185, x:20, y:355)
+            pyxel.rect(20, 355, 280, 185, 0)
+            pyxel.rectb(20, 355, 280, 185, 10)  # 金枠
+            pyxel.rectb(22, 357, 276, 181, 7)   # 白枠
+
+            c1 = "おめでとう！ 進化したよ！！"
+            w_c1 = self.app.text.measure_text_width(c1)
+            self.app.text.draw_text(20 + (280 - w_c1) // 2, 368, c1, 10)
+
+            # 旧形態 → 新形態 の矢印表示
+            evolve_flow = f"{old_name}  ▶  {new_name}"
+            w_flow = self.app.text.measure_text_width(evolve_flow)
+            self.app.text.draw_text(20 + (280 - w_flow) // 2, 400, evolve_flow, 11)
+
+            # 説明・肩書き
+            w_desc = self.app.text.measure_text_width(new_desc)
+            self.app.text.draw_text(20 + (280 - w_desc) // 2, 432, f"「{new_desc}」", 7)
+
+            # メッセージ
+            status_note = "新しい姿で これからも一緒に頑張ろう！"
+            w_sn = self.app.text.measure_text_width(status_note, font_type="mini")
+            self.app.text.draw_text_mini(20 + (280 - w_sn) // 2, 466, status_note, 7)
+
+            # タップで部屋へ戻る案内ボタン (点滅)
+            if anim["ready_to_close"]:
+                btn_col = 10 if (self.frame // 8) % 2 == 0 else 7
+                pyxel.rect(45, 494, 230, 32, 0)
+                pyxel.rectb(45, 494, 230, 32, btn_col)
+                prompt = "▶ タップしてお部屋へもどる"
+                wp = self.app.text.measure_text_width(prompt)
+                self.app.text.draw_text(45 + (230 - wp) // 2, 502, prompt, btn_col)
+
+    def _draw_growth_roadmap_modal(self):
+        """相棒の成長過程を一覧できる成長ロードマップ図鑑モーダル。"""
+        slot_data = self.app.get_current_slot_data()
+        if not slot_data:
+            return
+        partner = slot_data.get("partner", {})
+        pid = partner.get("id", 1)
+        cur_stage = partner.get("stage", 1)
+        species = COMPANION_SPECIES[pid]
+
+        # 画面暗幕
+        pyxel.rect(0, 0, 320, 640, 0)
+
+        # モーダル外枠 (x: 16, y: 35, 幅: 288, 高: 560)
+        pyxel.rect(16, 35, 288, 560, 0)
+        pyxel.rectb(16, 35, 288, 560, 12)  # 水色外枠
+        pyxel.rectb(18, 37, 284, 556, 7)   # 白内枠
+
+        # ヘッダー看板
+        pyxel.rect(28, 48, 264, 36, 12)
+        h_title = f"★ {species}の成長きろく ★"
+        wh = self.app.text.measure_text_width(h_title)
+        self.app.text.draw_text(28 + (264 - wh) // 2, 58, h_title, 0)
+
+        # 4つの段階カード（y: 96, 200, 304, 408）
+        stages_req = [
+            (1, "第1段階: タマゴ", "最初から", 1),
+            (2, "第2段階: 幼体", "Lv.5 到達", 5),
+            (3, "第3段階: 成体", "Lv.15 到達", 15),
+            (4, "第4段階: 究極体", "Lv.30 到達", 30),
+        ]
+
+        for idx, (stg_num, stg_label, cond_text, req_lv) in enumerate(stages_req):
+            cy = 96 + idx * 104
+            is_unlocked = cur_stage >= stg_num
+            is_current = cur_stage == stg_num
+
+            # カード枠
+            card_border = 10 if is_current else (11 if is_unlocked else 5)
+            pyxel.rect(24, cy, 272, 94, 0)
+            pyxel.rectb(24, cy, 272, 94, card_border)
+            if is_current:
+                pyxel.rectb(26, cy + 2, 268, 90, 7)
+
+            # 相棒グラフィック表示
+            if is_unlocked:
+                self.app.graphics.draw_partner(
+                    54, cy + 48, pid, stg_num, mood="happy" if is_current else "normal", frame=self.frame, scale=2
+                )
+                name = STAGE_INFO.get(pid, [("", "")])[stg_num][0]
+                desc = STAGE_INFO.get(pid, [("", "")])[stg_num][1]
+            else:
+                pyxel.rect(38, cy + 28, 32, 32, 5)
+                self.app.text.draw_text(48, cy + 36, "？", 7)
+                name = "？？？？？"
+                desc = f"Lv.{req_lv} 到達で進化！"
+
+            # テキスト情報
+            self.app.text.draw_text_mini(88, cy + 12, stg_label, 6 if not is_unlocked else 12)
+            self.app.text.draw_text(88, cy + 28, name, 7 if is_unlocked else 5)
+            self.app.text.draw_text_mini(88, cy + 50, f"条件: {cond_text}", 10 if is_current else 6)
+            self.app.text.draw_text_mini(88, cy + 68, desc, 7 if is_unlocked else 5)
+
+            # 現在バッジ
+            if is_current:
+                pyxel.rect(210, cy + 8, 80, 18, 10)
+                self.app.text.draw_text_mini(216, cy + 12, "★ いまここ", 0)
+            elif is_unlocked:
+                pyxel.rect(220, cy + 8, 70, 18, 3)
+                self.app.text.draw_text_mini(226, cy + 12, "✔ 達成！", 7)
+
+        # 最下部「タップして閉じる」
+        pyxel.rect(60, 545, 200, 36, 0)
+        pyxel.rectb(60, 545, 200, 36, 7)
+        btn_close_text = "◀ とじる (タップ)"
+        wc = self.app.text.measure_text_width(btn_close_text)
+        self.app.text.draw_text(60 + (200 - wc) // 2, 555, btn_close_text, 7)
