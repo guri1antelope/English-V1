@@ -289,12 +289,14 @@ class SceneResult:
                 font_type="main",
             )
         elif self.leveled_up:
-            pyxel.rect(30, 190, 260, 28, 0)
-            pyxel.rectb(30, 190, 260, 28, 11)
+            pyxel.rect(20, 190, 280, 28, 0)
+            pyxel.rectb(20, 190, 280, 28, 11)
+            t_lv = f"★ レベルアップ！ Lv.{self.new_level} ★"
+            w_lv = self.app.text.measure_text_width(t_lv, font_type="main")
             self.app.text.draw_text(
-                65,
+                20 + (280 - w_lv) // 2,
                 196,
-                f"レベルアップ！ Lv.{self.new_level}",
+                t_lv,
                 11,
                 font_type="main",
             )

@@ -263,6 +263,7 @@ class SceneHome:
                 food["apple"] -= 1
                 partner["fullness"] = min(100, partner.get("fullness", 50) + 20)
                 partner["exp"] = partner.get("exp", 0) + 50
+                old_lv = partner.get("level", 1)
                 self._check_level_up(partner)
                 self.app.storage.save_slot(self.app.current_slot, slot_data)
 
@@ -270,7 +271,8 @@ class SceneHome:
                 self.mood_timer = 60
                 self.jump_timer = 16
                 self.heart_timer = 30
-                self.speech_bubble = "リンゴおいしい！\nEXPが50アップしたよ！"
+                if partner.get("level", 1) == old_lv and not self.evolution_anim:
+                    self.speech_bubble = "リンゴおいしい！\nEXPが50アップしたよ！"
                 self.app.audio.play_se("eat")
             else:
                 self.speech_bubble = "リンゴがないよ。\nレッスンをクリアしてゲットしよう！"
@@ -282,6 +284,7 @@ class SceneHome:
             if food.get("meat", 0) > 0:
                 food["meat"] -= 1
                 partner["exp"] = partner.get("exp", 0) + 120
+                old_lv = partner.get("level", 1)
                 self._check_level_up(partner)
                 self.app.storage.save_slot(self.app.current_slot, slot_data)
 
@@ -289,7 +292,8 @@ class SceneHome:
                 self.mood_timer = 60
                 self.jump_timer = 16
                 self.heart_timer = 30
-                self.speech_bubble = "お肉最高！！\nEXPが120アップしたよ！"
+                if partner.get("level", 1) == old_lv and not self.evolution_anim:
+                    self.speech_bubble = "お肉最高！！\nEXPが120アップしたよ！"
                 self.app.audio.play_se("eat")
             else:
                 self.speech_bubble = "お肉がないよ。\n★3パーフェクトでゲットできるよ！"
@@ -301,6 +305,7 @@ class SceneHome:
             if food.get("golden_apple", 0) > 0:
                 food["golden_apple"] -= 1
                 partner["exp"] = partner.get("exp", 0) + 300
+                old_lv = partner.get("level", 1)
                 self._check_level_up(partner)
                 self.app.storage.save_slot(self.app.current_slot, slot_data)
 
@@ -308,7 +313,8 @@ class SceneHome:
                 self.mood_timer = 90
                 self.jump_timer = 20
                 self.heart_timer = 40
-                self.speech_bubble = "金のリンゴだ！！\nEXPが300アップしたよ！"
+                if partner.get("level", 1) == old_lv and not self.evolution_anim:
+                    self.speech_bubble = "金のリンゴだ！！\nEXPが300アップしたよ！"
                 self.app.audio.play_se("eat")
             else:
                 self.speech_bubble = "金のリンゴがないよ。\n今日の挑戦状クリアでゲット！"
@@ -444,22 +450,29 @@ class SceneHome:
         pyxel.rect(20, 236, 280, 44, 0)
         pyxel.rectb(20, 236, 280, 44, 7)
 
-        self.app.text.draw_text(26, 244, f"Lv.{plv}", 7)
+        # 左: レベル表示（16ptフォント・上下中央 y: 249）
+        self.app.text.draw_text(26, 249, f"Lv.{plv}", 7)
+
+        # 右上 (y: 241): EXP数値 と 進化目標カウントダウン (横並び・重なりゼロ)
+        self.app.text.draw_text_mini(92, 241, f"EXP {pexp}/{req_exp}", 7)
 
         # 次の成長目標 (Lv.5 / Lv.15 / Lv.30)
         next_lv = 5 if pstage == 1 else (15 if pstage == 2 else (30 if pstage == 3 else None))
         if next_lv:
             rem = max(0, next_lv - plv)
-            self.app.text.draw_text_mini(26, 264, f"次まであと{rem}Lv", 10)
+            t_rem = f"(次まであと{rem}Lv)"
+            w_rem = self.app.text.measure_text_width(t_rem, font_type="mini")
+            self.app.text.draw_text_mini(290 - w_rem, 241, t_rem, 10)
         else:
-            self.app.text.draw_text_mini(26, 264, "★最終形態", 11)
+            t_final = "★最終形態"
+            w_final = self.app.text.measure_text_width(t_final, font_type="mini")
+            self.app.text.draw_text_mini(290 - w_final, 241, t_final, 11)
 
-        # EXPゲージ
-        self.app.text.draw_text_mini(116, 242, f"EXP {pexp} / {req_exp}", 7)
-        pyxel.rect(116, 258, 174, 10, 5)
-        exp_w = int(174 * min(1.0, pexp / max(1, req_exp)))
+        # 右下 (y: 258): EXPゲージバー (幅198pxで綺麗に表示)
+        pyxel.rect(92, 258, 198, 12, 5)
+        exp_w = int(198 * min(1.0, pexp / max(1, req_exp)))
         if exp_w > 0:
-            pyxel.rect(116, 258, exp_w, 10, 11)  # 緑
+            pyxel.rect(92, 258, exp_w, 12, 11)  # 緑
 
         # ごはんボタン（3種独立: リンゴ / お肉 / 金のリンゴ）
         apple_cnt = food.get("apple", 0)
