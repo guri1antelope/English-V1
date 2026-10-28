@@ -281,10 +281,12 @@ class SceneResult:
         if self.evolved:
             pyxel.rect(20, 190, 280, 28, 0)
             pyxel.rectb(20, 190, 280, 28, 10)
+            t_ev = "★ 進化の予兆！ お部屋へ行こう ★"
+            w_ev = self.app.text.measure_text_width(t_ev, font_type="main")
             self.app.text.draw_text(
-                28,
+                20 + (280 - w_ev) // 2,
                 196,
-                "★ 進化の兆し！ お部屋へ行ってみよう！ ★",
+                t_ev,
                 10,
                 font_type="main",
             )
@@ -314,7 +316,7 @@ class SceneResult:
 
         # セリフ吹き出し (幅280, 高52, y: 415〜467)
         if self.evolved:
-            speech = "からだの奥から光があふれてきたよ！\nお部屋にいってみよう！"
+            speech = "体がピカピカ光ってきたよ！\nお部屋にいってみよう！"
         elif self.quiz_mode == "daily_duo":
             speech = "すごい！今日の挑戦状クリア！\nお部屋で金のリンゴを食べてね！"
         elif self.quiz_mode == "duo_section":

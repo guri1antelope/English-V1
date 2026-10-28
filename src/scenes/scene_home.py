@@ -714,7 +714,11 @@ class SceneHome:
             # 旧形態 → 新形態 の矢印表示
             evolve_flow = f"{old_name}  ▶  {new_name}"
             w_flow = self.app.text.measure_text_width(evolve_flow)
-            self.app.text.draw_text(20 + (280 - w_flow) // 2, 400, evolve_flow, 11)
+            if w_flow > 240:
+                w_flow_m = self.app.text.measure_text_width(evolve_flow, font_type="mini")
+                self.app.text.draw_text_mini(20 + (280 - w_flow_m) // 2, 402, evolve_flow, 11)
+            else:
+                self.app.text.draw_text(20 + (280 - w_flow) // 2, 400, evolve_flow, 11)
 
             # 説明・肩書き
             w_desc = self.app.text.measure_text_width(new_desc)
