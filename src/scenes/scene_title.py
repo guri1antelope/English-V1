@@ -200,7 +200,7 @@ class SceneTitle:
         self.app.text.draw_text_mini(30, 576, "★ 相棒と一緒に毎日コツコツ合格を目指そう！", 10)
 
         # 5. 最下部バージョン表記 (あそびかた枠から12px間隔: y: 612)
-        self.app.text.draw_text_mini(20, 612, "Version 1.0.5", 7)
+        self.app.text.draw_text_mini(20, 612, "Version 1.0.6", 7)
         gw_author = self.app.text.measure_text_width("@2026 gurita", font_type="mini")
         self.app.text.draw_text_mini(300 - gw_author, 612, "@2026 gurita", 7)
 

@@ -65,6 +65,8 @@ class SceneHome:
         self.evolution_anim = None
         # 成長ロードマップモーダル
         self.show_growth_roadmap = False
+        # お食事トコトコアニメーション用
+        self.feeding_anim = None
 
     def on_enter(self):
         """ホーム画面入室時の処理（進化保留チェックとログインボーナス）。"""
@@ -145,6 +147,14 @@ class SceneHome:
             self._update_evolution()
             return
 
+        # お食事演出の更新（タップで即スキップ可能）
+        if self.feeding_anim:
+            if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+                self._skip_feeding()
+                return
+            self._update_feeding()
+            return
+
         # 成長ロードマップ表示中はクリックで閉じるのみ
         if self.show_growth_roadmap:
             if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
@@ -223,6 +233,77 @@ class SceneHome:
             self.evolution_anim = None
             self.app.audio.play_se("tap")
 
+    def _start_feeding(self, food_type: str, exp_gain: int, full_gain: int, food_name: str):
+        """お食事トコトコ演出を開始。"""
+        self.feeding_anim = {
+            "food_type": food_type,
+            "exp_gain": exp_gain,
+            "full_gain": full_gain,
+            "food_name": food_name,
+            "timer": 0,
+            "start_x": 65,
+            "target_x": 195,
+            "plate_x": 240,
+            "cy": 160,
+        }
+        self.speech_bubble = f"{food_name}をみつけたよ！"
+        self.app.audio.play_se("tap")
+
+    def _update_feeding(self):
+        """お食事演出のフレーム更新。"""
+        anim = self.feeding_anim
+        if not anim:
+            return
+        anim["timer"] += 1
+        t = anim["timer"]
+
+        if t == 15:
+            self.speech_bubble = "トコトコトコ…"
+        elif t in (60, 68, 76):
+            self.speech_bubble = "もぐもぐ… おいしい！"
+            self.app.audio.play_se("eat")
+        elif t == 85:
+            self.speech_bubble = f"ごちそうさまでした！\nEXPが{anim['exp_gain']}アップしたよ！"
+            self.app.audio.play_se("levelup")
+        elif t >= 105:
+            self._finish_feeding()
+
+    def _finish_feeding(self):
+        """お食事演出の完了処理（所持数減算・EXP加算・ステータス保存）。"""
+        anim = self.feeding_anim
+        if not anim:
+            return
+        food_type = anim["food_type"]
+        exp_gain = anim["exp_gain"]
+        full_gain = anim["full_gain"]
+        food_name = anim["food_name"]
+
+        slot_data = self.app.get_current_slot_data()
+        if slot_data:
+            food = slot_data.get("food_inventory", {})
+            partner = slot_data.get("partner", {})
+            if food.get(food_type, 0) > 0:
+                food[food_type] -= 1
+                if full_gain > 0:
+                    partner["fullness"] = min(100, partner.get("fullness", 50) + full_gain)
+                partner["exp"] = partner.get("exp", 0) + exp_gain
+                old_lv = partner.get("level", 1)
+                self._check_level_up(partner)
+                self.app.storage.save_slot(self.app.current_slot, slot_data)
+                if partner.get("level", 1) == old_lv and not self.evolution_anim:
+                    self.speech_bubble = f"{food_name}おいしかった！\nEXPが{exp_gain}アップしたよ！"
+
+        self.partner_mood = "happy"
+        self.mood_timer = 60
+        self.jump_timer = 15
+        self.heart_timer = 30
+        self.feeding_anim = None
+
+    def _skip_feeding(self):
+        """タップによるお食事演出の即時スキップ。"""
+        self.app.audio.play_se("tap")
+        self._finish_feeding()
+
     def _handle_click(self, mx: int, my: int):
         # ログインボーナス演出中のタップで即スキップ
         if self.bonus_anim_timer > 0:
@@ -260,20 +341,7 @@ class SceneHome:
         # 1. リンゴボタン (20, 288, 幅86, 高44) -> +50 EXP, 満腹+20
         if 20 <= mx <= 106 and 288 <= my <= 332:
             if food.get("apple", 0) > 0:
-                food["apple"] -= 1
-                partner["fullness"] = min(100, partner.get("fullness", 50) + 20)
-                partner["exp"] = partner.get("exp", 0) + 50
-                old_lv = partner.get("level", 1)
-                self._check_level_up(partner)
-                self.app.storage.save_slot(self.app.current_slot, slot_data)
-
-                self.partner_mood = "happy"
-                self.mood_timer = 60
-                self.jump_timer = 16
-                self.heart_timer = 30
-                if partner.get("level", 1) == old_lv and not self.evolution_anim:
-                    self.speech_bubble = "リンゴおいしい！\nEXPが50アップしたよ！"
-                self.app.audio.play_se("eat")
+                self._start_feeding("apple", 50, 20, "リンゴ")
             else:
                 self.speech_bubble = "リンゴがないよ。\nレッスンをクリアしてゲットしよう！"
                 self.app.audio.play_se("cancel")
@@ -282,19 +350,7 @@ class SceneHome:
         # 2. お肉ボタン (114, 288, 幅86, 高44) -> +120 EXP
         if 114 <= mx <= 200 and 288 <= my <= 332:
             if food.get("meat", 0) > 0:
-                food["meat"] -= 1
-                partner["exp"] = partner.get("exp", 0) + 120
-                old_lv = partner.get("level", 1)
-                self._check_level_up(partner)
-                self.app.storage.save_slot(self.app.current_slot, slot_data)
-
-                self.partner_mood = "happy"
-                self.mood_timer = 60
-                self.jump_timer = 16
-                self.heart_timer = 30
-                if partner.get("level", 1) == old_lv and not self.evolution_anim:
-                    self.speech_bubble = "お肉最高！！\nEXPが120アップしたよ！"
-                self.app.audio.play_se("eat")
+                self._start_feeding("meat", 120, 0, "お肉")
             else:
                 self.speech_bubble = "お肉がないよ。\n★3パーフェクトでゲットできるよ！"
                 self.app.audio.play_se("cancel")
@@ -303,19 +359,7 @@ class SceneHome:
         # 3. 金のリンゴボタン (208, 288, 幅92, 高44) -> +300 EXP
         if 208 <= mx <= 300 and 288 <= my <= 332:
             if food.get("golden_apple", 0) > 0:
-                food["golden_apple"] -= 1
-                partner["exp"] = partner.get("exp", 0) + 300
-                old_lv = partner.get("level", 1)
-                self._check_level_up(partner)
-                self.app.storage.save_slot(self.app.current_slot, slot_data)
-
-                self.partner_mood = "happy"
-                self.mood_timer = 90
-                self.jump_timer = 20
-                self.heart_timer = 40
-                if partner.get("level", 1) == old_lv and not self.evolution_anim:
-                    self.speech_bubble = "金のリンゴだ！！\nEXPが300アップしたよ！"
-                self.app.audio.play_se("eat")
+                self._start_feeding("golden_apple", 300, 0, "金のリンゴ")
             else:
                 self.speech_bubble = "金のリンゴがないよ。\n今日の挑戦状クリアでゲット！"
                 self.app.audio.play_se("cancel")
@@ -421,21 +465,24 @@ class SceneHome:
             line_spacing=2,
         )
 
-        # 相棒キャラクター表示（中央・バウンス跳ね演出）
-        bounce_y = -8 if self.jump_timer > 8 else (-4 if self.jump_timer > 0 else 0)
-        self.app.graphics.draw_partner(
-            160,
-            160 + bounce_y,
-            pid,
-            pstage,
-            mood="happy" if self.jump_timer > 0 else self.partner_mood,
-            frame=self.frame,
-            scale=3,
-        )
+        # 相棒キャラクター表示（お食事演出中と通常正面の切り替え）
+        if self.feeding_anim:
+            self._draw_feeding_scene(partner)
+        else:
+            bounce_y = -8 if self.jump_timer > 8 else (-4 if self.jump_timer > 0 else 0)
+            self.app.graphics.draw_partner(
+                160,
+                160 + bounce_y,
+                pid,
+                pstage,
+                mood="happy" if self.jump_timer > 0 else self.partner_mood,
+                frame=self.frame,
+                scale=3,
+            )
 
-        # もぐもぐハート演出
-        if self.heart_timer > 0:
-            self.app.text.draw_text_mini(154, 104 + bounce_y, "♥", 8)
+            # もぐもぐハート演出
+            if self.heart_timer > 0:
+                self.app.text.draw_text_mini(154, 104 + bounce_y, "♥", 8)
 
         # 相棒の名前と状態 (y: 212 に引き上げてバーとの間に8pxの余白を確保)
         p_title = STAGE_INFO.get(pid, [("", "")])[pstage][0]
@@ -815,3 +862,75 @@ class SceneHome:
         btn_close_text = "◀ とじる (タップ)"
         wc = self.app.text.measure_text_width(btn_close_text)
         self.app.text.draw_text(60 + (200 - wc) // 2, 555, btn_close_text, 7)
+
+    def _draw_feeding_scene(self, partner: dict):
+        """お食事演出（横向き相棒のトコトコ歩行・お皿のエサ完食・喜びジャンプ）を描画。"""
+        anim = self.feeding_anim
+        if not anim:
+            return
+        t = anim["timer"]
+        pid = partner.get("id", 1)
+        pstage = partner.get("stage", 1)
+        food_type = anim["food_type"]
+
+        # 1. お皿とエサの描画 (x=plate_x, y=cy)
+        # bite_stage: 0=丸ごと(t < 60), 1=半分(60 <= t < 75), 2=完食(t >= 75)
+        bite_stage = 0
+        if t >= 75:
+            bite_stage = 2
+        elif t >= 60:
+            bite_stage = 1
+        self.app.graphics.draw_food_on_plate(anim["plate_x"], anim["cy"], food_type, bite_stage)
+
+        # 2. 相棒の位置と状態の計算
+        start_x = anim["start_x"]
+        target_x = anim["target_x"]
+        cy = anim["cy"]
+
+        if t < 15:
+            # 気づきフェーズ
+            cur_x = start_x
+            cur_y = cy
+            self.app.graphics.draw_partner_side(cur_x, cur_y, pid, pstage, step_frame=0, is_eating=False, scale=3)
+            # 頭上に「！」マーク (黄色10)
+            self.app.text.draw_text(cur_x - 3, cur_y - 42, "!", 10)
+        elif t < 60:
+            # トコトコ歩行フェーズ (15..60 で 45フレームかけて start_x -> target_x)
+            progress = (t - 15) / 45.0
+            cur_x = int(start_x + (target_x - start_x) * progress)
+            cur_y = cy
+            step_frame = t - 15
+            self.app.graphics.draw_partner_side(cur_x, cur_y, pid, pstage, step_frame=step_frame, is_eating=False, scale=3)
+            # 足元に小さなトコトコ煙（砂煙エフェクト）
+            if (t // 5) % 2 == 0:
+                pyxel.pset(cur_x - 16, cur_y + 14, 7)
+                pyxel.pset(cur_x - 14, cur_y + 13, 6)
+        elif t < 85:
+            # もぐもぐフェーズ
+            cur_x = target_x
+            cur_y = cy
+            # 8フレーム周期で口パク/お辞儀
+            eat_subframe = t - 60
+            is_eating = (eat_subframe // 4) % 2 == 1
+            self.app.graphics.draw_partner_side(cur_x, cur_y, pid, pstage, step_frame=0, is_eating=is_eating, scale=3)
+            # もぐもぐ音符
+            if is_eating:
+                self.app.text.draw_text_mini(cur_x + 10, cur_y - 28, "♪", 10)
+        else:
+            # 85〜105: 満足・喜びジャンプフェーズ
+            cur_x = target_x
+            jump_sub = t - 85
+            # ぴょんぴょん跳ねる
+            jump_h = int(math.sin(jump_sub * 0.35) * 6)
+            if jump_h < 0:
+                jump_h = 0
+            cur_y = cy - jump_h
+            self.app.graphics.draw_partner_side(cur_x, cur_y, pid, pstage, step_frame=0, is_eating=False, scale=3)
+            # ハートとEXPポップアップ
+            self.app.text.draw_text_mini(cur_x - 8, cur_y - 36, "♥", 8)
+            self.app.text.draw_text_mini(cur_x + 12, cur_y - 34, "♪", 10)
+            self.app.text.draw_text(cur_x - 15, cur_y - 48, f"+{anim['exp_gain']} EXP", 10)
+
+        # 「タップでスキップ」の控えめな案内（セリフ吹き出し右下）
+        self.app.text.draw_text_mini(240, 106, "▶ スキップ", 5)
+
