@@ -234,7 +234,11 @@ class SceneHome:
             self.app.audio.play_se("tap")
 
     def _start_feeding(self, food_type: str, exp_gain: int, full_gain: int, food_name: str):
-        """お食事トコトコ演出を開始。"""
+        """お食事トコトコ演出を開始（エサ種別ごとの速度・演出設定）。"""
+        walk_duration = 45 if food_type == "apple" else (36 if food_type == "meat" else 30)
+        eat_duration = 26
+        jump_duration = 24 if food_type != "golden_apple" else 32
+
         self.feeding_anim = {
             "food_type": food_type,
             "exp_gain": exp_gain,
@@ -245,27 +249,82 @@ class SceneHome:
             "target_x": 195,
             "plate_x": 240,
             "cy": 160,
+            "walk_start": 15,
+            "walk_end": 15 + walk_duration,
+            "eat_end": 15 + walk_duration + eat_duration,
+            "total_frames": 15 + walk_duration + eat_duration + jump_duration,
+            "step_count": 0,
         }
-        self.speech_bubble = f"{food_name}をみつけたよ！"
-        self.app.audio.play_se("tap")
+
+        if food_type == "golden_apple":
+            self.speech_bubble = "こ、これは伝説の金のリンゴ…！？"
+            self.app.audio.play_se("sparkle")
+        elif food_type == "meat":
+            self.speech_bubble = "わあ！おいしそうなお肉だ！！"
+            self.app.audio.play_se("tap")
+        else:
+            self.speech_bubble = f"{food_name}をみつけたよ！"
+            self.app.audio.play_se("tap")
 
     def _update_feeding(self):
-        """お食事演出のフレーム更新。"""
+        """お食事演出のフレーム更新（足音発音とエサ別セリフ更新）。"""
         anim = self.feeding_anim
         if not anim:
             return
         anim["timer"] += 1
         t = anim["timer"]
+        food_type = anim["food_type"]
+        w_start = anim["walk_start"]
+        w_end = anim["walk_end"]
+        e_end = anim["eat_end"]
 
-        if t == 15:
-            self.speech_bubble = "トコトコトコ…"
-        elif t in (60, 68, 76):
-            self.speech_bubble = "もぐもぐ… おいしい！"
-            self.app.audio.play_se("eat")
-        elif t == 85:
-            self.speech_bubble = f"ごちそうさまでした！\nEXPが{anim['exp_gain']}アップしたよ！"
-            self.app.audio.play_se("levelup")
-        elif t >= 105:
+        # 1. 歩行フェーズ
+        if t == w_start:
+            if food_type == "golden_apple":
+                self.speech_bubble = "すごい輝きだーっ！"
+            elif food_type == "meat":
+                self.speech_bubble = "タッタッタッ！（小走り）"
+            else:
+                self.speech_bubble = "トコトコトコ…"
+
+        if w_start <= t < w_end:
+            step_interval = 8 if food_type == "apple" else (6 if food_type == "meat" else 5)
+            walk_progress_f = t - w_start
+            if walk_progress_f % step_interval == 0:
+                anim["step_count"] += 1
+                se_name = "step" if anim["step_count"] % 2 == 1 else "step_alt"
+                self.app.audio.play_se(se_name)
+
+        # 2. もぐもぐフェーズ
+        if t == w_end:
+            if food_type == "golden_apple":
+                self.speech_bubble = "口の中でとろける〜！\n力がみなぎってきた！！"
+                self.app.audio.play_se("sparkle")
+            elif food_type == "meat":
+                self.speech_bubble = "ガツガツ！ジューシーで最高！"
+            else:
+                self.speech_bubble = "シャキシャキ… おいしい！"
+
+        if w_end <= t < e_end:
+            eat_f = t - w_end
+            eat_rate = 6 if food_type == "meat" else 8
+            if eat_f in (2, 2 + eat_rate, 2 + eat_rate * 2):
+                self.app.audio.play_se("eat")
+
+        # 3. 完食・喜びジャンプフェーズ
+        if t == e_end:
+            if food_type == "golden_apple":
+                self.speech_bubble = f"スーパーパワー全開！！！\nEXPが{anim['exp_gain']}アップしたよ！"
+                self.app.audio.play_se("evolve")
+            elif food_type == "meat":
+                self.speech_bubble = f"おなかいっぱい大満足！！\nEXPが{anim['exp_gain']}アップしたよ！"
+                self.app.audio.play_se("levelup")
+            else:
+                self.speech_bubble = f"ごちそうさまでした！\nEXPが{anim['exp_gain']}アップしたよ！"
+                self.app.audio.play_se("levelup")
+
+        # 終了判定
+        if t >= anim["total_frames"]:
             self._finish_feeding()
 
     def _finish_feeding(self):
@@ -864,7 +923,7 @@ class SceneHome:
         self.app.text.draw_text(60 + (200 - wc) // 2, 555, btn_close_text, 7)
 
     def _draw_feeding_scene(self, partner: dict):
-        """お食事演出（横向き相棒のトコトコ歩行・お皿のエサ完食・喜びジャンプ）を描画。"""
+        """お食事演出（横向き相棒のトコトコ歩行・お皿のエサ完食・エサ別リアクション）を描画。"""
         anim = self.feeding_anim
         if not anim:
             return
@@ -873,63 +932,124 @@ class SceneHome:
         pstage = partner.get("stage", 1)
         food_type = anim["food_type"]
 
-        # 1. お皿とエサの描画 (x=plate_x, y=cy)
-        # bite_stage: 0=丸ごと(t < 60), 1=半分(60 <= t < 75), 2=完食(t >= 75)
+        w_start = anim["walk_start"]
+        w_end = anim["walk_end"]
+        e_end = anim["eat_end"]
+
+        # 1. お皿とエサの描画
+        # bite_stage: 0=丸ごと, 1=半分, 2=完食
+        half_point = w_end + (e_end - w_end) // 2
         bite_stage = 0
-        if t >= 75:
-            bite_stage = 2
-        elif t >= 60:
+        if t >= half_point:
+            bite_stage = 2 if t >= e_end - 4 else 1
+        elif t >= w_end:
             bite_stage = 1
         self.app.graphics.draw_food_on_plate(anim["plate_x"], anim["cy"], food_type, bite_stage)
 
-        # 2. 相棒の位置と状態の計算
         start_x = anim["start_x"]
         target_x = anim["target_x"]
         cy = anim["cy"]
 
-        if t < 15:
+        if t < w_start:
             # 気づきフェーズ
             cur_x = start_x
             cur_y = cy
             self.app.graphics.draw_partner_side(cur_x, cur_y, pid, pstage, step_frame=0, is_eating=False, scale=3)
-            # 頭上に「！」マーク (黄色10)
-            self.app.text.draw_text(cur_x - 3, cur_y - 42, "!", 10)
-        elif t < 60:
-            # トコトコ歩行フェーズ (15..60 で 45フレームかけて start_x -> target_x)
-            progress = (t - 15) / 45.0
+            # アイコンマーク
+            mark = "★" if food_type == "golden_apple" else "!"
+            mark_col = 10 if food_type == "golden_apple" else 8
+            self.app.text.draw_text(cur_x - 3, cur_y - 42, mark, mark_col)
+        elif t < w_end:
+            # 歩行フェーズ
+            progress = (t - w_start) / float(w_end - w_start)
             cur_x = int(start_x + (target_x - start_x) * progress)
             cur_y = cy
-            step_frame = t - 15
+            step_frame = t - w_start
             self.app.graphics.draw_partner_side(cur_x, cur_y, pid, pstage, step_frame=step_frame, is_eating=False, scale=3)
-            # 足元に小さなトコトコ煙（砂煙エフェクト）
-            if (t // 5) % 2 == 0:
-                pyxel.pset(cur_x - 16, cur_y + 14, 7)
-                pyxel.pset(cur_x - 14, cur_y + 13, 6)
-        elif t < 85:
-            # もぐもぐフェーズ
+
+            # エフェクト
+            if food_type == "golden_apple":
+                # 星パーティクルが背後に尾を引く
+                pyxel.pset(cur_x - 18, cur_y - 8 + (t % 7), 10)
+                pyxel.pset(cur_x - 24, cur_y + 4 - (t % 5), 9)
+                self.app.text.draw_text_mini(cur_x - 22, cur_y - 20, "★", 10)
+            elif food_type == "meat":
+                # 砂煙2倍（小走りダッシュ）
+                if (t // 3) % 2 == 0:
+                    pyxel.pset(cur_x - 16, cur_y + 14, 7)
+                    pyxel.pset(cur_x - 14, cur_y + 13, 6)
+                    pyxel.pset(cur_x - 20, cur_y + 15, 6)
+            else:
+                # 通常砂煙
+                if (t // 5) % 2 == 0:
+                    pyxel.pset(cur_x - 16, cur_y + 14, 7)
+                    pyxel.pset(cur_x - 14, cur_y + 13, 6)
+        elif t < e_end:
+            # 食事フェーズ
             cur_x = target_x
             cur_y = cy
-            # 8フレーム周期で口パク/お辞儀
-            eat_subframe = t - 60
-            is_eating = (eat_subframe // 4) % 2 == 1
-            self.app.graphics.draw_partner_side(cur_x, cur_y, pid, pstage, step_frame=0, is_eating=is_eating, scale=3)
-            # もぐもぐ音符
-            if is_eating:
-                self.app.text.draw_text_mini(cur_x + 10, cur_y - 28, "♪", 10)
+            eat_subframe = t - w_end
+
+            if food_type == "meat":
+                # お肉: 豪快に前のめりでがっつく
+                is_eating = (eat_subframe // 3) % 2 == 1
+                shake_x = 2 if is_eating else 0
+                self.app.graphics.draw_partner_side(cur_x + shake_x, cur_y, pid, pstage, step_frame=0, is_eating=is_eating, scale=3)
+                if is_eating:
+                    self.app.text.draw_text_mini(cur_x + 12, cur_y - 28, "♪", 9)
+                    self.app.text.draw_text_mini(cur_x - 12, cur_y - 32, "っ", 7)
+            elif food_type == "golden_apple":
+                # 金のリンゴ: 黄金オーラを纏って味わう
+                is_eating = (eat_subframe // 4) % 2 == 1
+                self.app.graphics.draw_partner_side(cur_x, cur_y, pid, pstage, step_frame=0, is_eating=is_eating, scale=3)
+                pyxel.circb(cur_x, cur_y - 4, 28 + (t % 4), 10 if (t // 2) % 2 == 0 else 9)
+                if is_eating:
+                    self.app.text.draw_text_mini(cur_x + 14, cur_y - 30, "★", 10)
+            else:
+                # リンゴ: ちょこんと口パク
+                is_eating = (eat_subframe // 4) % 2 == 1
+                self.app.graphics.draw_partner_side(cur_x, cur_y, pid, pstage, step_frame=0, is_eating=is_eating, scale=3)
+                if is_eating:
+                    self.app.text.draw_text_mini(cur_x + 10, cur_y - 28, "♪", 10)
         else:
-            # 85〜105: 満足・喜びジャンプフェーズ
+            # 満足・喜びジャンプフェーズ
             cur_x = target_x
-            jump_sub = t - 85
-            # ぴょんぴょん跳ねる
-            jump_h = int(math.sin(jump_sub * 0.35) * 6)
-            if jump_h < 0:
-                jump_h = 0
-            cur_y = cy - jump_h
-            self.app.graphics.draw_partner_side(cur_x, cur_y, pid, pstage, step_frame=0, is_eating=False, scale=3)
-            # ハートとEXPポップアップ
-            self.app.text.draw_text_mini(cur_x - 8, cur_y - 36, "♥", 8)
-            self.app.text.draw_text_mini(cur_x + 12, cur_y - 34, "♪", 10)
-            self.app.text.draw_text(cur_x - 15, cur_y - 48, f"+{anim['exp_gain']} EXP", 10)
+            jump_sub = t - e_end
+
+            if food_type == "golden_apple":
+                # 特大ウルトラハイジャンプ（高さ14px）
+                jump_h = int(math.sin(jump_sub * 0.3) * 14)
+                jump_h = max(0, jump_h)
+                cur_y = cy - jump_h
+                self.app.graphics.draw_partner_side(cur_x, cur_y, pid, pstage, step_frame=0, is_eating=False, scale=3)
+                # 豪華エフェクト（星★＋ダブルハート＋ゴールドオーラ）
+                self.app.text.draw_text_mini(cur_x - 16, cur_y - 38, "★", 10)
+                self.app.text.draw_text_mini(cur_x + 18, cur_y - 38, "★", 9)
+                self.app.text.draw_text_mini(cur_x - 8, cur_y - 42, "♥", 8)
+                self.app.text.draw_text_mini(cur_x + 8, cur_y - 42, "♥", 8)
+                self.app.text.draw_text(cur_x - 22, cur_y - 56, f"+{anim['exp_gain']} EXP", 10)
+            elif food_type == "meat":
+                # 元気な2段ハイジャンプ（高さ10px）
+                jump_h = int(math.sin(jump_sub * 0.4) * 10)
+                jump_h = max(0, jump_h)
+                cur_y = cy - jump_h
+                self.app.graphics.draw_partner_side(cur_x, cur_y, pid, pstage, step_frame=0, is_eating=False, scale=3)
+                # ダブルハート＋ダブル音符
+                self.app.text.draw_text_mini(cur_x - 12, cur_y - 36, "♥", 8)
+                self.app.text.draw_text_mini(cur_x - 4, cur_y - 40, "♥", 8)
+                self.app.text.draw_text_mini(cur_x + 12, cur_y - 34, "♪", 9)
+                self.app.text.draw_text_mini(cur_x + 20, cur_y - 38, "♪", 10)
+                self.app.text.draw_text(cur_x - 18, cur_y - 52, f"+{anim['exp_gain']} EXP", 9)
+            else:
+                # 通常小ジャンプ（高さ6px）
+                jump_h = int(math.sin(jump_sub * 0.35) * 6)
+                jump_h = max(0, jump_h)
+                cur_y = cy - jump_h
+                self.app.graphics.draw_partner_side(cur_x, cur_y, pid, pstage, step_frame=0, is_eating=False, scale=3)
+                # ハート＋音符
+                self.app.text.draw_text_mini(cur_x - 8, cur_y - 36, "♥", 8)
+                self.app.text.draw_text_mini(cur_x + 12, cur_y - 34, "♪", 10)
+                self.app.text.draw_text(cur_x - 15, cur_y - 48, f"+{anim['exp_gain']} EXP", 10)
 
         # 「タップでスキップ」の控えめな案内（セリフ吹き出し右下）
         self.app.text.draw_text_mini(240, 106, "▶ スキップ", 5)

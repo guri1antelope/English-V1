@@ -112,10 +112,40 @@ class AudioEngine:
             speed=5,
         )
 
+        # サウンド 8: 足音（ピョコッ・右足）
+        if len(pyxel.sounds) > 8:
+            pyxel.sounds[8].set(
+                notes="e3",
+                tones="p",
+                volumes="2",
+                effects="n",
+                speed=2,
+            )
+
+        # サウンド 9: 足音（ピョコッ・左足）
+        if len(pyxel.sounds) > 9:
+            pyxel.sounds[9].set(
+                notes="c3",
+                tones="p",
+                volumes="2",
+                effects="n",
+                speed=2,
+            )
+
+        # サウンド 10: キラキラ（星・金のリンゴ）
+        if len(pyxel.sounds) > 10:
+            pyxel.sounds[10].set(
+                notes="a3 c4 e4 a4",
+                tones="s s s s",
+                volumes="3 4 5 6",
+                effects="n n n f",
+                speed=3,
+            )
+
     def play_se(self, se_type: str):
         """効果音を再生。
 
-        se_type: 'tap', 'correct', 'wrong', 'levelup', 'cancel', 'eat', 'egg_crack', 'evolve'
+        se_type: 'tap', 'correct', 'wrong', 'levelup', 'cancel', 'eat', 'egg_crack', 'evolve', 'step', 'step_alt', 'sparkle'
         """
         if not self.sound_enabled:
             return
@@ -129,6 +159,9 @@ class AudioEngine:
             "eat": 5,
             "egg_crack": 6,
             "evolve": 7,
+            "step": 8,
+            "step_alt": 9,
+            "sparkle": 10,
         }
         snd_id = sound_map.get(se_type)
         if snd_id is not None:
@@ -208,6 +241,15 @@ class AudioEngine:
                 "  playTone(783.99, 'square', now + 0.52, 0.18, 0.22);"
                 "  playTone(1046.50, 'square', now + 0.72, 0.45, 0.25);"
                 "  playTone(1318.51, 'square', now + 0.72, 0.45, 0.15);"
+                "} else if (se === 'step') {"
+                "  playTone(520, 'triangle', now, 0.025, 0.08);"
+                "} else if (se === 'step_alt') {"
+                "  playTone(460, 'triangle', now, 0.025, 0.08);"
+                "} else if (se === 'sparkle') {"
+                "  playTone(880, 'sine', now, 0.04, 0.12);"
+                "  playTone(1174.66, 'sine', now + 0.04, 0.05, 0.14);"
+                "  playTone(1567.98, 'sine', now + 0.09, 0.06, 0.16);"
+                "  playTone(2093.00, 'sine', now + 0.15, 0.14, 0.18);"
                 "}"
                 "})();"
             )
