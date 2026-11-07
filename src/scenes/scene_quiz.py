@@ -37,6 +37,7 @@ class SceneQuiz:
         self.q_start_time = 0
         self.last_is_correct = False
         self.last_speed_bonus = 0
+        self.show_detail_explanation = False
 
         self.quiz_mode = "eiken"  # "eiken", "duo_section", "daily_duo"
 
@@ -102,6 +103,7 @@ class SceneQuiz:
         self.state = "answering"
         self.show_cheatsheet = False
         self.show_translation = False  # 新しい問題では和訳を隠す
+        self.show_detail_explanation = False
         self.used_assistance = False  # 音声・和訳・要点ヒントの利用フラグ
         self.companion_mood = "normal"
         self.companion_say = "英語をじっくり読もう！"
@@ -327,6 +329,7 @@ class SceneQuiz:
     def _record_result(self, is_correct: bool, speed_bonus: int):
         self.last_is_correct = is_correct
         self.last_speed_bonus = speed_bonus
+        self.show_detail_explanation = False
         self.state = "feedback"
 
         slot_data = self.app.get_current_slot_data()
@@ -367,8 +370,48 @@ class SceneQuiz:
         if slot_data:
             self.app.storage.save_slot(self.app.current_slot, slot_data)
 
+    def _parse_explanation(self):
+        exp_text = self.current_q.get("explanation", "")
+        exp_lines = exp_text.split("\n")
+        target_def = ""
+        remaining_exp = []
+
+        if exp_lines and any(exp_lines[0].startswith(p) for p in ["【重要熟語】", "【重要単語】", "【重要構文】"]):
+            target_def = exp_lines[0]
+            rem = exp_lines[1:]
+            while rem and not rem[0].strip():
+                rem.pop(0)
+            remaining_exp = rem
+        else:
+            q_type = self.current_q.get("type", "choice")
+            if q_type == "choice":
+                corr_ans = self.correct_answer_text or (
+                    self.current_q.get("options", [])[self.current_q.get("answer", 0)]
+                    if self.current_q.get("options")
+                    else ""
+                )
+                target_def = f"【正解】{corr_ans}"
+            else:
+                target_def = ""
+            remaining_exp = exp_lines
+        return target_def, remaining_exp
+
+    def _proceed_next_question(self):
+        self.app.audio.play_se("tap")
+        self.show_detail_explanation = False
+        if self.current_q_idx + 1 < len(self.questions):
+            self._load_question(self.current_q_idx + 1)
+        else:
+            self.app.finish_quiz(
+                self.lesson,
+                self.correct_count,
+                len(self.questions),
+                self.total_exp_gained,
+                quiz_mode=self.quiz_mode,
+            )
+
     def _handle_feedback_click(self, mx: int, my: int):
-        # 1. 音声ボタン (x: 214, y: 6, 幅46, 高30) - 解説中も再聴可能
+        # 1. 音声ボタン (x: 212〜262, y: 4〜38) - 解説中も再聴可能
         if 212 <= mx <= 262 and 4 <= my <= 38:
             self.app.audio.play_se("tap")
             qid = self.current_q.get("id")
@@ -377,20 +420,39 @@ class SceneQuiz:
             self.app.audio.play_voice(audio_file, text=reading_text, qid=qid)
             return
 
-        # 2. 「つぎへすすむ」ボタン (x: 20, y: 535〜585)
-        if 20 <= mx <= 300 and 530 <= my <= 590:
-            self.app.audio.play_se("tap")
-            if self.current_q_idx + 1 < len(self.questions):
-                self._load_question(self.current_q_idx + 1)
+        target_def, remaining_exp = self._parse_explanation()
+        has_detail = bool(remaining_exp)
+
+        # 2. 下部ボタン判定 (y: 530〜590)
+        if 530 <= my <= 590:
+            if self.show_detail_explanation:
+                # 詳細画面
+                # 左: ◀ 英文に戻る (x: 20〜155)
+                if 20 <= mx <= 155:
+                    self.app.audio.play_se("tap")
+                    self.show_detail_explanation = False
+                    return
+                # 右: ▶ 次へ進む！ (x: 165〜300)
+                elif 165 <= mx <= 300:
+                    self._proceed_next_question()
+                    return
             else:
-                # 全問終了 -> リザルト画面へ
-                self.app.finish_quiz(
-                    self.lesson,
-                    self.correct_count,
-                    len(self.questions),
-                    self.total_exp_gained,
-                    quiz_mode=self.quiz_mode,
-                )
+                # メイン画面
+                if has_detail:
+                    # 左: 📖 解説・関連語 (x: 20〜155)
+                    if 20 <= mx <= 155:
+                        self.app.audio.play_se("tap")
+                        self.show_detail_explanation = True
+                        return
+                    # 右: ▶ 次へ進む！ (x: 165〜300)
+                    elif 165 <= mx <= 300:
+                        self._proceed_next_question()
+                        return
+                else:
+                    # 単一ボタン: ▶ 次へ進む！ (x: 20〜300)
+                    if 20 <= mx <= 300:
+                        self._proceed_next_question()
+                        return
 
     def draw(self):
         pyxel.cls(1)  # 統一基調: 濃紺背景
@@ -702,93 +764,75 @@ class SceneQuiz:
         )
 
     def _draw_feedback_modal(self):
-        """即時フィードバック画面（空所の正解語・意味を最上部に表示し、解説も確実に収める最適化レイアウト）。"""
+        """即時フィードバック画面（案B: 2段階表示 - 16ptの大きく読みやすいフォントで全項目を確実に表示）。"""
+        target_def, remaining_exp = self._parse_explanation()
+
+        if self.show_detail_explanation:
+            self._draw_detail_explanation_modal(target_def, remaining_exp)
+        else:
+            self._draw_main_feedback_modal(target_def, bool(remaining_exp))
+
+    def _draw_main_feedback_modal(self, target_def: str, has_detail: bool):
         pyxel.rect(10, 55, 300, 540, 0)
         border_col = 11 if self.last_is_correct else 8
         pyxel.rectb(10, 55, 300, 540, border_col)
 
-        # 1. 結果バナー (y: 65〜91)
+        # 1. 結果バナー (16pt)
         if self.last_is_correct:
-            pyxel.rect(20, 65, 280, 26, 11)
+            pyxel.rect(20, 65, 280, 32, 11)
             earned_exp = getattr(self, "last_earned_exp", 100)
             res_str = f"◎ 正解！ (+{earned_exp} EXP)"
             rw = self.app.text.measure_text_width(res_str)
-            self.app.text.draw_text(20 + (280 - rw) // 2, 70, res_str, 0)
-            cur_y = 97
+            self.app.text.draw_text(20 + (280 - rw) // 2, 73, res_str, 0)
+            cur_y = 106
         else:
-            pyxel.rect(20, 65, 280, 26, 8)
+            pyxel.rect(20, 65, 280, 32, 8)
             res_str = "× 不正解 (獲得: 0 EXP)"
             rw = self.app.text.measure_text_width(res_str)
-            self.app.text.draw_text(20 + (280 - rw) // 2, 70, res_str, 7)
+            self.app.text.draw_text(20 + (280 - rw) // 2, 73, res_str, 7)
 
-            # 解答比較コンパクトバー (不正解時)
+            # 解答比較バー (16pt)
             q_type = self.current_q.get("type", "choice")
+            user_ans = self.user_answer_text or "-"
+            corr_ans = self.correct_answer_text or "-"
             if q_type == "choice":
-                user_ans = self.user_answer_text or "-"
-                corr_ans = self.correct_answer_text or "-"
-                pyxel.rect(20, 95, 280, 20, 0)
-                pyxel.rectb(20, 95, 280, 20, 5)
-                self.app.text.draw_text_mini(26, 99, f"解答: {user_ans}", 8)
-                arrow_x = 26 + self.app.text.measure_text_width(f"解答: {user_ans}", "mini") + 8
-                self.app.text.draw_text_mini(arrow_x, 99, "▶", 7)
-                self.app.text.draw_text_mini(arrow_x + 14, 99, f"正解: {corr_ans}", 11)
-                cur_y = 120
+                pyxel.rect(20, 104, 280, 26, 0)
+                pyxel.rectb(20, 104, 280, 26, 5)
+                self.app.text.draw_text(26, 109, f"解答: {user_ans}", 8)
+                arrow_x = 26 + self.app.text.measure_text_width(f"解答: {user_ans}") + 6
+                self.app.text.draw_text(arrow_x, 109, "▶", 7)
+                self.app.text.draw_text(arrow_x + 16, 109, f"正解: {corr_ans}", 11)
+                cur_y = 138
             elif q_type == "reorder":
-                user_ans = self.user_answer_text or "-"
-                corr_ans = self.correct_answer_text or "-"
-                u_lines = self.app.text.wrap_text(f"あなたの並び: {user_ans}", max_width=268, font_type="mini")
-                c_lines = self.app.text.wrap_text(f"正しい並び: {corr_ans}", max_width=268, font_type="mini")
-                card_h = 8 + (len(u_lines) + len(c_lines)) * 14
-                pyxel.rect(20, 95, 280, card_h, 0)
-                pyxel.rectb(20, 95, 280, card_h, 5)
-                cy_sub = 99
+                u_lines = self.app.text.wrap_text(f"並び: {user_ans}", max_width=268)
+                c_lines = self.app.text.wrap_text(f"正解: {corr_ans}", max_width=268)
+                card_h = 10 + (len(u_lines) + len(c_lines)) * 19
+                pyxel.rect(20, 104, 280, card_h, 0)
+                pyxel.rectb(20, 104, 280, card_h, 5)
+                cy_sub = 109
                 for ul in u_lines:
-                    self.app.text.draw_text_mini(26, cy_sub, ul, 8)
-                    cy_sub += 14
+                    self.app.text.draw_text(26, cy_sub, ul, 8)
+                    cy_sub += 19
                 for cl in c_lines:
-                    self.app.text.draw_text_mini(26, cy_sub, cl, 11)
-                    cy_sub += 14
-                cur_y = 95 + card_h + 5
+                    self.app.text.draw_text(26, cy_sub, cl, 11)
+                    cy_sub += 19
+                cur_y = 104 + card_h + 8
             else:
-                cur_y = 97
+                cur_y = 106
 
-        # 2. 空所に入る正解語句・意味カード（最優先で上部に提示）
-        exp_text = self.current_q.get("explanation", "")
-        exp_lines = exp_text.split("\n")
-        target_def = ""
-        remaining_exp = []
-
-        if exp_lines and any(exp_lines[0].startswith(p) for p in ["【重要熟語】", "【重要単語】", "【重要構文】"]):
-            target_def = exp_lines[0]
-            rem = exp_lines[1:]
-            while rem and not rem[0].strip():
-                rem.pop(0)
-            remaining_exp = rem
-        else:
-            q_type = self.current_q.get("type", "choice")
-            if q_type == "choice":
-                corr_ans = self.correct_answer_text or (
-                    self.current_q.get("options", [])[self.current_q.get("answer", 0)]
-                    if self.current_q.get("options")
-                    else ""
-                )
-                target_def = f"【正解】{corr_ans}"
-            else:
-                target_def = ""
-            remaining_exp = exp_lines
-
+        # 2. 空所に入る正解語句・意味カード (16pt, 金枠)
         if target_def:
-            t_lines = self.app.text.wrap_text(target_def, max_width=268, font_type="mini")
-            t_card_h = 8 + len(t_lines) * 14
+            t_lines = self.app.text.wrap_text(target_def, max_width=268)
+            t_card_h = 10 + len(t_lines) * 19
             pyxel.rect(20, cur_y, 280, t_card_h, 0)
             pyxel.rectb(20, cur_y, 280, t_card_h, 10)  # 金枠
             for idx, tl in enumerate(t_lines):
-                self.app.text.draw_text_mini(26, cur_y + 4 + idx * 14, tl, 10)
-            cur_y += t_card_h + 8
+                self.app.text.draw_text(26, cur_y + 5 + idx * 19, tl, 10)
+            cur_y += t_card_h + 12
 
-        # 3. 正しい英文表示
-        self.app.text.draw_text_mini(22, cur_y, "【正しい英文】", 7)
-        cur_y += 14
+        # 3. 正しい英文表示 (16pt, Noto Sans)
+        self.app.text.draw_text(22, cur_y, "【正しい英文】", 7)
+        cur_y += 20
 
         q_type = self.current_q.get("type", "choice")
         full_sentence = self.current_q.get("sentence", "")
@@ -815,40 +859,85 @@ class SceneQuiz:
             line_spacing=3,
         )
 
-        # 4. 日本語訳（12pt miniフォントでコンパクト表示）
+        # 4. 日本語訳 (16pt)
         feedback_trans = self._format_dialogue(self.current_q.get("translation", ""))
-        next_y2 = self.app.text.draw_text(
+        self.app.text.draw_text(
             22,
-            next_y + 6,
+            next_y + 12,
             f"訳: {feedback_trans}",
-            6,
-            font_type="mini",
+            7,
             max_width=276,
-            line_spacing=2,
+            line_spacing=3,
         )
 
-        # 5. ポイント解説（残りの解説・関連語）
+        # 5. 下部ボタン (y: 535〜583)
+        if has_detail:
+            # 左: 📖 解説・関連語 (x: 20〜155)
+            pyxel.rect(20, 535, 135, 48, 0)
+            pyxel.rectb(20, 535, 135, 48, 10)
+            b1_str = "📖 解説・関連語"
+            b1_w = self.app.text.measure_text_width(b1_str)
+            self.app.text.draw_text(20 + (135 - b1_w) // 2, 535 + (48 - 16) // 2, b1_str, 10)
+
+            # 右: ▶ 次へ進む！ (x: 165〜300)
+            pyxel.rect(165, 535, 135, 48, 0)
+            pyxel.rectb(165, 535, 135, 48, 7)
+            b2_str = "▶ 次へ進む！"
+            b2_w = self.app.text.measure_text_width(b2_str)
+            self.app.text.draw_text(165 + (135 - b2_w) // 2, 535 + (48 - 16) // 2, b2_str, 7)
+        else:
+            pyxel.rect(20, 535, 280, 48, 0)
+            pyxel.rectb(20, 535, 280, 48, 7)
+            nxt_str = "▶ 次へ進む！"
+            ntw = self.app.text.measure_text_width(nxt_str)
+            self.app.text.draw_text(20 + (280 - ntw) // 2, 535 + (48 - 16) // 2, nxt_str, 7)
+
+    def _draw_detail_explanation_modal(self, target_def: str, remaining_exp: list):
+        pyxel.rect(10, 55, 300, 540, 0)
+        pyxel.rectb(10, 55, 300, 540, 10)  # 金枠
+
+        # 1. ヘッダー (y: 65〜95)
+        title = "【ポイント解説＆関連語】"
+        tw = self.app.text.measure_text_width(title)
+        self.app.text.draw_text(20 + (280 - tw) // 2, 72, title, 10)
+        pyxel.line(25, 96, 295, 96, 5)
+
+        cur_y = 108
+
+        # 正解語句の再掲
+        if target_def:
+            t_lines = self.app.text.wrap_text(target_def, max_width=268)
+            for tl in t_lines:
+                self.app.text.draw_text(24, cur_y, tl, 10)
+                cur_y += 19
+            cur_y += 8
+
+        # 詳細解説本文 (16pt)
         if remaining_exp:
             rem_text = "\n".join(remaining_exp)
-            self.app.text.draw_text_mini(22, next_y2 + 8, "【ポイント解説】", 7)
             self.app.text.draw_text(
-                22,
-                next_y2 + 22,
+                24,
+                cur_y,
                 rem_text,
                 7,
-                font_type="mini",
-                max_width=276,
-                line_spacing=2,
+                max_width=272,
+                line_spacing=3,
             )
 
-        # 6. 「次へ進む」ボタン (y: 535〜583) - 黒背景＋白枠＋白文字
-        pyxel.rect(20, 535, 280, 48, 0)
-        pyxel.rectb(20, 535, 280, 48, 7)
-        nxt_str = "▶ 次へ進む！"
-        ntw = self.app.text.measure_text_width(nxt_str)
-        self.app.text.draw_text(
-            20 + (280 - ntw) // 2, 535 + (48 - 16) // 2, nxt_str, 7
-        )
+        # 下部ボタン (y: 535〜583)
+        # 左: ◀ 英文に戻る (x: 20〜155)
+        pyxel.rect(20, 535, 135, 48, 0)
+        pyxel.rectb(20, 535, 135, 48, 7)
+        b1_str = "◀ 英文に戻る"
+        b1_w = self.app.text.measure_text_width(b1_str)
+        self.app.text.draw_text(20 + (135 - b1_w) // 2, 535 + (48 - 16) // 2, b1_str, 7)
+
+        # 右: ▶ 次へ進む！ (x: 165〜300)
+        pyxel.rect(165, 535, 135, 48, 0)
+        pyxel.rectb(165, 535, 135, 48, 11)  # 緑枠
+        b2_str = "▶ 次へ進む！"
+        b2_w = self.app.text.measure_text_width(b2_str)
+        self.app.text.draw_text(165 + (135 - b2_w) // 2, 535 + (48 - 16) // 2, b2_str, 11)
 
     def _draw_cheatsheet_modal(self):
         """要点あんちょこ画面（参考画像準拠: 半透明メッシュ背景＋立体白背景ポップアップ＋緑タイトル＋右上に[✕]ボタン）。"""
