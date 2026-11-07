@@ -784,26 +784,41 @@ class SceneQuiz:
             res_str = f"◎ 正解！ (+{earned_exp} EXP)"
             rw = self.app.text.measure_text_width(res_str)
             self.app.text.draw_text(20 + (280 - rw) // 2, 73, res_str, 0)
-            cur_y = 106
         else:
             pyxel.rect(20, 65, 280, 32, 8)
             res_str = "× 不正解 (獲得: 0 EXP)"
             rw = self.app.text.measure_text_width(res_str)
             self.app.text.draw_text(20 + (280 - rw) // 2, 73, res_str, 7)
 
-            # 解答比較バー (16pt)
-            q_type = self.current_q.get("type", "choice")
-            user_ans = self.user_answer_text or "-"
-            corr_ans = self.correct_answer_text or "-"
-            if q_type == "choice":
-                pyxel.rect(20, 104, 280, 26, 0)
-                pyxel.rectb(20, 104, 280, 26, 5)
+        # 解答比較バー (16pt) - 正解・不正解共通で表示
+        q_type = self.current_q.get("type", "choice")
+        user_ans = self.user_answer_text or "-"
+        corr_ans = self.correct_answer_text or "-"
+
+        if q_type == "choice":
+            pyxel.rect(20, 104, 280, 26, 0)
+            if self.last_is_correct:
+                pyxel.rectb(20, 104, 280, 26, 11)  # 緑枠
+                self.app.text.draw_text(26, 109, f"あなたの解答 (◎): {user_ans}", 11)
+            else:
+                pyxel.rectb(20, 104, 280, 26, 5)   # 灰枠
                 self.app.text.draw_text(26, 109, f"解答: {user_ans}", 8)
                 arrow_x = 26 + self.app.text.measure_text_width(f"解答: {user_ans}") + 6
                 self.app.text.draw_text(arrow_x, 109, "▶", 7)
                 self.app.text.draw_text(arrow_x + 16, 109, f"正解: {corr_ans}", 11)
-                cur_y = 138
-            elif q_type == "reorder":
+            cur_y = 138
+        elif q_type == "reorder":
+            if self.last_is_correct:
+                u_lines = self.app.text.wrap_text(f"あなたの並び (◎): {user_ans}", max_width=268)
+                card_h = 10 + len(u_lines) * 19
+                pyxel.rect(20, 104, 280, card_h, 0)
+                pyxel.rectb(20, 104, 280, card_h, 11)  # 緑枠
+                cy_sub = 109
+                for ul in u_lines:
+                    self.app.text.draw_text(26, cy_sub, ul, 11)
+                    cy_sub += 19
+                cur_y = 104 + card_h + 8
+            else:
                 u_lines = self.app.text.wrap_text(f"並び: {user_ans}", max_width=268)
                 c_lines = self.app.text.wrap_text(f"正解: {corr_ans}", max_width=268)
                 card_h = 10 + (len(u_lines) + len(c_lines)) * 19
@@ -817,8 +832,8 @@ class SceneQuiz:
                     self.app.text.draw_text(26, cy_sub, cl, 11)
                     cy_sub += 19
                 cur_y = 104 + card_h + 8
-            else:
-                cur_y = 106
+        else:
+            cur_y = 106
 
         # 2. 空所に入る正解語句・意味カード (16pt, 金枠)
         if target_def:
