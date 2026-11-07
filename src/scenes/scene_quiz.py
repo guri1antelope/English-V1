@@ -702,164 +702,95 @@ class SceneQuiz:
         )
 
     def _draw_feedback_modal(self):
-        """即時フィードバック画面（ゆとりある余白・均等間隔配置）。"""
+        """即時フィードバック画面（空所の正解語・意味を最上部に表示し、解説も確実に収める最適化レイアウト）。"""
         pyxel.rect(10, 55, 300, 540, 0)
         border_col = 11 if self.last_is_correct else 8
         pyxel.rectb(10, 55, 300, 540, border_col)
 
+        # 1. 結果バナー (y: 65〜91)
         if self.last_is_correct:
-            pyxel.rect(20, 68, 280, 40, 11)
-            # 中央揃え: 20 + (280 - 80) // 2 = 120
-            self.app.text.draw_text(
-                120, 80, "◎ 正解！", 0
-            )
+            pyxel.rect(20, 65, 280, 26, 11)
             earned_exp = getattr(self, "last_earned_exp", 100)
-            self.app.text.draw_text(
-                35, 114, f"獲得: {earned_exp} EXP", 11
-            )
-            exp_details = []
-            if getattr(self, "last_self_bonus", 0) > 0:
-                exp_details.append("+30 自力ボーナス")
-            if self.last_speed_bonus > 0:
-                exp_details.append(f"+{self.last_speed_bonus} 速度ボーナス")
-            if exp_details:
-                self.app.text.draw_text_mini(
-                    35, 131, f"（{' / '.join(exp_details)}）", 10
-                )
+            res_str = f"◎ 正解！ (+{earned_exp} EXP)"
+            rw = self.app.text.measure_text_width(res_str)
+            self.app.text.draw_text(20 + (280 - rw) // 2, 70, res_str, 0)
+            cur_y = 97
         else:
-            pyxel.rect(20, 68, 280, 40, 8)
-            # 中央揃え: 20 + (280 - 64) // 2 = 128
-            self.app.text.draw_text(
-                128, 80, "× 不正解", 7
-            )
-            self.app.text.draw_text(
-                35, 114, "獲得: 0 EXP", 7
-            )
+            pyxel.rect(20, 65, 280, 26, 8)
+            res_str = "× 不正解 (獲得: 0 EXP)"
+            rw = self.app.text.measure_text_width(res_str)
+            self.app.text.draw_text(20 + (280 - rw) // 2, 70, res_str, 7)
 
-        # 獲得EXPとの間隔を確保してカード配置
-        card_y = 148
+            # 解答比較コンパクトバー (不正解時)
+            q_type = self.current_q.get("type", "choice")
+            if q_type == "choice":
+                user_ans = self.user_answer_text or "-"
+                corr_ans = self.correct_answer_text or "-"
+                pyxel.rect(20, 95, 280, 20, 0)
+                pyxel.rectb(20, 95, 280, 20, 5)
+                self.app.text.draw_text_mini(26, 99, f"解答: {user_ans}", 8)
+                arrow_x = 26 + self.app.text.measure_text_width(f"解答: {user_ans}", "mini") + 8
+                self.app.text.draw_text_mini(arrow_x, 99, "▶", 7)
+                self.app.text.draw_text_mini(arrow_x + 14, 99, f"正解: {corr_ans}", 11)
+                cur_y = 120
+            elif q_type == "reorder":
+                user_ans = self.user_answer_text or "-"
+                corr_ans = self.correct_answer_text or "-"
+                u_lines = self.app.text.wrap_text(f"あなたの並び: {user_ans}", max_width=268, font_type="mini")
+                c_lines = self.app.text.wrap_text(f"正しい並び: {corr_ans}", max_width=268, font_type="mini")
+                card_h = 8 + (len(u_lines) + len(c_lines)) * 14
+                pyxel.rect(20, 95, 280, card_h, 0)
+                pyxel.rectb(20, 95, 280, card_h, 5)
+                cy_sub = 99
+                for ul in u_lines:
+                    self.app.text.draw_text_mini(26, cy_sub, ul, 8)
+                    cy_sub += 14
+                for cl in c_lines:
+                    self.app.text.draw_text_mini(26, cy_sub, cl, 11)
+                    cy_sub += 14
+                cur_y = 95 + card_h + 5
+            else:
+                cur_y = 97
+
+        # 2. 空所に入る正解語句・意味カード（最優先で上部に提示）
+        exp_text = self.current_q.get("explanation", "")
+        exp_lines = exp_text.split("\n")
+        target_def = ""
+        remaining_exp = []
+
+        if exp_lines and any(exp_lines[0].startswith(p) for p in ["【重要熟語】", "【重要単語】", "【重要構文】"]):
+            target_def = exp_lines[0]
+            rem = exp_lines[1:]
+            while rem and not rem[0].strip():
+                rem.pop(0)
+            remaining_exp = rem
+        else:
+            q_type = self.current_q.get("type", "choice")
+            if q_type == "choice":
+                corr_ans = self.correct_answer_text or (
+                    self.current_q.get("options", [])[self.current_q.get("answer", 0)]
+                    if self.current_q.get("options")
+                    else ""
+                )
+                target_def = f"【正解】{corr_ans}"
+            else:
+                target_def = ""
+            remaining_exp = exp_lines
+
+        if target_def:
+            t_lines = self.app.text.wrap_text(target_def, max_width=268, font_type="mini")
+            t_card_h = 8 + len(t_lines) * 14
+            pyxel.rect(20, cur_y, 280, t_card_h, 0)
+            pyxel.rectb(20, cur_y, 280, t_card_h, 10)  # 金枠
+            for idx, tl in enumerate(t_lines):
+                self.app.text.draw_text_mini(26, cur_y + 4 + idx * 14, tl, 10)
+            cur_y += t_card_h + 8
+
+        # 3. 正しい英文表示
+        self.app.text.draw_text_mini(22, cur_y, "【正しい英文】", 7)
+        cur_y += 14
+
         q_type = self.current_q.get("type", "choice")
-
-        # 解答対比カードの描画（高さ52px・上下パディング8〜10px確保）
-        if q_type == "choice":
-            if self.last_is_correct:
-                # 正解時: 全幅カード (高さ52px)
-                pyxel.rect(20, card_y, 280, 52, 0)
-                pyxel.rectb(20, card_y, 280, 52, 11)  # 緑枠
-                self.app.text.draw_text_mini(
-                    26, card_y + 8, "あなたの解答 (◎ 正解):", 11
-                )
-                self.app.text.draw_text(
-                    26,
-                    card_y + 26,
-                    self.user_answer_text or "-",
-                    7,
-                    max_width=268,
-                    font_type="english",
-                )
-                cur_y = card_y + 52 + 18
-            else:
-                # 不正解時: 全幅上下2段カード (行数に応じて高さを動的計算し、文字被りを完全防止)
-                # 上段: あなたの解答 (赤枠)
-                user_ans = self.user_answer_text or "-"
-                u_lines = self.app.text.wrap_text(user_ans, max_width=268, font_type="english")
-                u_card_h = 24 + max(1, len(u_lines)) * 17
-                pyxel.rect(20, card_y, 280, u_card_h, 0)
-                pyxel.rectb(20, card_y, 280, u_card_h, 8)
-                self.app.text.draw_text_mini(
-                    26, card_y + 6, "あなたの解答 (×):", 8
-                )
-                self.app.text.draw_text(
-                    26,
-                    card_y + 22,
-                    user_ans,
-                    8,
-                    max_width=268,
-                    font_type="english",
-                )
-
-                # 下段: 正解 (緑枠)
-                next_card_y = card_y + u_card_h + 6
-                corr_ans = self.correct_answer_text or "-"
-                c_lines = self.app.text.wrap_text(corr_ans, max_width=268, font_type="english")
-                c_card_h = 24 + max(1, len(c_lines)) * 17
-                pyxel.rect(20, next_card_y, 280, c_card_h, 0)
-                pyxel.rectb(20, next_card_y, 280, c_card_h, 11)
-                self.app.text.draw_text_mini(
-                    26, next_card_y + 6, "正解 (◎):", 11
-                )
-                self.app.text.draw_text(
-                    26,
-                    next_card_y + 22,
-                    corr_ans,
-                    11,
-                    max_width=268,
-                    font_type="english",
-                )
-                cur_y = next_card_y + c_card_h + 16
-        elif q_type == "reorder":
-            if self.last_is_correct:
-                # 正解時: 全幅カード
-                pyxel.rect(20, card_y, 280, 52, 0)
-                pyxel.rectb(20, card_y, 280, 52, 11)
-                self.app.text.draw_text_mini(
-                    26, card_y + 8, "あなたの並び替え (◎ 正解):", 11
-                )
-                self.app.text.draw_text(
-                    26,
-                    card_y + 26,
-                    self.user_answer_text or "-",
-                    7,
-                    max_width=268,
-                    font_type="english",
-                )
-                cur_y = card_y + 52 + 18
-            else:
-                # 不正解時: 全幅上下2段カード (動的高さ計算)
-                user_ans = self.user_answer_text or "-"
-                u_lines = self.app.text.wrap_text(user_ans, max_width=268, font_type="english")
-                u_card_h = 24 + max(1, len(u_lines)) * 17
-                pyxel.rect(20, card_y, 280, u_card_h, 0)
-                pyxel.rectb(20, card_y, 280, u_card_h, 8)
-                self.app.text.draw_text_mini(
-                    26, card_y + 6, "あなたの並び替え (×):", 8
-                )
-                self.app.text.draw_text(
-                    26,
-                    card_y + 22,
-                    user_ans,
-                    8,
-                    max_width=268,
-                    font_type="english",
-                )
-
-                # 下段: 正しい並び順
-                next_card_y = card_y + u_card_h + 6
-                corr_ans = self.correct_answer_text or "-"
-                c_lines = self.app.text.wrap_text(corr_ans, max_width=268, font_type="english")
-                c_card_h = 24 + max(1, len(c_lines)) * 17
-                pyxel.rect(20, next_card_y, 280, c_card_h, 0)
-                pyxel.rectb(20, next_card_y, 280, c_card_h, 11)
-                self.app.text.draw_text_mini(
-                    26, next_card_y + 6, "正しい並び順 (◎):", 11
-                )
-                self.app.text.draw_text(
-                    26,
-                    next_card_y + 22,
-                    corr_ans,
-                    11,
-                    max_width=268,
-                    font_type="english",
-                )
-                cur_y = next_card_y + c_card_h + 16
-        else:
-            cur_y = card_y
-
-        # 正解の英文表示 (見出しから本文まで18px)
-        self.app.text.draw_text(
-            22, cur_y, "【正しい英文】", 7
-        )
-        cur_y += 18
         full_sentence = self.current_q.get("sentence", "")
         if q_type == "choice":
             c_word = self.current_q.get("options", [])[
@@ -884,49 +815,33 @@ class SceneQuiz:
             line_spacing=3,
         )
 
-        # 日本語訳（本文から14pxの間隔）
+        # 4. 日本語訳（12pt miniフォントでコンパクト表示）
         feedback_trans = self._format_dialogue(self.current_q.get("translation", ""))
         next_y2 = self.app.text.draw_text(
             22,
-            next_y + 14,
+            next_y + 6,
             f"訳: {feedback_trans}",
-            7,
+            6,
+            font_type="mini",
             max_width=276,
-            line_spacing=3,
+            line_spacing=2,
         )
 
-        # ポイント解説（ボタン y: 535 との被りを完全防止する動的レイアウト）
-        exp_text = self.current_q.get("explanation", "")
-        exp_lines = []
-        for raw_line in exp_text.split("\n"):
-            wrapped = self.app.text.wrap_text(raw_line, max_width=276)
-            exp_lines.extend(wrapped if wrapped else [""])
+        # 5. ポイント解説（残りの解説・関連語）
+        if remaining_exp:
+            rem_text = "\n".join(remaining_exp)
+            self.app.text.draw_text_mini(22, next_y2 + 8, "【ポイント解説】", 7)
+            self.app.text.draw_text(
+                22,
+                next_y2 + 22,
+                rem_text,
+                7,
+                font_type="mini",
+                max_width=276,
+                line_spacing=2,
+            )
 
-        spacing = 3
-        needed_body_h = len(exp_lines) * 16 + max(0, len(exp_lines) - 1) * spacing
-        # ボタン上端(535)からマージン10pxを確保した上限 525
-        if next_y2 + 36 + needed_body_h > 525:
-            spacing = 2
-            needed_body_h = len(exp_lines) * 16 + max(0, len(exp_lines) - 1) * spacing
-            exp_header_y = max(next_y2 + 10, 525 - needed_body_h - 18)
-            exp_body_y = exp_header_y + 16
-        else:
-            exp_header_y = next_y2 + 14
-            exp_body_y = exp_header_y + 16
-
-        self.app.text.draw_text(
-            22, exp_header_y, "【ポイント解説】", 7
-        )
-        self.app.text.draw_text(
-            22,
-            exp_body_y,
-            exp_text,
-            7,
-            max_width=276,
-            line_spacing=spacing,
-        )
-
-        # 「次へ進む」ボタン (y: 535〜585) - 黒背景＋白枠＋白文字
+        # 6. 「次へ進む」ボタン (y: 535〜583) - 黒背景＋白枠＋白文字
         pyxel.rect(20, 535, 280, 48, 0)
         pyxel.rectb(20, 535, 280, 48, 7)
         nxt_str = "▶ 次へ進む！"
