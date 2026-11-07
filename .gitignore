@@ -21,3 +21,7 @@ __pycache__/
 # エディタ設定
 .vscode/
 .idea/
+
+# セーブデータ
+data/save_slot_*.json
+

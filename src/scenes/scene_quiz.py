@@ -895,17 +895,35 @@ class SceneQuiz:
             line_spacing=3,
         )
 
-        # ポイント解説（日本語訳から18pxの間隔、見出しから本文まで18px）
+        # ポイント解説（ボタン y: 535 との被りを完全防止する動的レイアウト）
+        exp_text = self.current_q.get("explanation", "")
+        exp_lines = []
+        for raw_line in exp_text.split("\n"):
+            wrapped = self.app.text.wrap_text(raw_line, max_width=276)
+            exp_lines.extend(wrapped if wrapped else [""])
+
+        spacing = 3
+        needed_body_h = len(exp_lines) * 16 + max(0, len(exp_lines) - 1) * spacing
+        # ボタン上端(535)からマージン10pxを確保した上限 525
+        if next_y2 + 36 + needed_body_h > 525:
+            spacing = 2
+            needed_body_h = len(exp_lines) * 16 + max(0, len(exp_lines) - 1) * spacing
+            exp_header_y = max(next_y2 + 10, 525 - needed_body_h - 18)
+            exp_body_y = exp_header_y + 16
+        else:
+            exp_header_y = next_y2 + 14
+            exp_body_y = exp_header_y + 16
+
         self.app.text.draw_text(
-            22, next_y2 + 18, "【ポイント解説】", 7
+            22, exp_header_y, "【ポイント解説】", 7
         )
         self.app.text.draw_text(
             22,
-            next_y2 + 36,
-            self.current_q.get("explanation", ""),
+            exp_body_y,
+            exp_text,
             7,
             max_width=276,
-            line_spacing=3,
+            line_spacing=spacing,
         )
 
         # 「次へ進む」ボタン (y: 535〜585) - 黒背景＋白枠＋白文字
