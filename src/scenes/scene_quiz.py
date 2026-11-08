@@ -796,17 +796,46 @@ class SceneQuiz:
         corr_ans = self.correct_answer_text or "-"
 
         if q_type == "choice":
-            pyxel.rect(20, 104, 280, 26, 0)
             if self.last_is_correct:
-                pyxel.rectb(20, 104, 280, 26, 11)  # 緑枠
-                self.app.text.draw_text(26, 109, f"あなたの解答 (◎): {user_ans}", 11)
+                ans_text = f"あなたの解答 (◎): {user_ans}"
+                lines = self.app.text.wrap_text(ans_text, max_width=268)
+                card_h = 10 + len(lines) * 19
+                pyxel.rect(20, 104, 280, card_h, 0)
+                pyxel.rectb(20, 104, 280, card_h, 11)  # 緑枠
+                cy_sub = 109
+                for l in lines:
+                    self.app.text.draw_text(26, cy_sub, l, 11)
+                    cy_sub += 19
+                cur_y = 104 + card_h + 8
             else:
-                pyxel.rectb(20, 104, 280, 26, 5)   # 灰枠
-                self.app.text.draw_text(26, 109, f"解答: {user_ans}", 8)
-                arrow_x = 26 + self.app.text.measure_text_width(f"解答: {user_ans}") + 6
-                self.app.text.draw_text(arrow_x, 109, "▶", 7)
-                self.app.text.draw_text(arrow_x + 16, 109, f"正解: {corr_ans}", 11)
-            cur_y = 138
+                u_part = f"解答: {user_ans}"
+                c_part = f"正解: {corr_ans}"
+                w_u = self.app.text.measure_text_width(u_part)
+                w_c = self.app.text.measure_text_width(c_part)
+                w_arrow = self.app.text.measure_text_width("▶")
+
+                if w_u + 6 + w_arrow + 10 + w_c <= 268:
+                    pyxel.rect(20, 104, 280, 26, 0)
+                    pyxel.rectb(20, 104, 280, 26, 5)
+                    self.app.text.draw_text(26, 109, u_part, 8)
+                    arrow_x = 26 + w_u + 6
+                    self.app.text.draw_text(arrow_x, 109, "▶", 7)
+                    self.app.text.draw_text(arrow_x + 16, 109, c_part, 11)
+                    cur_y = 138
+                else:
+                    u_lines = self.app.text.wrap_text(f"解答 (×): {user_ans}", max_width=268)
+                    c_lines = self.app.text.wrap_text(f"正解 (◎): {corr_ans}", max_width=268)
+                    card_h = 10 + (len(u_lines) + len(c_lines)) * 19
+                    pyxel.rect(20, 104, 280, card_h, 0)
+                    pyxel.rectb(20, 104, 280, card_h, 5)
+                    cy_sub = 109
+                    for ul in u_lines:
+                        self.app.text.draw_text(26, cy_sub, ul, 8)
+                        cy_sub += 19
+                    for cl in c_lines:
+                        self.app.text.draw_text(26, cy_sub, cl, 11)
+                        cy_sub += 19
+                    cur_y = 104 + card_h + 8
         elif q_type == "reorder":
             if self.last_is_correct:
                 u_lines = self.app.text.wrap_text(f"あなたの並び (◎): {user_ans}", max_width=268)
